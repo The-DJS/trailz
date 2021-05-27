@@ -1,0 +1,44 @@
+{
+  "name": "trailz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server",
+    "build": "webpack --config webpack.config.js --mode development --watch",
+    "lint": "eslint . --ext .js,.jsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonhourcade/trailz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonhourcade/trailz/issues"
+  },
+  "homepage": "https://github.com/jonhourcade/trailz#readme",
+  "dependencies": {
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-react": "^7.13.13",
+    "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.11",
+    "path": "^0.12.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "uuid": "^8.3.2",
+    "webpack": "^5.38.0",
+    "webpack-cli": "^4.7.0"
+  }
+}
