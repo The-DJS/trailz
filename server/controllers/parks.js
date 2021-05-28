@@ -48,16 +48,8 @@ const searchParks = wrapAsync(async (req, res) => {
       lng: result.geometry.location.lng,
     },
     icon: result.icon,
-    // imageUrl: results.photos.map((photo, index) => {
-    //   if (!index) {
-    //     return photo.photo_reference;
-    //   }
-    // })[0],
-    // anchorTag: results.photos.map((photo, index) => {
-    //   if (!index) {
-    //     return photo.html_attributions;
-    //   }
-    // })[0],
+    imageUrl: result.photos[0].photo_reference || null,
+    anchorTag: result.photos[0].html_attributions || null,
   }));
   console.log(mappedResults);
   res.send(mappedResults);
