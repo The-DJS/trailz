@@ -1,11 +1,12 @@
+/* eslint-disable import/extensions */
 import React, { } from 'react';
 import styled from 'styled-components';
 import { Route, Switch, Link } from 'react-router-dom';
-import GoogleButton from 'react-google-button';
+// import GoogleButton from 'react-google-button';
 import Search from './Search.jsx';
 import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
-import Map from './Map.jsx'
+import Map from './Map.jsx';
 
 const Nav = styled.nav`
   padding: 0 20px;
