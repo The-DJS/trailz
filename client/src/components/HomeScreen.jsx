@@ -27,9 +27,15 @@ const HomeScreen = () => (
     backgroundAttachment: 'scroll',
   }}
   >
-    <GoogleButton
-      onClick={() => { login() }}
-    />
+    {/* <GoogleButton
+      onClick={() => { login(); }}
+    /> */}
+    <a
+      className="login-button"
+      href="/auth/google"
+    >
+      Login
+    </a>
 
   </div>
 

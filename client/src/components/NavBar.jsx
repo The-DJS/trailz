@@ -5,6 +5,7 @@ import GoogleButton from 'react-google-button';
 import Search from './Search.jsx';
 import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
+import Map from './Map.jsx'
 
 const Nav = styled.nav`
   padding: 0 20px;
@@ -56,6 +57,11 @@ const Navbar = () => (
             </LinkCss>
           </Item>
           <Item>
+            <LinkCss as={Link} to="/map">
+              Map
+            </LinkCss>
+          </Item>
+          <Item>
             <LinkCss as={Link} to="/search">
               Search
             </LinkCss>
@@ -72,6 +78,7 @@ const Navbar = () => (
       <Switch>
         <Route exact path="/search" component={Search} />
         <Route exact path="/favorite" component={FavoriteTrails} />
+        <Route exact path="/map" component={Map} />
         <Route exact path="/" component={Home} />
       </Switch>
     </div>
