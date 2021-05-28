@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-boolean-value */
 import React, { useState } from 'react';
+import axios from 'axios';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 
 const containerStyle = {
@@ -13,17 +15,13 @@ const defaultCenter = {
   lng: -90.1077311,
 };
 
-const Map = () => {
-  const points = [
-    {
-      name: 'Location 1',
-      location: {
-        lat: 29.9869849,
-        lng: -90.0980445,
-      },
-    },
-  ];
+const options = {
+  styles: mapStyles,
+  disableDefaultUI: true,
+  zoomControl: true,
+};
 
+const Map = ({ searchResults }) => {
   const [selected, setSelected] = useState({});
 
   const onSelect = (item) => {
@@ -43,9 +41,10 @@ const Map = () => {
         mapContainerStyle={containerStyle}
         center={defaultCenter}
         zoom={12}
+        options={options}
       >
         {
-          points.map((item) => (
+          searchResults.map((item) => (
             <Marker
               key={item.name}
               position={item.location}
@@ -61,7 +60,10 @@ const Map = () => {
               clickable={true}
               onCloseClick={() => setSelected({})}
             >
-              <p>{selected.name}</p>
+              <div className="map-info-window">
+                <button type="button">Add to favs</button>
+                <p>{selected.name}</p>
+              </div>
             </InfoWindow>
           )
         }
@@ -72,4 +74,3 @@ const Map = () => {
 };
 
 export default Map;
-//////working
