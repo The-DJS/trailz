@@ -1,1 +1,1 @@
-module.exports = { auth: require('./auth') };
+module.exports = { auth: require('./auth'), parks: require('./parks') };

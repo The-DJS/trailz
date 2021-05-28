@@ -1,3 +1,9 @@
-.eslint*
-**/node_modules
-dist
+# MAC OS
+.DS_Store
+# Node/NPM
+node_modules
+# Project
+client/dist/bundle.js
+.env
+# Google Maps API Key
+google-maps
