@@ -72,4 +72,3 @@ const Map = () => {
 };
 
 export default Map;
-//////working
