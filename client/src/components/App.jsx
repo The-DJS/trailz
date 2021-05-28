@@ -25,12 +25,15 @@ const App = () => {
   ]);
 
   const fetchSearch = async () => {
-    const data = await axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${GOOGLE_MAPS_API_KEY}&location=29.977000,-90.101570&radius=160934&type=park`);
-    console.info(data.results);
-    return data.results;
+    const results = await axios.get('/parks/searchResults/');
+    return results.data;
   };
 
-  useEffect(() => fetchSearch(), []);
+  useEffect(() => {
+    fetchSearch()
+      .then((data) => setSearchResults(data))
+      .catch((err) => console.warn(err));
+  }, []);
 
   return (
     <BrowserRouter>
