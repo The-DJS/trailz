@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  favoriteParks: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
 });
 
 userSchema.plugin(findOrCreate);

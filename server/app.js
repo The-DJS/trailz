@@ -4,7 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
-const { auth: authRouter } = require('./routers');
+const { auth: authRouter, parks: parksRouter } = require('./routers');
 
 const app = express();
 
@@ -19,12 +19,13 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 require('./helpers/auth');
 
 app.use('/auth', authRouter);
+app.use('/parks', parksRouter);
 
 module.exports = app;
