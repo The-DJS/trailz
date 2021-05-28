@@ -1,14 +1,15 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import NavBar from './Navbar.jsx';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return <h1>hello world</h1>;
-  }
-}
+const App = () => {
+  return (
+  <BrowserRouter>
+    <div>
+      <NavBar />
+    </div>
+  </BrowserRouter>
+  )
+};
 
 export default App;
