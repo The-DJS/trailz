@@ -1,49 +1,37 @@
 import React from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px',
+  width: '90vw',
+  height: '70vh',
 };
 
 const center = {
-  lat: 30.032996,
-  lng: -89.882563,
+  lat: 29.9706145,
+  lng: -90.1077311,
 };
 
 const Map = () => {
-  const { isLoaded } = useJsApiLoader({
+  const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
   });
 
-  const [map, setMap] = React.useState(null);
-
-  const onLoad = React.useCallback((map) => {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
-
-  const onUnmount = React.useCallback((map) => {
-    setMap(null);
-  }, []);
+  if (loadError) return 'Error loading maps';
 
   return isLoaded
     ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
+        zoom={12}
       >
         { /* Child components, such as markers, info windows, etc. */}
         <></>
       </GoogleMap>
     )
-    : <></>;
-}
+    : <h1>Loading Maps!</h1>;
+};
 
 export default Map;
