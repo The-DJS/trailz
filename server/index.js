@@ -8,4 +8,4 @@ dotenv.config({
 });
 
 const port = 3000;
-app.listen(port, () => console.log(`trailz server listening on port ${port}`));
+app.listen(port, () => console.log(`started on port: http://localhost:${port}`));
