@@ -1,5 +1,6 @@
-import React from 'react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+/* eslint-disable react/jsx-boolean-value */
+import React, { useState } from 'react';
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 
 const containerStyle = {
@@ -7,12 +8,28 @@ const containerStyle = {
   height: '70vh',
 };
 
-const center = {
+const defaultCenter = {
   lat: 29.9706145,
   lng: -90.1077311,
 };
 
 const Map = () => {
+  const points = [
+    {
+      name: 'Location 1',
+      location: {
+        lat: 29.9869849,
+        lng: -90.0980445,
+      },
+    },
+  ];
+
+  const [selected, setSelected] = useState({});
+
+  const onSelect = (item) => {
+    setSelected(item);
+  };
+
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -24,10 +41,30 @@ const Map = () => {
     ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
+        center={defaultCenter}
         zoom={12}
       >
-        { /* Child components, such as markers, info windows, etc. */}
+        {
+          points.map((item) => (
+            <Marker
+              key={item.name}
+              position={item.location}
+              onClick={() => onSelect(item)}
+            />
+          ))
+        }
+        {
+          selected.location
+          && (
+            <InfoWindow
+              position={selected.location}
+              clickable={true}
+              onCloseClick={() => setSelected({})}
+            >
+              <p>{selected.name}</p>
+            </InfoWindow>
+          )
+        }
         <></>
       </GoogleMap>
     )
