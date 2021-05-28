@@ -44,7 +44,7 @@ const Menu = styled.ul`
 
 const Item = styled.li``;
 
-const Navbar = () => (
+const Navbar = ({ searchResults }) => (
   <div>
     <div>
       <Nav>
@@ -79,7 +79,9 @@ const Navbar = () => (
       <Switch>
         <Route exact path="/search" component={Search} />
         <Route exact path="/favorite" component={FavoriteTrails} />
-        <Route exact path="/map" component={Map} />
+        <Route exact path="/map">
+          <Map searchResults={searchResults} />
+        </Route>
         <Route exact path="/" component={Home} />
       </Switch>
     </div>
