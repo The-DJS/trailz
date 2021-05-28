@@ -1,11 +1,12 @@
+/* eslint-disable import/extensions */
 import React, { } from 'react';
 import styled from 'styled-components';
 import { Route, Switch, Link } from 'react-router-dom';
-import GoogleButton from 'react-google-button';
+// import GoogleButton from 'react-google-button';
 import Search from './Search.jsx';
 import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
-import Map from './Map.jsx'
+import Map from './Map.jsx';
 
 const Nav = styled.nav`
   padding: 0 20px;
@@ -43,7 +44,7 @@ const Menu = styled.ul`
 
 const Item = styled.li``;
 
-const Navbar = () => (
+const Navbar = ({ searchResults }) => (
   <div>
     <div>
       <Nav>
@@ -78,7 +79,9 @@ const Navbar = () => (
       <Switch>
         <Route exact path="/search" component={Search} />
         <Route exact path="/favorite" component={FavoriteTrails} />
-        <Route exact path="/map" component={Map} />
+        <Route exact path="/map">
+          <Map searchResults={searchResults} />
+        </Route>
         <Route exact path="/" component={Home} />
       </Switch>
     </div>

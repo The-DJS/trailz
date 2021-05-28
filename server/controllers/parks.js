@@ -36,7 +36,7 @@ const addFavoritePark = wrapAsync(async (req, res) => {
 
 const searchParks = wrapAsync(async (req, res) => {
   const response = await axios.get(
-    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${GOOGLE_MAPS_API_KEY}&location=29.977000,-90.101570&radius=160934&type=park`
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${GOOGLE_MAPS_API_KEY}&location=29.977000,-90.101570&radius=160934&keyword=trails&type=park`
   );
   const { results } = response.data;
   const mappedResults = results.map((result) => ({
