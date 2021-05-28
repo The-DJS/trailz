@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { User } = require('./models');
 
 const name = 'trailzDb';
 const url = `mongodb://localhost:27017/${name}`;
@@ -16,4 +17,5 @@ const database = mongoose
 
 module.exports = {
   database,
+  User,
 };
