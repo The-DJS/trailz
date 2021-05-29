@@ -1,22 +1,25 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/jsx-boolean-value */
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import Form from './Form.jsx';
 import Search from './Search.jsx';
 
+// The size of the map on the page
 const containerStyle = {
   width: '90vw',
   height: '70vh',
 };
 
+// Default location of the map.
 const defaultCenter = {
   lat: 29.9706145,
   lng: -90.1077311,
 };
 
+// Options of the render (disable default UI and custom styles)
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
@@ -24,21 +27,32 @@ const options = {
 };
 
 const Map = ({ searchResults }) => {
+  // Selected marker
   const [selected, setSelected] = useState({});
 
   const onSelect = (item) => {
     setSelected(item);
   };
 
+  // Custom pins
   const [userPins, setUserPins] = useState([]);
 
+  // Location references to keep the center when the map re-renders.
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
+  // Load script
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
   });
 
+  // Show error if there was an error loading the script.
   if (loadError) return 'Error loading maps';
 
+  // Render the map
   return isLoaded
     ? (
       <div>
@@ -56,6 +70,7 @@ const Map = ({ searchResults }) => {
             },
             time: new Date(),
           }])}
+          onLoad={onMapLoad}
         >
 
           {
@@ -102,6 +117,7 @@ const Map = ({ searchResults }) => {
         <Form />
       </div>
     )
+    // Display loading message while the script loads the map.
     : <h1>Loading Maps!</h1>;
 };
 
