@@ -10,6 +10,7 @@ import {
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import Form from './Form.jsx';
+import Modal from './Modal.jsx';
 
 // The size of the map on the page
 const containerStyle = {
@@ -31,6 +32,11 @@ const options = {
 };
 
 const Map = ({ results }) => {
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
+
   // Selected marker
   const [selected, setSelected] = useState({});
 
@@ -64,19 +70,17 @@ const Map = ({ results }) => {
         center={defaultCenter}
         zoom={12}
         options={options}
-        onClick={(event) =>
-          setUserPins((currentState) => [
-            ...currentState,
-            {
-              name: 'Custom User Pin',
-              location: {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
-              },
-              time: new Date(),
+        onClick={(event) => setUserPins((currentState) => [
+          ...currentState,
+          {
+            name: 'Custom User Pin',
+            location: {
+              lat: event.latLng.lat(),
+              lng: event.latLng.lng(),
             },
-          ])
-        }
+            time: new Date(),
+          },
+        ])}
         onLoad={onMapLoad}
       >
         {results.map((item) => (
@@ -108,6 +112,7 @@ const Map = ({ results }) => {
             <div className="map-info-window">
               <p>{selected.name}</p>
               <button type="button">Add to favs</button>
+              <Modal />
             </div>
           </InfoWindow>
         )}
