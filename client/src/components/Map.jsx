@@ -1,11 +1,11 @@
+/* eslint-disable import/extensions */
 /* eslint-disable react/jsx-boolean-value */
 import React, { useState } from 'react';
-import axios from 'axios';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import Form from './Form.jsx';
-import Search from './Search.jsx'
+import Search from './Search.jsx';
 
 const containerStyle = {
   width: '90vw',
@@ -30,6 +30,8 @@ const Map = ({ searchResults }) => {
     setSelected(item);
   };
 
+  const [userPins, setUserPins] = useState([]);
+
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -46,6 +48,14 @@ const Map = ({ searchResults }) => {
           center={defaultCenter}
           zoom={12}
           options={options}
+          onClick={(event) => setUserPins((currentState) => [...currentState, {
+            name: 'Custom User Pin',
+            location: {
+              lat: event.latLng.lat(),
+              lng: event.latLng.lng(),
+            },
+            time: new Date(),
+          }])}
         >
 
           {
@@ -53,7 +63,22 @@ const Map = ({ searchResults }) => {
               <Marker
                 key={item.name}
                 position={item.location}
+                // icon={{
+                //   url: '/park.svg',
+                // }}
                 onClick={() => onSelect(item)}
+              />
+            ))
+          }
+          {
+            userPins.map((pin) => (
+              <Marker
+                key={pin.time.toISOString()}
+                position={pin.location}
+                // icon={{
+                //   url: '/camping.svg',
+                // }}
+                onClick={() => onSelect(pin)}
               />
             ))
           }
@@ -66,8 +91,8 @@ const Map = ({ searchResults }) => {
               onCloseClick={() => setSelected({})}
             >
               <div className="map-info-window">
-                <button type="button">Add to favs</button>
                 <p>{selected.name}</p>
+                <button type="button">Add to favs</button>
               </div>
             </InfoWindow>
           )
