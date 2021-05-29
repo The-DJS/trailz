@@ -1,17 +1,18 @@
 import React from 'react';
 import GoogleButton from 'react-google-button';
 import axios from 'axios';
+import GoogleLogin from 'react-google-login';
 
 const HomeScreen = ({ loginUser }) => {
-  const login = (response) => {
+  const login = ({ googleId }) => {
     axios
-      .get('/auth/google')
-      .then((data) => {
-        console.info(data);
-        loginUser(data);
+      .get(`/auth/user/${googleId}`)
+      .then(({ data: user }) => {
+        loginUser(user);
       })
-      .catch((err) => console.warn(err));
-    console.info(response);
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const logout = (response) => {
@@ -19,8 +20,9 @@ const HomeScreen = ({ loginUser }) => {
       .get('/google/logout')
       .then((data) => console.info(data))
       .catch((err) => console.warn(err));
-    console.info(response);
+    console.info('response!!!!!', response);
   };
+
   return (
     <div
       style={{
@@ -34,16 +36,27 @@ const HomeScreen = ({ loginUser }) => {
       }}
     >
       {/* <GoogleButton
-        onClick={() => {
-          login();
-        }}
-      /> */}
-      <a className="login-button" href="/auth/google/logout">
-        Logout
-      </a>
-      <a className="login-button" href="/auth/google">
-        Login
-      </a>
+      onClick={() => { login(); }}
+    /> */}
+      {/* <a
+      className="login-button"
+      href="/auth/google/logout"
+    >
+      Logout
+    </a>
+    <a
+      className="login-button"
+      href="/auth/google"
+    >
+      Login
+    </a> */}
+      <GoogleLogin
+        clientId="266879339390-9ia1hkk7q7u6oh2puf1jjbep2bpgi305.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={login}
+        onFailure={login}
+        cookiePolicy="single_host_origin"
+      />
     </div>
   );
 };

@@ -8,14 +8,26 @@ import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API.js';
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [user, setUser] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+
+  const fetchFavorites = async (user) => {
+    const { data: favoriteParks } = await axios.get(
+      `/parks/favorites/${user._id}`
+    );
+    return favoriteParks;
+  };
 
   const loginUser = (currentUser) => {
     setUser(currentUser);
+    fetchFavorites(currentUser)
+      .then((favoriteParks) => {
+        setFavorites(favoriteParks);
+      })
+      .catch((err) => console.log(err));
   };
 
   const fetchSearch = async () => {
     const results = await axios.get('/parks/searchResults/');
-    console.log(results.data);
     return results.data;
   };
 
@@ -25,14 +37,15 @@ const App = () => {
       .catch((err) => console.warn(err));
   }, []);
 
-  if (user) {
-    return <h1>hello </h1>;
-  }
-
+  console.log('in app', searchResults);
   return (
     <BrowserRouter>
       <div>
-        <NavBar searchResults={searchResults} loginUser={loginUser} />
+        <NavBar
+          searchResults={searchResults}
+          loginUser={loginUser}
+          favorites={favorites}
+        />
       </div>
     </BrowserRouter>
   );

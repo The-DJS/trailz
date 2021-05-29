@@ -7,24 +7,25 @@ const getFavoriteParks = wrapAsync(async (req, res) => {
   const { userId } = req.params;
   const { favoriteParks } = await User.findOne({ _id: userId });
   const mappedParks = await Promise.all(
-    favoriteParks.map(async (park) => {
-      const mappedPark = await Park.findOne({ _id: park._id });
+    favoriteParks.map(async (parkId) => {
+      const mappedPark = await Park.findOne({ _id: parkId });
       return mappedPark;
     })
   );
-  return mappedParks;
+  res.send(mappedParks);
 });
 
 const addFavoritePark = wrapAsync(async (req, res) => {
+  console.log('in fav park route');
   const { userId } = req.params;
-  const { parkId, name, address, lat, long, icon, imageUrl, anchorTag } =
+  const { parkId, name, address, lat, lng, icon, imageUrl, anchorTag } =
     req.body;
   const user = await User.findOne({ _id: userId });
   const newPark = await new Park({
     parkId,
     name,
     address,
-    location: { lat, long },
+    location: { lat, lng },
     icon,
     imageUrl,
     anchorTag,

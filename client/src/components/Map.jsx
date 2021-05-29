@@ -1,11 +1,16 @@
 /* eslint-disable react/jsx-boolean-value */
 import React, { useState } from 'react';
 import axios from 'axios';
-import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoWindow,
+} from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import Form from './Form.jsx';
-import Search from './Search.jsx'
+import Search from './Search.jsx';
 
 const containerStyle = {
   width: '90vw',
@@ -23,7 +28,7 @@ const options = {
   zoomControl: true,
 };
 
-const Map = ({ searchResults }) => {
+const Map = ({ results }) => {
   const [selected, setSelected] = useState({});
 
   const onSelect = (item) => {
@@ -37,47 +42,40 @@ const Map = ({ searchResults }) => {
 
   if (loadError) return 'Error loading maps';
 
-  return isLoaded
-    ? (
-      <div>
-        <Search />
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={defaultCenter}
-          zoom={12}
-          options={options}
-        >
-
-          {
-            searchResults.map((item) => (
-              <Marker
-                key={item.name}
-                position={item.location}
-                onClick={() => onSelect(item)}
-              />
-            ))
-          }
-          {
-            selected.location
-          && (
-            <InfoWindow
-              position={selected.location}
-              clickable={true}
-              onCloseClick={() => setSelected({})}
-            >
-              <div className="map-info-window">
-                <button type="button">Add to favs</button>
-                <p>{selected.name}</p>
-              </div>
-            </InfoWindow>
-          )
-          }
-          <></>
-        </GoogleMap>
-        <Form />
-      </div>
-    )
-    : <h1>Loading Maps!</h1>;
+  return isLoaded ? (
+    <div>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={defaultCenter}
+        zoom={12}
+        options={options}
+      >
+        {results.map((item) => (
+          <Marker
+            key={item.name}
+            position={item.location}
+            onClick={() => onSelect(item)}
+          />
+        ))}
+        {selected.location && (
+          <InfoWindow
+            position={selected.location}
+            clickable={true}
+            onCloseClick={() => setSelected({})}
+          >
+            <div className="map-info-window">
+              <button type="button">Add to favs</button>
+              <p>{selected.name}</p>
+            </div>
+          </InfoWindow>
+        )}
+        <></>
+      </GoogleMap>
+      <Form />
+    </div>
+  ) : (
+    <h1>Loading Maps!</h1>
+  );
 };
 
 export default Map;
