@@ -13,7 +13,6 @@ const App = () => {
         lat: 29.9869849,
         lng: -90.0980445,
       },
-
     },
     {
       name: 'Location 2',
@@ -26,6 +25,7 @@ const App = () => {
 
   const fetchSearch = async () => {
     const results = await axios.get('/parks/searchResults/');
+    console.log(results.data);
     return results.data;
   };
 

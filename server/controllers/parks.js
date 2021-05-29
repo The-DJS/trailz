@@ -48,8 +48,8 @@ const searchParks = wrapAsync(async (req, res) => {
       lng: result.geometry.location.lng,
     },
     icon: result.icon,
-    imageUrl: result.photos[0].photo_reference || null,
-    anchorTag: result.photos[0].html_attributions || null,
+    // imageUrl: result.photos[0].photo_reference || null,
+    // anchorTag: result.photos[0].html_attributions || null,
   }));
   console.log(mappedResults);
   res.send(mappedResults);
