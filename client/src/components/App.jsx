@@ -6,23 +6,12 @@ import NavBar from './NavBar.jsx';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API.js';
 
 const App = () => {
-  const [searchResults, setSearchResults] = useState([
-    {
-      name: 'location 1',
-      location: {
-        lat: 29.9869849,
-        lng: -90.0980445,
-      },
+  const [searchResults, setSearchResults] = useState([]);
+  const [user, setUser] = useState(null);
 
-    },
-    {
-      name: 'Location 2',
-      location: {
-        lat: 29.9756568,
-        lng: -90.09472559999999,
-      },
-    },
-  ]);
+  const loginUser = (currentUser) => {
+    setUser(currentUser);
+  };
 
   const fetchSearch = async () => {
     const results = await axios.get('/parks/searchResults/');
@@ -35,10 +24,13 @@ const App = () => {
       .catch((err) => console.warn(err));
   }, []);
 
+  if (user) {
+    return <div>User is logged in</div>;
+  }
   return (
     <BrowserRouter>
       <div>
-        <NavBar searchResults={searchResults} />
+        <NavBar searchResults={searchResults} loginUser={loginUser} />
       </div>
     </BrowserRouter>
   );
