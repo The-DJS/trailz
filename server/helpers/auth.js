@@ -23,6 +23,6 @@ passport.use(
     (accessToken, refreshToken, profile, cb) => {
       console.log(profile);
       User.findOrCreate({ googleId: profile.id }, (err, user) => cb(err, user));
-    },
-  ),
+    }
+  )
 );

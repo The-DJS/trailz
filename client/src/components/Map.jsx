@@ -4,8 +4,6 @@ import axios from 'axios';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
-import Form from './Form.jsx';
-import Search from './Search.jsx'
 
 const containerStyle = {
   width: '90vw',
@@ -39,26 +37,23 @@ const Map = ({ searchResults }) => {
 
   return isLoaded
     ? (
-      <div>
-        <Search />
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={defaultCenter}
-          zoom={12}
-          options={options}
-        >
-
-          {
-            searchResults.map((item) => (
-              <Marker
-                key={item.name}
-                position={item.location}
-                onClick={() => onSelect(item)}
-              />
-            ))
-          }
-          {
-            selected.location
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={defaultCenter}
+        zoom={12}
+        options={options}
+      >
+        {
+          searchResults.map((item) => (
+            <Marker
+              key={item.name}
+              position={item.location}
+              onClick={() => onSelect(item)}
+            />
+          ))
+        }
+        {
+          selected.location
           && (
             <InfoWindow
               position={selected.location}
@@ -71,11 +66,9 @@ const Map = ({ searchResults }) => {
               </div>
             </InfoWindow>
           )
-          }
-          <></>
-        </GoogleMap>
-        <Form />
-      </div>
+        }
+        <></>
+      </GoogleMap>
     )
     : <h1>Loading Maps!</h1>;
 };
