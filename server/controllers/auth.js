@@ -1,6 +1,12 @@
-const loggedIn = (req, res) => {
-  res.send('logged in');
-};
+const { wrapAsync } = require('../helpers');
+const { User } = require('../database');
+
+const loggedIn = wrapAsync(async (req, res) => {
+  const googleId = req.session.passport.user;
+  const user = await User.findOne({ googleId });
+  console.log(user);
+  res.send(user);
+});
 
 const loggedOut = (req, res) => {
   req.logout();
