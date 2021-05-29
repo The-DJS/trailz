@@ -5,6 +5,7 @@ import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import Form from './Form.jsx';
+import Search from './Search.jsx'
 
 const containerStyle = {
   width: '90vw',
@@ -39,7 +40,7 @@ const Map = ({ searchResults }) => {
   return isLoaded
     ? (
       <div>
-
+        <Search />
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={defaultCenter}
