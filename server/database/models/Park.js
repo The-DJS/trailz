@@ -18,7 +18,7 @@ const parkSchema = mongoose.Schema({
       type: Number,
       required: true,
     },
-    long: {
+    lng: {
       type: Number,
       required: true,
     },
@@ -29,11 +29,11 @@ const parkSchema = mongoose.Schema({
   },
   imageUrl: {
     type: String,
-    required: true,
+    // required: true,
   },
   anchorTag: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 

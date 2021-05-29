@@ -1,7 +1,6 @@
 import React from 'react';
+import Map from './Map.jsx';
 
-const FavoriteTrails = () => (
-  <h1>hello world</h1>
-);
+const FavoriteTrails = ({ favorites }) => <Map results={favorites} />;
 
 export default FavoriteTrails;

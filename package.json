@@ -38,6 +38,7 @@
     "express-session": "^1.17.2",
     "form": "^0.2.4",
     "hook": "^0.0.5",
+    "install": "^0.13.0",
     "mongoose": "^5.12.11",
     "mongoose-findorcreate": "^3.0.0",
     "passport": "^0.4.1",
