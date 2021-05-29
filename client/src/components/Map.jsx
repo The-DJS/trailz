@@ -108,7 +108,7 @@ const Map = ({ results }) => {
               <div className="map-info-window">
                 <p>{selected.name}</p>
                 <button type="button">Add to favs</button>
-                <Modal />
+                <Modal location={selected} />
               </div>
             </InfoWindow>
           )}
