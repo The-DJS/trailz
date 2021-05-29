@@ -22,7 +22,14 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
       console.log(profile);
-      User.findOrCreate({ googleId: profile.id }, (err, user) => cb(err, user));
-    },
-  ),
+      User.findOrCreate(
+        {
+          googleId: profile.id,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+        },
+        (err, user) => cb(err, user)
+      );
+    }
+  )
 );
