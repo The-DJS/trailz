@@ -9,7 +9,6 @@ import {
 } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
-import Form from './Form.jsx';
 import Modal from './Modal.jsx';
 
 // The size of the map on the page
@@ -115,7 +114,6 @@ const Map = ({ results }) => {
           )}
           <></>
         </GoogleMap>
-        <Form />
       </div>
     )
     : (

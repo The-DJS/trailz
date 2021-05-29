@@ -1,5 +1,7 @@
+/* eslint-disable import/extensions */
 import React from 'react';
 import Modal from 'react-modal';
+import Form from './Form.jsx';
 
 const customStyles = {
   content: {
@@ -41,15 +43,17 @@ const CustomModal = ({ handleClose, show }) => {
       >
 
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
+        <button type="button" onClick={closeModal}>close</button>
         <div>I am a modal</div>
-        <form>
+        <Form />
+
+        {/* <form>
           <input />
           <button>tab navigation</button>
           <button>stays</button>
           <button>inside</button>
           <button>the modal</button>
-        </form>
+        </form> */}
       </Modal>
     </div>
   );
