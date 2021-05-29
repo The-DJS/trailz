@@ -10,6 +10,7 @@ import {
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import Form from './Form.jsx';
+import Modal from './Modal.jsx';
 
 // The size of the map on the page
 const containerStyle = {
@@ -43,6 +44,7 @@ const Map = ({ results }) => {
 
   // Location references to keep the center when the map re-renders.
   const mapRef = useRef();
+
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
@@ -57,15 +59,15 @@ const Map = ({ results }) => {
   if (loadError) return 'Error loading maps';
 
   // Render the map
-  return isLoaded ? (
-    <div>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={defaultCenter}
-        zoom={12}
-        options={options}
-        onClick={(event) =>
-          setUserPins((currentState) => [
+  return isLoaded
+    ? (
+      <div>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={defaultCenter}
+          zoom={12}
+          options={options}
+          onClick={(event) => setUserPins((currentState) => [
             ...currentState,
             {
               name: 'Custom User Pin',
@@ -75,50 +77,51 @@ const Map = ({ results }) => {
               },
               time: new Date(),
             },
-          ])
-        }
-        onLoad={onMapLoad}
-      >
-        {results.map((item) => (
-          <Marker
-            key={item.name}
-            position={item.location}
-            // icon={{
-            //   url: '/park.svg',
-            // }}
-            onClick={() => onSelect(item)}
-          />
-        ))}
-        {userPins.map((pin) => (
-          <Marker
-            key={pin.time.toISOString()}
-            position={pin.location}
-            // icon={{
-            //   url: '/camping.svg',
-            // }}
-            onClick={() => onSelect(pin)}
-          />
-        ))}
-        {selected.location && (
-          <InfoWindow
-            position={selected.location}
-            clickable={true}
-            onCloseClick={() => setSelected({})}
-          >
-            <div className="map-info-window">
-              <p>{selected.name}</p>
-              <button type="button">Add to favs</button>
-            </div>
-          </InfoWindow>
-        )}
-        <></>
-      </GoogleMap>
-      <Form />
-    </div>
-  ) : (
+          ])}
+          onLoad={onMapLoad}
+        >
+          {results.map((item) => (
+            <Marker
+              key={item.name}
+              position={item.location}
+              // icon={{
+              //   url: '/park.svg',
+              // }}
+              onClick={() => onSelect(item)}
+            />
+          ))}
+          {userPins.map((pin) => (
+            <Marker
+              key={pin.time.toISOString()}
+              position={pin.location}
+              // icon={{
+              //   url: '/camping.svg',
+              // }}
+              onClick={() => onSelect(pin)}
+            />
+          ))}
+          {selected.location && (
+            <InfoWindow
+              position={selected.location}
+              clickable={true}
+              onCloseClick={() => setSelected({})}
+            >
+              <div className="map-info-window">
+                <p>{selected.name}</p>
+                <button type="button">Add to favs</button>
+                <Modal />
+              </div>
+            </InfoWindow>
+          )}
+          <></>
+        </GoogleMap>
+        <Form />
+      </div>
+    )
+    : (
     // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+      <h1>Loading Maps!</h1>
+    );
 };
 
 export default Map;
