@@ -25,7 +25,7 @@ const parkSchema = mongoose.Schema({
   },
   icon: {
     type: String,
-    require: true,
+    // require: true,
   },
   imageUrl: {
     type: String,
