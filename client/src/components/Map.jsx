@@ -10,7 +10,6 @@ import {
 } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
-import Form from './Form.jsx';
 import Modal from './Modal.jsx';
 
 // The size of the map on the page
@@ -33,6 +32,11 @@ const options = {
 };
 
 const Map = ({ results, addFavorite, removeFavorite, position }) => {
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
+
   // Selected marker
   const [selected, setSelected] = useState({});
 
@@ -95,9 +99,9 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
           <Marker
             key={getKey()}
             position={item.location}
-            // icon={{
-            //   url: '/park.svg',
-            // }}
+            icon={{
+              url: './camping.svg',
+            }}
             onClick={() => onSelect(item)}
           />
         ))}
@@ -135,12 +139,11 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
         )}
         <></>
       </GoogleMap>
-      <Form />
     </div>
   ) : (
     // Display loading message while the script loads the map.
     <h1>Loading Maps!</h1>
   );
 };
-
+////hey
 export default Map;
