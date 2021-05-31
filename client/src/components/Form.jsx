@@ -39,18 +39,13 @@ color: palevioletred;
 const message = 'this is the validation message';
 const Form = ({ location }) => (
   <div>
-    {console.log(location)}
     <FormGroup>
       <Label htmlFor="label">Event</Label>
       <Input id="label" />
       <Message>This is the validation message</Message>
     </FormGroup>
     <FormGroup>
-      <Label>Location</Label>
-      <h1>
-        Location:
-        { location }
-      </h1>
+      <Label>Location: </Label> { location.name }
       <Message>This is the validation message</Message>
     </FormGroup>
     <FormGroup>
