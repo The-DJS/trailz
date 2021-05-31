@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Route, Switch, Link } from 'react-router-dom';
 // import GoogleButton from 'react-google-button';
 import Search from './Search.jsx';
+// import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
 import Map from './Map.jsx';
 
@@ -43,8 +44,16 @@ const Menu = styled.ul`
 
 const Item = styled.li``;
 
-const Navbar = ({ searchResults, loginUser, favorites }) => {
-  console.log('in nav bar', searchResults);
+const Navbar = ({
+  searchResults,
+  loginUser,
+  favorites,
+  addFavorite,
+  removeFavorite,
+  updateSearchResults,
+  position,
+  updatePosition,
+}) => {
   return (
     <div>
       <div>
@@ -75,14 +84,26 @@ const Navbar = ({ searchResults, loginUser, favorites }) => {
         <Switch>
           <Route exact path="/search">
             <>
-              <Search />
-              <Map results={searchResults} />
+              <Search
+                updateSearchResults={updateSearchResults}
+                position={position}
+                updatePosition={updatePosition}
+              />
+              <Map
+                results={searchResults}
+                addFavorite={addFavorite}
+                position={position}
+              />
             </>
           </Route>
           <Route exact path="/favorite">
             <>
               <h2>Favorite Trails</h2>
-              <Map results={favorites} />
+              <Map
+                results={favorites}
+                removeFavorite={removeFavorite}
+                position={position}
+              />
             </>
           </Route>
           <Route exact path="/">

@@ -16,31 +16,61 @@ const getFavoriteParks = wrapAsync(async (req, res) => {
 });
 
 const addFavoritePark = wrapAsync(async (req, res) => {
-  console.log('in fav park route');
   const { userId } = req.params;
-  const { parkId, name, address, lat, lng, icon, imageUrl, anchorTag } =
-    req.body;
+  const { parkId, name, address, lat, lng } = req.body;
   const user = await User.findOne({ _id: userId });
   const newPark = await new Park({
     parkId,
     name,
     address,
     location: { lat, lng },
-    icon,
-    imageUrl,
-    anchorTag,
+    // icon,
+    // imageUrl,
+    // anchorTag,
   }).save();
   user.favoriteParks.push(newPark);
   await user.save();
   res.send(newPark);
 });
 
-const searchParks = wrapAsync(async (req, res) => {
-  const response = await axios.get(
+const removeFavoritePark = wrapAsync(async (req, res) => {
+  const { userId, parkId } = req.params;
+  const user = await User.findById(userId);
+  const parks = [...user.favoriteParks].filter(
+    (id) => id.toString() !== parkId
+  );
+  user.favoriteParks = parks;
+  await user.save();
+  res.send();
+});
+
+const defaultSearch = wrapAsync(async (req, res) => {
+  const { data: results } = await axios.get(
     `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${GOOGLE_MAPS_API_KEY}&location=29.977000,-90.101570&radius=160934&keyword=trails&type=park`
   );
-  const { results } = response.data;
-  const mappedResults = results.map((result) => ({
+  console.log(results);
+  res.send(
+    results.results.map((result) => ({
+      parkId: result.place_id,
+      name: result.name,
+      address: result.vicinity,
+      location: {
+        lat: result.geometry.location.lat,
+        lng: result.geometry.location.lng,
+      },
+      icon: result.icon,
+      // imageUrl: result.photos[0].photo_reference || null,
+      // anchorTag: result.photos[0].html_attributions || null,
+    }))
+  );
+});
+
+const searchParks = wrapAsync(async (req, res) => {
+  const { lat, lng, keyword } = req.params;
+  const { data: results } = await axios.get(
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=160934&type=park&key=${GOOGLE_MAPS_API_KEY}&keyword=${keyword}`
+  );
+  const mappedResults = results.results.map((result) => ({
     parkId: result.place_id,
     name: result.name,
     address: result.vicinity,
@@ -52,12 +82,46 @@ const searchParks = wrapAsync(async (req, res) => {
     // imageUrl: result.photos[0].photo_reference || null,
     // anchorTag: result.photos[0].html_attributions || null,
   }));
-  console.log(mappedResults);
-  res.send(mappedResults);
+  const locations = mappedResults.reduce(
+    (center, result) => ({
+      minLat:
+        result.location.lat < center.minLat
+          ? result.location.lat
+          : center.minLat,
+      maxLat:
+        result.location.lat > center.maxLat
+          ? result.location.lat
+          : center.maxLat,
+      minLng:
+        result.location.lng < center.minLng
+          ? result.location.lng
+          : center.minLng,
+      maxLng:
+        result.location.lng > center.maxLng
+          ? result.location.lng
+          : center.maxLng,
+    }),
+    {
+      minLat: Infinity,
+      maxLat: -Infinity,
+      minLng: Infinity,
+      maxLng: -Infinity,
+    }
+  );
+  const { minLat, maxLat, minLng, maxLng } = locations;
+  res.send({
+    mappedResults,
+    position: {
+      lat: (minLat + maxLat) / 2,
+      lng: (minLng + maxLng) / 2,
+    },
+  });
 });
 
 module.exports = {
   getFavoriteParks,
   addFavoritePark,
+  removeFavoritePark,
+  defaultSearch,
   searchParks,
 };

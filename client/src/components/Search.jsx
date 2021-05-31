@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const Search = ({ searchResults }) => {
-  // this is basically like a axios request but we are referencing the backend
+const Search = ({ updateSearchResults, position, updatePosition }) => {
   const [search, setSearch] = useState('');
-  console.log('in search', searchResults);
+  const handleClick = () => {
+    const { lat, lng } = position;
+    axios
+      .get(`/parks/searchResults/${lat}/${lng}/${search}`)
+      .then(({ data: results }) => {
+        console.log(results);
+        updateSearchResults(results.mappedResults);
+        updatePosition(results.position);
+        setSearch('');
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div>
       <div>
@@ -14,6 +25,9 @@ const Search = ({ searchResults }) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <button type="button" onClick={handleClick}>
+          Search Parks
+        </button>
       </div>
     </div>
   );

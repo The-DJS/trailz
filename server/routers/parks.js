@@ -6,6 +6,8 @@ const router = Router();
 
 router.get('/favorites/:userId', parks.getFavoriteParks);
 router.post('/favorites/:userId', parks.addFavoritePark);
-router.get('/searchResults', parks.searchParks);
+router.delete('/favorites/:userId/:parkId', parks.removeFavoritePark);
+router.get('/searchResults', parks.defaultSearch);
+router.get('/searchResults/:lat/:lng/:keyword', parks.searchParks);
 
 module.exports = router;
