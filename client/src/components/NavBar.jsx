@@ -7,6 +7,7 @@ import Search from './Search.jsx';
 import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
 import Map from './Map.jsx';
+import Events from './Events.jsx';
 
 const Nav = styled.nav`
   padding: 0 20px;
@@ -69,6 +70,11 @@ const Navbar = ({ searchResults, loginUser, favorites }) => {
                 Favorite Trails
               </LinkCss>
             </Item>
+            <Item>
+              <LinkCss as={Link} to="/events">
+                Events
+              </LinkCss>
+            </Item>
           </Menu>
         </Nav>
       </div>
@@ -86,6 +92,12 @@ const Navbar = ({ searchResults, loginUser, favorites }) => {
               <Map results={favorites} />
             </>
           </Route>
+          {/* <Route exact path="/events">
+            <>
+              <h2>Events</h2>
+              <Map results={favorites} />
+            </>
+          </Route> */}
           <Route exact path="/">
             <Home loginUser={loginUser} />
           </Route>

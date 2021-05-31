@@ -87,9 +87,9 @@ const Map = ({ results }) => {
           <Marker
             key={item.name}
             position={item.location}
-            icon={{
-              url: './camping.svg',
-            }}
+            // icon={{
+            //   url: './camping.svg',
+            // }}
             onClick={() => onSelect(item)}
           />
         ))}
@@ -118,7 +118,6 @@ const Map = ({ results }) => {
         )}
         <></>
       </GoogleMap>
-      <Form />
     </div>
   ) : (
     // Display loading message while the script loads the map.
