@@ -94,9 +94,9 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
           <Marker
             key={getKey()}
             position={item.location}
-            icon={{
-              url: './camping.svg',
-            }}
+            // icon={{
+            //   url: './camping.svg',
+            // }}
             onClick={() => onSelect(item)}
           />
         ))}

@@ -69,7 +69,11 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (window.navigator.geolocation) {
+    let currPosition;
+
+    window.navigator.geolocation.getCurrentPosition((position) => currPosition = position);
+
+    if (currPosition) {
       window.navigator.geolocation.getCurrentPosition((position) =>
         setPosition({
           lat: position.coords.latitude,
