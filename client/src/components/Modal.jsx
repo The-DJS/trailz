@@ -1,5 +1,7 @@
+/* eslint-disable import/extensions */
 import React from 'react';
 import Modal from 'react-modal';
+import Form from './Form.jsx';
 
 const customStyles = {
   content: {
@@ -12,7 +14,7 @@ const customStyles = {
   },
 };
 
-const CustomModal = ({ handleClose, show }) => {
+const CustomModal = ({ location }) => {
   let subtitle;
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -31,7 +33,7 @@ const CustomModal = ({ handleClose, show }) => {
 
   return (
     <div>
-      <button type="button" onClick={openModal}>Open Modal</button>
+      <button type="button" onClick={openModal}>Create an event</button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -40,16 +42,9 @@ const CustomModal = ({ handleClose, show }) => {
         contentLabel="Example Modal"
       >
 
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
+        <button type="button" onClick={closeModal}>X</button>
+        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Create an event</h2>
+        <Form location={location} />
       </Modal>
     </div>
   );
