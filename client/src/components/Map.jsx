@@ -32,11 +32,6 @@ const options = {
 };
 
 const Map = ({ results, addFavorite, removeFavorite, position }) => {
-  const [open, setOpen] = useState(false);
-
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
-
   // Selected marker
   const [selected, setSelected] = useState({});
 
@@ -99,6 +94,19 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
           <Marker
             key={getKey()}
             position={item.location}
+<<<<<<< HEAD
+            // icon={{
+            //   url: './camping.svg',
+            // }}
+            onClick={() => onSelect(item)}
+          />
+        ))}
+        {userPins.map((pin) => (
+          <Marker
+            key={getKey()}
+            position={pin.location}
+=======
+>>>>>>> f6fb77ec5250f2ed9cf7e4e22874c1cee31cf1fa
             // icon={{
             //   url: './camping.svg',
             // }}
@@ -141,10 +149,11 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
         <></>
       </GoogleMap>
     </div>
-  ) : (
+  )
+    : (
     // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+      <h1>Loading Maps!</h1>
+    );
 };
-////hey
+
 export default Map;
