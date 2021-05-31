@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FormGroup = styled.div`
-  color: palevioletred;
+  color: SlateGray;
     display: block;
   width: 300px;
   margin: 50px auto;
@@ -10,14 +10,44 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
 margin-bottom: 0.5em;
-color: palevioletred;
+color: ForestGreen;
     display: block;
 `;
 
 const Input = styled.input`
   padding: 0.5em;
-  color: palevioletred;
-  background: papayawhip;
+  color: SlateGray;
+  background: AliceBlue;
+  border: none;
+  border-radius: 3px;
+  width: 100%;
+  margin-bottom: 0.5em;
+`;
+
+const Textarea = styled.textarea`
+  padding: 0.5em;
+  color: LightSlateGray;
+  background: AliceBlue;
+  border: none;
+  border-radius: 3px;
+  width: 100%;
+  margin-bottom: 0.5em;
+`;
+
+const Option = styled.option`
+  padding: 0.5em;
+  color: LightSlateGray;
+  background: AliceBlue;
+  border: none;
+  border-radius: 3px;
+  width: 100%;
+  margin-bottom: 0.5em;
+`;
+
+const Select = styled.select`
+  padding: 0.5em;
+  color: SlateGray;
+  background: AliceBlue;
   border: none;
   border-radius: 3px;
   width: 100%;
@@ -26,60 +56,64 @@ const Input = styled.input`
 
 const Message = styled.label`
   margin-bottom: 0.5em;
-  color: palevioletred;
+  color: SlateGray;
     display: block;
 `;
 
 const Button = styled.button`
 margin-bottom: 0.5em;
-color: palevioletred;
+background-color: ForestGreen;
+font-weight: bolder;
+color: AliceBlue;
   display: block;
 `;
 
-<<<<<<< HEAD
-const message = 'this is the validation message';
+// const message = 'this is the validation message';
 const Form = ({ location }) => (
   <div>
-    <Form>
-      <FormGroup>
-        <Label htmlFor="label">Event</Label>
-        <Input id="label" />
-        <Message>This is the validation message</Message>
-      </FormGroup>
-      <FormGroup>
-        <Label>Location: </Label>
-        { location.name }
-        <Message>This is the validation message</Message>
-      </FormGroup>
-      <FormGroup>
-        <Button type="submit">Submit</Button>
-      </FormGroup>
-    </Form>
+    <FormGroup>
+      <Label htmlFor="eventName">Title</Label>
+      <Input id="eventName" type="text" placeholder="Name your event" name="eventName" />
+    </FormGroup>
+
+    <FormGroup>
+      <Label htmlFor="locationName">Location</Label>
+      <Message id="locationName" name="locationName">{location.name}</Message>
+    </FormGroup>
+
+    <FormGroup>
+      <Label htmlFor="date">Date</Label>
+      <Input type="date" id="date" name="date" />
+    </FormGroup>
+
+    <FormGroup>
+      <Label htmlFor="description">Description</Label>
+      <Textarea
+        id="description"
+        name="description"
+        rows="4"
+        cols="50"
+        placeholder="Starts at noon near the gazebo./n Bring drinks!"
+      />
+    </FormGroup>
+
+    <FormGroup>
+      <Label htmlFor="isPublic">Type:</Label>
+      <Select id="isPublic" name="isPublic">
+        <Option value="true">Public</Option>
+        <Option value="false">False</Option>
+      </Select>
+    </FormGroup>
+
+    <FormGroup>
+      <input type="hidden" id="location" name="location" value={location.location} />
+      {/* <input type="hidden" id="owner" name="owner" value={user._id} /> */}
+    </FormGroup>
+
+    <FormGroup>
+      <Button type="submit">Submit</Button>
+    </FormGroup>
   </div>
 );
-=======
-// const message = 'this is the validation message';
-const Form = ({ location }) => {
-  console.log(location);
-  return (
-    <div>
-      <Form>
-        <FormGroup controlId="eventName">
-          <Label>Event Title:</Label>
-          <Input type="text" placeholder="Name this event" />
-        </FormGroup>
-
-        <FormGroup>
-          <Label>Location:</Label>
-        </FormGroup>
-
-        <FormGroup>
-          <Button type="submit">Submit</Button>
-        </FormGroup>
-      </Form>
-    </div>
-  );
-};
->>>>>>> main
 
 export default Form;
