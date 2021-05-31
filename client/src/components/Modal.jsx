@@ -30,8 +30,11 @@ const CustomModal = ({ handleClose, show }) => {
   };
 
   return (
+    // <div onClick={openModal}>
     <div>
-      <button type="button" onClick={openModal}>Open Modal</button>
+      <button type="button" onClick={openModal}>
+        Open Modal
+      </button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -39,7 +42,6 @@ const CustomModal = ({ handleClose, show }) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
         <button onClick={closeModal}>close</button>
         <div>I am a modal</div>
