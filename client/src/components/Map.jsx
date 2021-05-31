@@ -138,7 +138,7 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
                     Remove from favs
                   </button>
                 )}
-                <Modal location={selected.location} />
+                <Modal location={selected} />
               </div>
             </InfoWindow>
           )}

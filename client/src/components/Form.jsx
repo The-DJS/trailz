@@ -36,23 +36,27 @@ color: palevioletred;
   display: block;
 `;
 
-const message = 'this is the validation message';
-const Form = ({ location }) => (
-  <div>
-    <FormGroup>
-      <Label htmlFor="label">Event</Label>
-      <Input id="label" />
-      <Message>This is the validation message</Message>
-    </FormGroup>
-    <FormGroup>
-      <Label>Location: </Label>
-      { location.name }
-      <Message>This is the validation message</Message>
-    </FormGroup>
-    <FormGroup>
-      <Button type="submit">Submit</Button>
-    </FormGroup>
-  </div>
-);
+// const message = 'this is the validation message';
+const Form = ({ location }) => {
+  console.log(location);
+  return (
+    <div>
+      <Form>
+        <FormGroup controlId="eventName">
+          <Label>Event Title:</Label>
+          <Input type="text" placeholder="Name this event" />
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Location:</Label>
+        </FormGroup>
+
+        <FormGroup>
+          <Button type="submit">Submit</Button>
+        </FormGroup>
+      </Form>
+    </div>
+  );
+};
 
 export default Form;
