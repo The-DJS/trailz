@@ -32,7 +32,6 @@ const CustomModal = ({ location }) => {
   };
 
   return (
-    // <div onClick={openModal}>
     <div>
       <button type="button" onClick={openModal}>
         Create an event
