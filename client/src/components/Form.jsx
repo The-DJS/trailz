@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const FormGroup = styled.div`
@@ -39,14 +39,14 @@ color: palevioletred;
 const message = 'this is the validation message';
 const Form = ({ location }) => (
   <div>
-    {console.log(location)}
     <FormGroup>
       <Label htmlFor="label">Event</Label>
       <Input id="label" />
       <Message>This is the validation message</Message>
     </FormGroup>
     <FormGroup>
-      <Label>Location:</Label> { location.name }
+      <Label>Location: </Label>
+      { location.name }
       <Message>This is the validation message</Message>
     </FormGroup>
     <FormGroup>

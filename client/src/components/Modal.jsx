@@ -32,8 +32,11 @@ const CustomModal = ({ location }) => {
   };
 
   return (
+    // <div onClick={openModal}>
     <div>
-      <button type="button" onClick={openModal}>Create an event</button>
+      <button type="button" onClick={openModal}>
+        Create an event
+      </button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -41,8 +44,9 @@ const CustomModal = ({ location }) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-
-        <button type="button" onClick={closeModal}>X</button>
+        <button type="button" onClick={closeModal}>
+          X
+        </button>
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Create an event</h2>
         <Form location={location} />
       </Modal>
