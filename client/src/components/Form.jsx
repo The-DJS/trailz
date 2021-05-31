@@ -46,11 +46,7 @@ const Form = ({ location }) => (
       <Message>This is the validation message</Message>
     </FormGroup>
     <FormGroup>
-      <Label>Location</Label>
-      <h1>
-        Location:
-        { location }
-      </h1>
+      <Label>Location:</Label> { location.name }
       <Message>This is the validation message</Message>
     </FormGroup>
     <FormGroup>
