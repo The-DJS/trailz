@@ -9,7 +9,6 @@ import {
 } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
-import Form from './Form.jsx';
 import Modal from './Modal.jsx';
 
 // The size of the map on the page
@@ -49,6 +48,7 @@ const Map = ({ results }) => {
 
   // Location references to keep the center when the map re-renders.
   const mapRef = useRef();
+
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
@@ -122,8 +122,8 @@ const Map = ({ results }) => {
     </div>
   ) : (
     // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+      <h1>Loading Maps!</h1>
+    );
 };
 ////hey
 export default Map;
