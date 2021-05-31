@@ -36,10 +36,9 @@ const addFavoritePark = wrapAsync(async (req, res) => {
 const removeFavoritePark = wrapAsync(async (req, res) => {
   const { userId, parkId } = req.params;
   const user = await User.findById(userId);
-  const parks = [...user.favoriteParks].filter(
+  user.favoriteParks = [...user.favoriteParks].filter(
     (id) => id.toString() !== parkId
   );
-  user.favoriteParks = parks;
   await user.save();
   res.send();
 });
