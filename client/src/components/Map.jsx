@@ -94,6 +94,7 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
           <Marker
             key={getKey()}
             position={item.location}
+<<<<<<< HEAD
             // icon={{
             //   url: './camping.svg',
             // }}
@@ -104,12 +105,25 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
           <Marker
             key={getKey()}
             position={pin.location}
+=======
+>>>>>>> f6fb77ec5250f2ed9cf7e4e22874c1cee31cf1fa
             // icon={{
-            //   url: '/camping.svg',
+            //   url: './camping.svg',
             // }}
-            onClick={() => onSelect(pin)}
+            onClick={() => onSelect(item)}
           />
         ))}
+        {addFavorite &&
+          userPins.map((pin) => (
+            <Marker
+              key={getKey()}
+              position={pin.location}
+              // icon={{
+              //   url: '/camping.svg',
+              // }}
+              onClick={() => onSelect(pin)}
+            />
+          ))}
         {selected.location && (
           <InfoWindow
             position={selected.location}
@@ -128,7 +142,7 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
                   Remove from favs
                 </button>
               )}
-              <Modal />
+              <Modal location={selected.location} />
             </div>
           </InfoWindow>
         )}
