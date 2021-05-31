@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Map from './Map.jsx';
 
 const Search = ({ searchResults }) => {
   // this is basically like a axios request but we are referencing the backend

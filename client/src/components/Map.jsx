@@ -31,11 +31,6 @@ const options = {
 };
 
 const Map = ({ results }) => {
-  const [open, setOpen] = useState(false);
-
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
-
   // Selected marker
   const [selected, setSelected] = useState({});
 
@@ -118,12 +113,12 @@ const Map = ({ results }) => {
         )}
         <></>
       </GoogleMap>
-      <Form />
     </div>
-  ) : (
+  )
+    : (
     // Display loading message while the script loads the map.
       <h1>Loading Maps!</h1>
     );
 };
-////hey
+
 export default Map;

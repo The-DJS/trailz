@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
 import NavBar from './NavBar.jsx';
-import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API.js';
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);

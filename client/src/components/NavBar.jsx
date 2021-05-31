@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Route, Switch, Link } from 'react-router-dom';
 // import GoogleButton from 'react-google-button';
 import Search from './Search.jsx';
-import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
 import Map from './Map.jsx';
 
