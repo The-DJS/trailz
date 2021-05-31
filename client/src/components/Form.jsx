@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const FormGroup = styled.div`
@@ -45,7 +45,8 @@ const Form = ({ location }) => (
       <Message>This is the validation message</Message>
     </FormGroup>
     <FormGroup>
-      <Label>Location: </Label> { location.name }
+      <Label>Location: </Label>
+      { location.name }
       <Message>This is the validation message</Message>
     </FormGroup>
     <FormGroup>
