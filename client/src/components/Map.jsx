@@ -72,6 +72,11 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
   const { lat, lng } = position;
   const defaultCenter = { lat, lng };
 
+  useEffect(
+    () => setSelected({}),
+    [results, addFavorite, removeFavorite, position]
+  );
+
   // Render the map
   return isLoaded ? (
     <div>
@@ -146,5 +151,5 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
     <h1>Loading Maps!</h1>
   );
 };
-////hey
+/// /hey
 export default Map;
