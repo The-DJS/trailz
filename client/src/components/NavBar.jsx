@@ -7,6 +7,8 @@ import Search from './Search.jsx';
 // import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
 import Map from './Map.jsx';
+import Login from  './Login.jsx'
+import Events from './Events.jsx';
 
 const Nav = styled.nav`
   padding: 0 20px;
@@ -20,6 +22,7 @@ const Nav = styled.nav`
 `;
 
 const LinkCss = styled.a`
+  font-size: 25px;
   color: white;
   text-decoration: none;
   :hover {
@@ -53,6 +56,8 @@ const Navbar = ({
   updateSearchResults,
   position,
   updatePosition,
+  logoutUser,
+  user,
   events,
   attending,
   register,
@@ -70,6 +75,11 @@ const Navbar = ({
         <Menu>
           <Item>
             <LinkCss as={Link} to="/">
+              <Login loginUser={loginUser} logoutUser={logoutUser} user={user} />
+            </LinkCss>
+          </Item>
+          <Item>
+            <LinkCss as={Link} to="/">
               Home
             </LinkCss>
           </Item>
@@ -79,9 +89,11 @@ const Navbar = ({
             </LinkCss>
           </Item>
           <Item>
-            <LinkCss as={Link} to="/favorite">
-              Favorite Trails
-            </LinkCss>
+            { user && (
+              <LinkCss as={Link} to="/favorite">
+                Favorite Trails
+              </LinkCss>
+            )}
           </Item>
           <Item>
             <LinkCss as={Link} to="/events">
@@ -113,7 +125,16 @@ const Navbar = ({
         </Route>
         <Route exact path="/favorite">
           <>
-            <h2>Favorite Trails</h2>
+            <br />
+            <h2 style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            >
+              Favorite Trails
+            </h2>
+            <br />
             <Map
               results={favorites}
               removeFavorite={removeFavorite}
@@ -141,11 +162,12 @@ const Navbar = ({
           </>
         </Route>
         <Route exact path="/">
-          <Home loginUser={loginUser} />
+          <Home loginUser={loginUser} logoutUser={logoutUser} user={user} />
         </Route>
       </Switch>
     </div>
   </div>
 );
 
+/// logout button is funcitonal now
 export default Navbar;

@@ -3,7 +3,8 @@ import GoogleButton from 'react-google-button';
 import axios from 'axios';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
-const HomeScreen = ({ loginUser, logoutUser, user }) => {
+
+const Login = ({ loginUser, logoutUser, user }) => {
   const login = ({ googleId }) => {
     axios
       .get(`/auth/user/${googleId}`)
@@ -25,17 +26,7 @@ const HomeScreen = ({ loginUser, logoutUser, user }) => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage:
-          'url("https://wallpaperaccess.com/full/825191.jpg")',
-        height: '1000px',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'scroll',
-      }}
-    >
+    <div>
       {/* <GoogleButton
       onClick={() => { login(); }}
     /> */}
@@ -51,7 +42,7 @@ const HomeScreen = ({ loginUser, logoutUser, user }) => {
     >
       Login
     </a> */}
-      {/* { !user
+      { !user
         ? (
           <GoogleLogin
             clientId="266879339390-9ia1hkk7q7u6oh2puf1jjbep2bpgi305.apps.googleusercontent.com"
@@ -66,10 +57,10 @@ const HomeScreen = ({ loginUser, logoutUser, user }) => {
             clientId="266879339390-9ia1hkk7q7u6oh2puf1jjbep2bpgi305.apps.googleusercontent.com"
             buttonText="Sign out"
             onLogoutSuccess={logout}
-          /> */}
+          />
         )}
     </div>
   );
 };
 
-export default HomeScreen;
+export default Login;

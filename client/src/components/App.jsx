@@ -114,6 +114,10 @@ const App = () => {
       .catch((err) => console.log(err));
   };
 
+  const logoutUser = () => {
+    setUser(null);
+  };
+
   const fetchSearchResults = async () => {
     const results = await axios.get('/parks/searchResults');
     return results.data;
@@ -158,6 +162,7 @@ const App = () => {
         <NavBar
           searchResults={searchResults}
           loginUser={loginUser}
+          logoutUser={logoutUser}
           favorites={favorites}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
@@ -166,6 +171,7 @@ const App = () => {
           updatePosition={updatePosition}
           events={events}
           attending={attending}
+          user={user}
           register={register}
           unregister={unregister}
           addEvent={addEvent}

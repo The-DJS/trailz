@@ -24,8 +24,8 @@ passport.use(
       User.findOrCreate(
         {
           googleId: profile.id,
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
+          firstName: profile.name.givenName || 'no first name ',
+          lastName: profile.name.familyName || 'no last name',
         },
         (err, user) => cb(err, user)
       );

@@ -16,14 +16,21 @@ const Search = ({ updateSearchResults, position, updatePosition }) => {
   };
   return (
     <div>
-      <div>
-        <h3 className="title">Search</h3>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        {/* <h3 className="title">Search</h3> */}
         <input
           type="text"
           placeholder="Search Trails"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <br />
+        <br />
         <button type="button" onClick={handleClick}>
           Search Parks
         </button>

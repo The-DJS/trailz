@@ -14,8 +14,8 @@ import Modal from './Modal.jsx';
 
 // The size of the map on the page
 const containerStyle = {
-  width: '90vw',
-  height: '70vh',
+  height: "100vh",
+  width: "100vw",
 };
 
 // Options of the render (disable default UI and custom styles)
@@ -72,11 +72,6 @@ const Map = ({
   const { lat, lng } = position;
   const defaultCenter = { lat, lng };
 
-  useEffect(
-    () => setSelected({}),
-    [results, addFavorite, removeFavorite, position]
-  );
-
   // Render the map
   return isLoaded ? (
     <div>
@@ -85,21 +80,19 @@ const Map = ({
         center={defaultCenter}
         zoom={12}
         options={options}
-        onClick={(event) => {
-          if (addFavorite) {
-            setUserPins((currentState) => [
-              ...currentState,
-              {
-                name: 'Custom User Pin',
-                location: {
-                  lat: event.latLng.lat(),
-                  lng: event.latLng.lng(),
-                },
-                time: new Date(),
+        onClick={(event) =>
+          setUserPins((currentState) => [
+            ...currentState,
+            {
+              name: 'Custom User Pin',
+              location: {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
               },
-            ]);
-          }
-        }}
+              time: new Date(),
+            },
+          ])
+        }
         onLoad={onMapLoad}
       >
         {results.map((item) => (
@@ -171,9 +164,11 @@ const Map = ({
         <></>
       </GoogleMap>
     </div>
-  ) : (
+  )
+    : (
     // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+      <h1>Loading Maps!</h1>
+    );
 };
+
 export default Map;
