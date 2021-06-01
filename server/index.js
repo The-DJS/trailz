@@ -7,5 +7,5 @@ dotenv.config({
   path: path.resolve(__dirname, '../.env'),
 });
 
-const port = 3000;
+const port = 8080;
 app.listen(port, () => console.log(`started on port: http://localhost:${port}`));

@@ -94,19 +94,6 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
           <Marker
             key={getKey()}
             position={item.location}
-<<<<<<< HEAD
-            // icon={{
-            //   url: './camping.svg',
-            // }}
-            onClick={() => onSelect(item)}
-          />
-        ))}
-        {userPins.map((pin) => (
-          <Marker
-            key={getKey()}
-            position={pin.location}
-=======
->>>>>>> f6fb77ec5250f2ed9cf7e4e22874c1cee31cf1fa
             // icon={{
             //   url: './camping.svg',
             // }}

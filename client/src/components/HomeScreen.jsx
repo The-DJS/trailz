@@ -1,7 +1,7 @@
 import React from 'react';
 import GoogleButton from 'react-google-button';
 import axios from 'axios';
-import GoogleLogin from 'react-google-login';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 const HomeScreen = ({ loginUser }) => {
   const login = ({ googleId }) => {
@@ -17,11 +17,14 @@ const HomeScreen = ({ loginUser }) => {
 
   const logout = (response) => {
     axios
-      .get('/google/logout')
+      .get('/auth/google/logout')
       .then((data) => console.info(data))
       .catch((err) => console.warn(err));
     console.info('response!!!!!', response);
+    // console.log('logout');
   };
+
+
 
   return (
     <div
@@ -56,6 +59,13 @@ const HomeScreen = ({ loginUser }) => {
         onSuccess={login}
         onFailure={login}
         cookiePolicy="single_host_origin"
+      />
+      <br />
+      <br />
+      <GoogleLogout
+        clientId="266879339390-9ia1hkk7q7u6oh2puf1jjbep2bpgi305.apps.googleusercontent.com"
+        buttonText="Sign out"
+        onLogoutSuccess={logout}
       />
     </div>
   );

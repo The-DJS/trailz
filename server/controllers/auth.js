@@ -9,7 +9,8 @@ const loggedIn = wrapAsync(async (req, res) => {
 });
 const loggedOut = (req, res) => {
   req.logout();
-  res.redirect('https://accounts.google.com/logout');
+  // res.redirect('https://accounts.google.com/logout');
+  res.redirect('/');
 };
 const getCurrentUser = wrapAsync(async (req, res) => {
   const { googleId } = req.params;
