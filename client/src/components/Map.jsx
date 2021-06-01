@@ -34,6 +34,8 @@ const Map = ({
   unregister,
   addEvent,
   removeEvent,
+  attending,
+  created,
 }) => {
   // Selected marker
   const [selected, setSelected] = useState({});
@@ -52,7 +54,7 @@ const Map = ({
     mapRef.current = map;
     const bounds = results.reduce(
       (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
-      new window.google.maps.LatLngBounds(),
+      new window.google.maps.LatLngBounds()
     );
     mapRef.current.fitBounds(bounds);
   }, []);
@@ -72,7 +74,7 @@ const Map = ({
 
   useEffect(
     () => setSelected({}),
-    [results, addFavorite, removeFavorite, position],
+    [results, addFavorite, removeFavorite, position]
   );
 
   // Render the map
@@ -110,17 +112,17 @@ const Map = ({
             onClick={() => onSelect(item)}
           />
         ))}
-        {addFavorite
-        && userPins.map((pin) => (
-          <Marker
-            key={getKey()}
-            position={pin.location}
-            // icon={{
-            //   url: '/camping.svg',
-            // }}
-            onClick={() => onSelect(pin)}
-          />
-        ))}
+        {addFavorite &&
+          userPins.map((pin) => (
+            <Marker
+              key={getKey()}
+              position={pin.location}
+              // icon={{
+              //   url: '/camping.svg',
+              // }}
+              onClick={() => onSelect(pin)}
+            />
+          ))}
         {selected.location && (
           <InfoWindow
             position={selected.location}
@@ -139,10 +141,30 @@ const Map = ({
                   Remove from favs
                 </button>
               )}
-              <Modal
-                location={selected}
-                addEvent={addEvent}
-              />
+              {!addFavorite &&
+              !removeFavorite &&
+              !attending.includes(selected) ? (
+                <>
+                  <button type="button" onClick={() => register(selected._id)}>
+                    Register
+                  </button>
+                </>
+              ) : null}
+              {!addFavorite &&
+              !removeFavorite &&
+              attending.includes(selected) ? (
+                <button type="button" onClick={() => unregister(selected._id)}>
+                  Unregister
+                </button>
+              ) : null}
+              {!addFavorite &&
+              !removeFavorite &&
+              created.includes(selected._id) ? (
+                <button type="button" onClick={() => removeEvent(selected._id)}>
+                  Delete
+                </button>
+              ) : null}
+              <Modal location={selected} addEvent={addEvent} />
             </div>
           </InfoWindow>
         )}

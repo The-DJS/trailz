@@ -12,6 +12,7 @@ const App = () => {
   const [position, setPosition] = useState({});
   const [events, setEvents] = useState([]);
   const [attending, setAttending] = useState([]);
+  const [created, setCreated] = useState([]);
 
   // Events
   const unregister = async (eventId) => {
@@ -31,7 +32,7 @@ const App = () => {
     lng,
     time,
     description,
-    isPublic,
+    isPublic
   ) => {
     const { data: event } = await axios.post(`/events/${user._id}`, {
       eventName,
@@ -44,12 +45,14 @@ const App = () => {
     });
     setEvents([...events, event]);
     setAttending([...attending, event]);
+    setCreated([...created, event._id]);
   };
 
   const removeEvent = async (eventId) => {
     await axios.delete(`/events/removeEvent/${eventId}`);
     setEvents(events.filter((event) => event._id !== eventId));
     setAttending(attending.filter((event) => event._id !== eventId));
+    setCreated(created.filter((id) => id !== eventId));
   };
 
   const updatePosition = (newPosition) => setPosition(newPosition);
@@ -62,15 +65,14 @@ const App = () => {
       .then(() => {
         setFavorites(
           favorites.filter(
-            (currentPark) => park._id.toString() !== currentPark._id,
-          ),
+            (currentPark) => park._id.toString() !== currentPark._id
+          )
         );
       })
       .catch((err) => console.log(err));
   };
 
   const addFavorite = (park) => {
-    console.log('in add fav', park);
     const {
       parkId,
       name,
@@ -85,31 +87,30 @@ const App = () => {
         lat,
         lng,
       })
-      .then(({ data: newPark }) => {
-        setFavorites([...favorites, newPark]);
-      })
+      .then(({ data: newPark }) => setFavorites([...favorites, newPark]))
       .catch((err) => console.log(err));
   };
 
   const fetchFavorites = async (user) => {
     const { data: favoriteParks } = await axios.get(
-      `/parks/favorites/${user._id}`,
+      `/parks/favorites/${user._id}`
     );
     return favoriteParks;
   };
 
-  const fetchAttending = async () => {
-    const { data } = await axios.get(`/events/${user._id}`);
+  const fetchAttending = async (currUser) => {
+    const { data } = await axios.get(`/events/${currUser._id}`);
     return data;
   };
 
   const loginUser = (currentUser) => {
     setUser(currentUser);
+    setCreated(currentUser.createdEvents);
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))
       .catch((err) => console.log(err));
-    fetchAttending()
-      .then((attending) => setAttending(attending))
+    fetchAttending(currentUser)
+      .then(({ registeredEvents }) => setAttending(registeredEvents))
       .catch((err) => console.log(err));
   };
 
@@ -125,17 +126,16 @@ const App = () => {
 
   useEffect(() => {
     let currPosition;
-
     window.navigator.geolocation.getCurrentPosition(
-      (position) => (currPosition = position),
+      (position) => (currPosition = position)
     );
-
     if (currPosition) {
       window.navigator.geolocation.getCurrentPosition((position) =>
         setPosition({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-        }));
+        })
+      );
     } else {
       setPosition({
         lat: 29.976999,
@@ -148,12 +148,8 @@ const App = () => {
       .catch((err) => console.warn(err));
 
     fetchEvents()
-      .then((events) => {
-        setEvents(events);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((events) => setEvents(events))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -174,6 +170,7 @@ const App = () => {
           unregister={unregister}
           addEvent={addEvent}
           removeEvent={removeEvent}
+          created={created}
         />
       </div>
     </BrowserRouter>

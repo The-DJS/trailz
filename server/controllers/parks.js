@@ -47,7 +47,6 @@ const defaultSearch = wrapAsync(async (req, res) => {
   const { data: results } = await axios.get(
     `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${GOOGLE_MAPS_API_KEY}&location=29.977000,-90.101570&radius=160934&keyword=trails&type=park`
   );
-  console.log(results);
   res.send(
     results.results.map((result) => ({
       parkId: result.place_id,

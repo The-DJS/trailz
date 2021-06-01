@@ -14,10 +14,7 @@ const customStyles = {
   },
 };
 
-const CustomModal = ({
-  location,
-  addEvent,
-}) => {
+const CustomModal = ({ location, addEvent }) => {
   let subtitle;
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
