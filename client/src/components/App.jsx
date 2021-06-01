@@ -97,8 +97,8 @@ const App = () => {
     return favoriteParks;
   };
 
-  const fetchAttending = async () => {
-    const { data } = await axios.get(`/events/${user._id}`);
+  const fetchAttending = async (currUser) => {
+    const { data } = await axios.get(`/events/${currUser._id}`);
     return data;
   };
 
@@ -107,8 +107,10 @@ const App = () => {
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))
       .catch((err) => console.log(err));
-    fetchAttending()
-      .then((attending) => setAttending(attending))
+    fetchAttending(currentUser)
+      .then(({ registeredEvents }) => {
+        setAttending(registeredEvents);
+      })
       .catch((err) => console.log(err));
   };
 
