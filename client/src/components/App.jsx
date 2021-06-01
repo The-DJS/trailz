@@ -97,8 +97,8 @@ const App = () => {
     return favoriteParks;
   };
 
-  const fetchAttending = async () => {
-    const { data } = await axios.get(`/events/${user._id}`);
+  const fetchAttending = async (currentUser) => {
+    const { data } = await axios.get(`/events/${currentUser._id}`);
     return data;
   };
 
@@ -107,9 +107,13 @@ const App = () => {
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))
       .catch((err) => console.log(err));
-    fetchAttending()
+    fetchAttending(currentUser)
       .then((attending) => setAttending(attending))
       .catch((err) => console.log(err));
+  };
+
+  const logoutUser = () => {
+    setUser(null);
   };
 
   const fetchSearchResults = async () => {
@@ -162,6 +166,7 @@ const App = () => {
         <NavBar
           searchResults={searchResults}
           loginUser={loginUser}
+          logoutUser={logoutUser}
           favorites={favorites}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
@@ -170,6 +175,7 @@ const App = () => {
           updatePosition={updatePosition}
           events={events}
           attending={attending}
+          user={user}
         />
       </div>
     </BrowserRouter>

@@ -54,6 +54,8 @@ const Navbar = ({
   updateSearchResults,
   position,
   updatePosition,
+  logoutUser,
+  user,
 }) => (
   <div>
     <div>
@@ -73,9 +75,11 @@ const Navbar = ({
             </LinkCss>
           </Item>
           <Item>
-            <LinkCss as={Link} to="/favorite">
-              Favorite Trails
-            </LinkCss>
+            { user && (
+              <LinkCss as={Link} to="/favorite">
+                Favorite Trails
+              </LinkCss>
+            )}
           </Item>
         </Menu>
       </Nav>
@@ -107,7 +111,7 @@ const Navbar = ({
           </>
         </Route>
         <Route exact path="/">
-          <Home loginUser={loginUser} />
+          <Home loginUser={loginUser} logoutUser={logoutUser} />
         </Route>
       </Switch>
     </div>

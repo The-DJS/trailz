@@ -3,7 +3,7 @@ import GoogleButton from 'react-google-button';
 import axios from 'axios';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
-const HomeScreen = ({ loginUser }) => {
+const HomeScreen = ({ loginUser, logoutUser }) => {
   const login = ({ googleId }) => {
     axios
       .get(`/auth/user/${googleId}`)
@@ -18,13 +18,11 @@ const HomeScreen = ({ loginUser }) => {
   const logout = (response) => {
     axios
       .get('/auth/google/logout')
-      .then((data) => console.info(data))
+      .then(({ data }) => {console.info(data); logoutUser()})
       .catch((err) => console.warn(err));
     console.info('response!!!!!', response);
     // console.log('logout');
   };
-
-
 
   return (
     <div
