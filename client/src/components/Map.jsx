@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/jsx-boolean-value */
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { v4 as getKey } from 'uuid';
 import {
   GoogleMap,
@@ -10,12 +10,13 @@ import {
 } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
-import Modal from './Modal.jsx';
+import EventModal from './EventModal.jsx';
+import { eventNames } from '../../../server/database/models/Event';
 
 // The size of the map on the page
 const containerStyle = {
-  width: '90vw',
-  height: '70vh',
+  height: '87.8vh',
+  width: '100vw',
 };
 
 // Options of the render (disable default UI and custom styles)
@@ -54,7 +55,7 @@ const Map = ({
     mapRef.current = map;
     const bounds = results.reduce(
       (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
-      new window.google.maps.LatLngBounds()
+      new window.google.maps.LatLngBounds(),
     );
     mapRef.current.fitBounds(bounds);
   }, []);
@@ -72,109 +73,119 @@ const Map = ({
   const { lat, lng } = position;
   const defaultCenter = { lat, lng };
 
-  useEffect(
-    () => setSelected({}),
-    [results, addFavorite, removeFavorite, position]
-  );
-
   // Render the map
-  return isLoaded ? (
-    <div>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={defaultCenter}
-        zoom={12}
-        options={options}
-        onClick={(event) => {
-          if (addFavorite) {
-            setUserPins((currentState) => [
-              ...currentState,
-              {
-                name: 'Custom User Pin',
-                location: {
-                  lat: event.latLng.lat(),
-                  lng: event.latLng.lng(),
-                },
-                time: new Date(),
+  return isLoaded
+    ? (
+      <div>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={defaultCenter}
+          zoom={12}
+          options={options}
+          onClick={(event) => setUserPins((currentState) => [
+            ...currentState,
+            {
+              name: 'Custom User Pin',
+              location: {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
               },
-            ]);
-          }
-        }}
-        onLoad={onMapLoad}
-      >
-        {results.map((item) => (
-          <Marker
-            key={getKey()}
-            position={item.location}
-            // icon={{
-            //   url: './camping.svg',
-            // }}
-            onClick={() => onSelect(item)}
-          />
-        ))}
-        {addFavorite &&
-          userPins.map((pin) => (
+              time: new Date(),
+            },
+          ])}
+          onLoad={onMapLoad}
+        >
+          {results.map((item) => (
             <Marker
               key={getKey()}
-              position={pin.location}
+              position={item.location}
               // icon={{
-              //   url: '/camping.svg',
+              //   url: './camping.svg',
               // }}
-              onClick={() => onSelect(pin)}
+              onClick={() => onSelect(item)}
             />
           ))}
-        {selected.location && (
-          <InfoWindow
-            position={selected.location}
-            clickable={true}
-            onCloseClick={() => setSelected({})}
-          >
-            <div className="map-info-window">
-              <p>{selected.name}</p>
-              {addFavorite && (
-                <button type="button" onClick={() => addFavorite(selected)}>
-                  Add to favs
-                </button>
-              )}
-              {removeFavorite && (
-                <button type="button" onClick={() => removeFavorite(selected)}>
-                  Remove from favs
-                </button>
-              )}
-              {!addFavorite &&
-              !removeFavorite &&
-              !attending.includes(selected) ? (
-                <>
-                  <button type="button" onClick={() => register(selected._id)}>
-                    Register
+          {addFavorite
+            && userPins.map((pin) => (
+              <Marker
+                key={getKey()}
+                position={pin.location}
+                // icon={{
+                //   url: '/camping.svg',
+                // }}
+                onClick={() => onSelect(pin)}
+              />
+            ))}
+          {selected.location && (
+            <InfoWindow
+              position={selected.location}
+              clickable={true}
+              onCloseClick={() => setSelected({})}
+            >
+              <div className="map-info-window">
+                {selected.eventName
+                  ? (
+                    <div>
+                      <p>{selected.locationName}</p>
+                      <p>{selected.eventName}</p>
+                      <p>{selected.time}</p>
+                      <p>{selected.description}</p>
+                      <p>{selected.isPublic}</p>
+                      <p>{selected.attendees}</p>
+                    </div>
+                  )
+                  : <p>{selected.name}</p>}
+                {addFavorite && (
+                  <button type="button" onClick={() => addFavorite(selected)}>
+                    Add to favs
                   </button>
-                </>
-              ) : null}
-              {!addFavorite &&
-              !removeFavorite &&
-              attending.includes(selected) ? (
-                <button type="button" onClick={() => unregister(selected._id)}>
-                  Unregister
-                </button>
-              ) : null}
-              {!addFavorite &&
-              !removeFavorite &&
-              created.includes(selected._id) ? (
-                <button type="button" onClick={() => removeEvent(selected._id)}>
-                  Delete
-                </button>
-              ) : null}
-              <Modal location={selected} addEvent={addEvent} />
-            </div>
-          </InfoWindow>
-        )}
-        <></>
-      </GoogleMap>
-    </div>
-  )
+                )}
+                {removeFavorite && (
+                  <button type="button" onClick={() => removeFavorite(selected)}>
+                    Remove from favs
+                  </button>
+                )}
+                {!addFavorite
+                  && !removeFavorite
+                  && !attending.includes(selected)
+                  ? (
+                    <>
+                      <button type="button" onClick={() => register(selected._id)}>
+                        Register
+                      </button>
+                    </>
+                  )
+                  : null}
+                {!addFavorite
+                  && !removeFavorite
+                  && attending.includes(selected)
+                  ? (
+                    <button type="button" onClick={() => unregister(selected._id)}>
+                      Unregister
+                    </button>
+                  )
+                  : null}
+                {!addFavorite
+                  && !removeFavorite
+                  && created.includes(selected._id)
+                  ? (
+                    <button type="button" onClick={() => removeEvent(selected._id)}>
+                      Delete
+                    </button>
+                  )
+                  : null}
+                <EventModal location={selected} addEvent={addEvent} />
+              </div>
+            </InfoWindow>
+          )}
+          <></>
+        </GoogleMap>
+      </div>
+    )
     : (
       // Display loading message while the script loads the map.
       <h1>Loading Maps!</h1>
     );
 };
+
 export default Map;

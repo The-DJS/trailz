@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const FormGroup = styled.div`
   color: SlateGray;
   display: block;
-  width: 300px;
+  width: 80vw;
   margin: 50px auto;
 `;
 
@@ -92,17 +92,17 @@ const Button = styled.button`
 `;
 
 // const message = 'this is the validation message';
-const Form = ({ location, addEvent, closeModal }) => {
+const EventForm = ({ location, addEvent, closeModal }) => {
   // Input fields
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
   const [isPublic, setIsPublic] = useState('');
-  // const [type, setType] = useState('');
+  const [activity, setActivity] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title && date && description && isPublic) {
+    if (title && date && description && isPublic && activity) {
       addEvent(
         title,
         location.name,
@@ -110,7 +110,7 @@ const Form = ({ location, addEvent, closeModal }) => {
         location.location.lng,
         date,
         description,
-        isPublic
+        isPublic,
       );
       setTitle('');
       setDate('');
@@ -135,6 +135,25 @@ const Form = ({ location, addEvent, closeModal }) => {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="isPublic">What is the main activity for this event? *</Label>
+          <Select
+            id="activity"
+            name="activity"
+            defaultValue=""
+            onChange={(e) => setActivity(e.target.value)}
+            required
+          >
+            <Option disabled value="">-- select an activity --</Option>
+            <Option value="true">Hiking</Option>
+            <Option value="false">Biking</Option>
+            <Option value="false">Fishing</Option>
+            <Option value="false">Camping</Option>
+            <Option value="false">Running</Option>
+            <Option value="false">Other</Option>
+          </Select>
         </FormGroup>
 
         <FormGroup>
@@ -173,13 +192,11 @@ const Form = ({ location, addEvent, closeModal }) => {
           <Select
             id="isPublic"
             name="isPublic"
+            defaultValue=""
             onChange={(e) => setIsPublic(e.target.value)}
             required
           >
-            <Option disabled selected value="">
-              {' '}
-              -- select an option --{' '}
-            </Option>
+            <Option disabled value="">-- select an option --</Option>
             <Option value="true">True</Option>
             <Option value="false">False</Option>
           </Select>
@@ -207,4 +224,4 @@ const Form = ({ location, addEvent, closeModal }) => {
   );
 };
 
-export default Form;
+export default EventForm;

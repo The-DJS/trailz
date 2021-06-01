@@ -7,9 +7,11 @@ const loggedIn = wrapAsync(async (req, res) => {
   res.send(user);
 });
 
-const loggedOut = (req, res) => {
+const loggedOut = (req, res, next) => {
   req.logout();
-  res.redirect('https://accounts.google.com/logout');
+  // res.redirect('https://accounts.google.com/logout');
+  req.session.destroy();
+  res.send(true);
 };
 
 const getCurrentUser = wrapAsync(async (req, res) => {
