@@ -18,12 +18,6 @@ const containerStyle = {
   height: '70vh',
 };
 
-// Default location of the map.
-// const defaultCenter = {
-//   lat: 29.9706145,
-//   lng: -90.1077311,
-// };
-
 // Options of the render (disable default UI and custom styles)
 const options = {
   styles: mapStyles,
@@ -31,7 +25,16 @@ const options = {
   zoomControl: true,
 };
 
-const Map = ({ results, addFavorite, removeFavorite, position }) => {
+const Map = ({
+  results,
+  addFavorite,
+  removeFavorite,
+  position,
+  register,
+  unregister,
+  addEvent,
+  removeEvent,
+}) => {
   // Selected marker
   const [selected, setSelected] = useState({});
 
@@ -49,7 +52,7 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
     mapRef.current = map;
     const bounds = results.reduce(
       (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
-      new window.google.maps.LatLngBounds()
+      new window.google.maps.LatLngBounds(),
     );
     mapRef.current.fitBounds(bounds);
   }, []);
@@ -69,7 +72,7 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
 
   useEffect(
     () => setSelected({}),
-    [results, addFavorite, removeFavorite, position]
+    [results, addFavorite, removeFavorite, position],
   );
 
   // Render the map
@@ -107,17 +110,17 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
             onClick={() => onSelect(item)}
           />
         ))}
-        {addFavorite &&
-          userPins.map((pin) => (
-            <Marker
-              key={getKey()}
-              position={pin.location}
-              // icon={{
-              //   url: '/camping.svg',
-              // }}
-              onClick={() => onSelect(pin)}
-            />
-          ))}
+        {addFavorite
+        && userPins.map((pin) => (
+          <Marker
+            key={getKey()}
+            position={pin.location}
+            // icon={{
+            //   url: '/camping.svg',
+            // }}
+            onClick={() => onSelect(pin)}
+          />
+        ))}
         {selected.location && (
           <InfoWindow
             position={selected.location}
@@ -136,16 +139,20 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
                   Remove from favs
                 </button>
               )}
-              <Modal location={selected} />
+              <Modal
+                location={selected}
+                addEvent={addEvent}
+              />
             </div>
           </InfoWindow>
         )}
         <></>
       </GoogleMap>
     </div>
-  ) : (
-    // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+  )
+    : (
+      // Display loading message while the script loads the map.
+      <h1>Loading Maps!</h1>
+    );
 };
 export default Map;

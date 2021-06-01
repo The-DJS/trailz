@@ -13,6 +13,7 @@ const App = () => {
   const [events, setEvents] = useState([]);
   const [attending, setAttending] = useState([]);
 
+  // Events
   const unregister = async (eventId) => {
     await axios.delete(`/events/${user._id}/${eventId}`);
     setAttending(attending.filter((event) => event._id !== eventId));
@@ -30,7 +31,7 @@ const App = () => {
     lng,
     time,
     description,
-    isPublic
+    isPublic,
   ) => {
     const { data: event } = await axios.post(`/events/${user._id}`, {
       eventName,
@@ -61,8 +62,8 @@ const App = () => {
       .then(() => {
         setFavorites(
           favorites.filter(
-            (currentPark) => park._id.toString() !== currentPark._id
-          )
+            (currentPark) => park._id.toString() !== currentPark._id,
+          ),
         );
       })
       .catch((err) => console.log(err));
@@ -92,7 +93,7 @@ const App = () => {
 
   const fetchFavorites = async (user) => {
     const { data: favoriteParks } = await axios.get(
-      `/parks/favorites/${user._id}`
+      `/parks/favorites/${user._id}`,
     );
     return favoriteParks;
   };
@@ -126,7 +127,7 @@ const App = () => {
     let currPosition;
 
     window.navigator.geolocation.getCurrentPosition(
-      (position) => (currPosition = position)
+      (position) => (currPosition = position),
     );
 
     if (currPosition) {
@@ -134,8 +135,7 @@ const App = () => {
         setPosition({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-        })
-      );
+        }));
     } else {
       setPosition({
         lat: 29.976999,
@@ -170,6 +170,10 @@ const App = () => {
           updatePosition={updatePosition}
           events={events}
           attending={attending}
+          register={register}
+          unregister={unregister}
+          addEvent={addEvent}
+          removeEvent={removeEvent}
         />
       </div>
     </BrowserRouter>
