@@ -15,6 +15,8 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   favoriteParks: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
+  createdEvents: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
+  registeredEvents: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
 });
 
 userSchema.plugin(findOrCreate);

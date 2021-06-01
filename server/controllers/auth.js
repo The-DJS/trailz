@@ -7,14 +7,23 @@ const loggedIn = wrapAsync(async (req, res) => {
   console.log(user);
   res.send(user);
 });
-const loggedOut = (req, res) => {
+
+const loggedOut = (req, res, next) => {
   req.logout();
-  res.redirect('https://accounts.google.com/logout');
+  // res.redirect('https://accounts.google.com/logout');
+  req.session.destroy();
+  res.send(true);
 };
+
 const getCurrentUser = wrapAsync(async (req, res) => {
   const { googleId } = req.params;
   const user = await User.findOne({ googleId: googleId });
   console.log('sever sider user', user);
   res.send(user);
 });
-module.exports = { loggedIn, loggedOut, getCurrentUser };
+
+module.exports = {
+  loggedIn,
+  loggedOut,
+  getCurrentUser,
+};

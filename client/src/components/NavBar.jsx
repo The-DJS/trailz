@@ -54,77 +54,69 @@ const Navbar = ({
   updateSearchResults,
   position,
   updatePosition,
-}) => {
-  return (
+  logoutUser,
+  user,
+}) => (
+  <div>
     <div>
-      <div>
-        <Nav>
-          <Logo as={Link} to="/" style={{ fontsize: '40px' }}>
-            TRAILZ
-          </Logo>
-          <Menu>
-            <Item>
-              <LinkCss as={Link} to="/">
-                Home
-              </LinkCss>
-            </Item>
-            <Item>
-              <LinkCss as={Link} to="/search">
-                Search
-              </LinkCss>
-            </Item>
-            <Item>
+      <Nav>
+        <Logo as={Link} to="/" style={{ fontsize: '40px' }}>
+          TRAILZ
+        </Logo>
+        <Menu>
+          <Item>
+            <LinkCss as={Link} to="/">
+              Home
+            </LinkCss>
+          </Item>
+          <Item>
+            <LinkCss as={Link} to="/search">
+              Search
+            </LinkCss>
+          </Item>
+          <Item>
+            { user && (
               <LinkCss as={Link} to="/favorite">
                 Favorite Trails
               </LinkCss>
-            </Item>
-            <Item>
-              <LinkCss as={Link} to="/events">
-                Events
-              </LinkCss>
-            </Item>
-          </Menu>
-        </Nav>
-      </div>
-      <div>
-        <Switch>
-          <Route exact path="/search">
-            <>
-              <Search
-                updateSearchResults={updateSearchResults}
-                position={position}
-                updatePosition={updatePosition}
-              />
-              <Map
-                results={searchResults}
-                addFavorite={addFavorite}
-                position={position}
-              />
-            </>
-          </Route>
-          <Route exact path="/favorite">
-            <>
-              <h2>Favorite Trails</h2>
-              <Map
-                results={favorites}
-                removeFavorite={removeFavorite}
-                position={position}
-              />
-            </>
-          </Route>
-          {/* <Route exact path="/events">
-            <>
-              <h2>Events</h2>
-              <Map results={favorites} />
-            </>
-          </Route> */}
-          <Route exact path="/">
-            <Home loginUser={loginUser} />
-          </Route>
-        </Switch>
-      </div>
+            )}
+          </Item>
+        </Menu>
+      </Nav>
     </div>
-  );
-};
+    <div>
+      <Switch>
+        <Route exact path="/search">
+          <>
+            <Search
+              updateSearchResults={updateSearchResults}
+              position={position}
+              updatePosition={updatePosition}
+            />
+            <Map
+              results={searchResults}
+              addFavorite={addFavorite}
+              position={position}
+            />
+          </>
+        </Route>
+        <Route exact path="/favorite">
+          <>
+            <h2>Favorite Trails</h2>
+            <Map
+              results={favorites}
+              removeFavorite={removeFavorite}
+              position={position}
+            />
+          </>
+        </Route>
+        <Route exact path="/">
+          <Home loginUser={loginUser} logoutUser={logoutUser} />
+        </Route>
+      </Switch>
+    </div>
+  </div>
+);
 
+///logout button is funcitonal now
 export default Navbar;
