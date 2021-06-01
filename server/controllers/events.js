@@ -25,6 +25,7 @@ const addNewEvent = wrapAsync(async (req, res) => {
     description,
     isPublic,
   }).save();
+  // add attendee
   const user = await User.findById(userId);
   user.createdEvents = [...new Set([...user.createdEvents, event])];
   user.registeredEvents = [...new Set([...user.registeredEvents, event])];

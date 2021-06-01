@@ -12,7 +12,9 @@ const App = () => {
   const [position, setPosition] = useState({});
   const [events, setEvents] = useState([]);
   const [attending, setAttending] = useState([]);
+  const [created, setCreated] = useState([]);
 
+  // Events
   const unregister = async (eventId) => {
     await axios.delete(`/events/${user._id}/${eventId}`);
     setAttending(attending.filter((event) => event._id !== eventId));
@@ -43,12 +45,14 @@ const App = () => {
     });
     setEvents([...events, event]);
     setAttending([...attending, event]);
+    setCreated([...created, event._id]);
   };
 
   const removeEvent = async (eventId) => {
     await axios.delete(`/events/removeEvent/${eventId}`);
     setEvents(events.filter((event) => event._id !== eventId));
     setAttending(attending.filter((event) => event._id !== eventId));
+    setCreated(created.filter((id) => id !== eventId));
   };
 
   const updatePosition = (newPosition) => setPosition(newPosition);
@@ -69,7 +73,6 @@ const App = () => {
   };
 
   const addFavorite = (park) => {
-    console.log('in add fav', park);
     const {
       parkId,
       name,
@@ -84,9 +87,7 @@ const App = () => {
         lat,
         lng,
       })
-      .then(({ data: newPark }) => {
-        setFavorites([...favorites, newPark]);
-      })
+      .then(({ data: newPark }) => setFavorites([...favorites, newPark]))
       .catch((err) => console.log(err));
   };
 
@@ -104,13 +105,12 @@ const App = () => {
 
   const loginUser = (currentUser) => {
     setUser(currentUser);
+    setCreated(currentUser.createdEvents);
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))
       .catch((err) => console.log(err));
     fetchAttending(currentUser)
-      .then(({ registeredEvents }) => {
-        setAttending(registeredEvents);
-      })
+      .then(({ registeredEvents }) => setAttending(registeredEvents))
       .catch((err) => console.log(err));
   };
 
@@ -126,11 +126,9 @@ const App = () => {
 
   useEffect(() => {
     let currPosition;
-
     window.navigator.geolocation.getCurrentPosition(
       (position) => (currPosition = position)
     );
-
     if (currPosition) {
       window.navigator.geolocation.getCurrentPosition((position) =>
         setPosition({
@@ -150,12 +148,8 @@ const App = () => {
       .catch((err) => console.warn(err));
 
     fetchEvents()
-      .then((events) => {
-        setEvents(events);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((events) => setEvents(events))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -172,6 +166,11 @@ const App = () => {
           updatePosition={updatePosition}
           events={events}
           attending={attending}
+          register={register}
+          unregister={unregister}
+          addEvent={addEvent}
+          removeEvent={removeEvent}
+          created={created}
         />
       </div>
     </BrowserRouter>
