@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -9,6 +10,46 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [position, setPosition] = useState({});
+  const [events, setEvents] = useState([]);
+  const [attending, setAttending] = useState([]);
+
+  const unregister = async (eventId) => {
+    await axios.delete(`/events/${user._id}/${eventId}`);
+    setAttending(attending.filter((event) => event._id !== eventId));
+  };
+
+  const register = async (eventId) => {
+    await axios.post(`/events/${user._id}/${eventId}`);
+    setAttending([...attending, events.find((event) => event._id === eventId)]);
+  };
+
+  const addEvent = async (
+    eventName,
+    locationName,
+    lat,
+    lng,
+    time,
+    description,
+    isPublic
+  ) => {
+    const { data: event } = await axios.post(`/events/${user._id}`, {
+      eventName,
+      locationName,
+      lat,
+      lng,
+      time,
+      description,
+      isPublic,
+    });
+    setEvents([...events, event]);
+    setAttending([...attending, event]);
+  };
+
+  const removeEvent = async (eventId) => {
+    await axios.delete(`/events/removeEvent/${eventId}`);
+    setEvents(events.filter((event) => event._id !== eventId));
+    setAttending(attending.filter((event) => event._id !== eventId));
+  };
 
   const updatePosition = (newPosition) => setPosition(newPosition);
 
@@ -56,10 +97,18 @@ const App = () => {
     return favoriteParks;
   };
 
+  const fetchAttending = async () => {
+    const { data } = await axios.get(`/events/${user._id}`);
+    return data;
+  };
+
   const loginUser = (currentUser) => {
     setUser(currentUser);
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))
+      .catch((err) => console.log(err));
+    fetchAttending()
+      .then((attending) => setAttending(attending))
       .catch((err) => console.log(err));
   };
 
@@ -68,10 +117,17 @@ const App = () => {
     return results.data;
   };
 
+  const fetchEvents = async () => {
+    const { data } = await axios.get('/events');
+    return data;
+  };
+
   useEffect(() => {
     let currPosition;
 
-    window.navigator.geolocation.getCurrentPosition((position) => currPosition = position);
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => (currPosition = position)
+    );
 
     if (currPosition) {
       window.navigator.geolocation.getCurrentPosition((position) =>
@@ -86,9 +142,18 @@ const App = () => {
         lng: -90.10157,
       });
     }
+
     fetchSearchResults()
       .then((data) => setSearchResults(data))
       .catch((err) => console.warn(err));
+
+    fetchEvents()
+      .then((events) => {
+        setEvents(events);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -103,6 +168,8 @@ const App = () => {
           updateSearchResults={updateSearchResults}
           position={position}
           updatePosition={updatePosition}
+          events={events}
+          attending={attending}
         />
       </div>
     </BrowserRouter>

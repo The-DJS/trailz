@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import React from 'react';
 import Map from './Map.jsx';
 
