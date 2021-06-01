@@ -118,4 +118,5 @@ const Navbar = ({
   </div>
 );
 
+///logout button is funcitonal now
 export default Navbar;
