@@ -53,6 +53,7 @@ const CustomModal = ({
         <Form
           location={location}
           addEvent={addEvent}
+          closeModal={closeModal}
         />
       </Modal>
     </div>
