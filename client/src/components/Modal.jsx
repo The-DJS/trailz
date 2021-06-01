@@ -24,7 +24,7 @@ const CustomModal = ({ location }) => {
 
   const afterOpenModal = () => {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
+    subtitle.style.color = 'ForestGreen';
   };
 
   const closeModal = () => {
@@ -32,7 +32,6 @@ const CustomModal = ({ location }) => {
   };
 
   return (
-    // <div onClick={openModal}>
     <div>
       <button type="button" onClick={openModal}>
         Create an event

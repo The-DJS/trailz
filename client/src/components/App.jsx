@@ -1,9 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
 import NavBar from './NavBar.jsx';
-import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API.js';
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -13,7 +13,7 @@ const App = () => {
   const [events, setEvents] = useState([]);
   const [attending, setAttending] = useState([]);
 
-  unregister = async (eventId) => {
+  const unregister = async (eventId) => {
     await axios.delete(`/events/${user._id}/${eventId}`);
     setAttending(attending.filter((event) => event._id !== eventId));
   };
@@ -123,7 +123,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (window.navigator.geolocation) {
+    let currPosition;
+
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => (currPosition = position)
+    );
+
+    if (currPosition) {
       window.navigator.geolocation.getCurrentPosition((position) =>
         setPosition({
           lat: position.coords.latitude,

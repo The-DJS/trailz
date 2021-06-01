@@ -5,8 +5,10 @@
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server",
-    "build": "webpack --config webpack.config.js --mode development --watch",
+    "start": "node server",
+    "start-dev": "nodemon server",
+    "build": "webpack --config webpack.config.js --mode production",
+    "build-dev": "webpack --config webpack.config.js --mode development --watch",
     "lint": "eslint . --ext .js,.jsx"
   },
   "repository": {

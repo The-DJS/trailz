@@ -32,11 +32,6 @@ const options = {
 };
 
 const Map = ({ results, addFavorite, removeFavorite, position }) => {
-  const [open, setOpen] = useState(false);
-
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
-
   // Selected marker
   const [selected, setSelected] = useState({});
 
@@ -85,19 +80,21 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
         center={defaultCenter}
         zoom={12}
         options={options}
-        onClick={(event) =>
-          setUserPins((currentState) => [
-            ...currentState,
-            {
-              name: 'Custom User Pin',
-              location: {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
+        onClick={(event) => {
+          if (addFavorite) {
+            setUserPins((currentState) => [
+              ...currentState,
+              {
+                name: 'Custom User Pin',
+                location: {
+                  lat: event.latLng.lat(),
+                  lng: event.latLng.lng(),
+                },
+                time: new Date(),
               },
-              time: new Date(),
-            },
-          ])
-        }
+            ]);
+          }
+        }}
         onLoad={onMapLoad}
       >
         {results.map((item) => (
@@ -139,7 +136,7 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
                   Remove from favs
                 </button>
               )}
-              <Modal location={selected.location} />
+              <Modal location={selected} />
             </div>
           </InfoWindow>
         )}
@@ -151,5 +148,4 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
     <h1>Loading Maps!</h1>
   );
 };
-/// /hey
 export default Map;
