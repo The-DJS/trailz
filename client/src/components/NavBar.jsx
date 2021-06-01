@@ -53,6 +53,12 @@ const Navbar = ({
   updateSearchResults,
   position,
   updatePosition,
+  events,
+  attending,
+  register,
+  unregister,
+  addEvent,
+  removeEvent,
 }) => (
   <div>
     <div>
@@ -92,6 +98,10 @@ const Navbar = ({
               results={searchResults}
               addFavorite={addFavorite}
               position={position}
+              register={register}
+              unregister={unregister}
+              addEvent={addEvent}
+              removeEvent={removeEvent}
             />
           </>
         </Route>
@@ -102,6 +112,10 @@ const Navbar = ({
               results={favorites}
               removeFavorite={removeFavorite}
               position={position}
+              register={register}
+              unregister={unregister}
+              addEvent={addEvent}
+              removeEvent={removeEvent}
             />
           </>
         </Route>
