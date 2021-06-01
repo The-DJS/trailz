@@ -4,15 +4,15 @@ import styled from 'styled-components';
 
 const FormGroup = styled.div`
   color: SlateGray;
-    display: block;
+  display: block;
   width: 300px;
   margin: 50px auto;
 `;
 
 const Label = styled.label`
-margin-bottom: 0.5em;
-color: ForestGreen;
-    display: block;
+  margin-bottom: 0.5em;
+  color: ForestGreen;
+  display: block;
 `;
 
 const Input = styled.input`
@@ -24,7 +24,7 @@ const Input = styled.input`
   width: 100%;
   margin-bottom: 0.5em;
   &:invalid {
-    border: 2px solid red
+    border: 2px solid red;
   }
 `;
 
@@ -37,7 +37,7 @@ const Textarea = styled.textarea`
   width: 100%;
   margin-bottom: 0.5em;
   &:invalid {
-    border: 2px solid red
+    border: 2px solid red;
   }
 `;
 
@@ -60,7 +60,7 @@ const Select = styled.select`
   width: 100%;
   margin-bottom: 0.5em;
   &:invalid {
-    border: 2px solid red
+    border: 2px solid red;
   }
 `;
 
@@ -69,7 +69,7 @@ const Message = styled.label`
   background: AliceBlue;
   width: 100%;
   color: SlateGray;
-    display: block;
+  display: block;
 `;
 
 const RequiredMessage = styled.label`
@@ -77,26 +77,22 @@ const RequiredMessage = styled.label`
   width: 100%;
   font-weight: bold;
   color: red;
-    display: block;
+  display: block;
 `;
 
 const Button = styled.button`
-margin-bottom: 0.5em;
-background-color: ForestGreen;
-font-weight: bolder;
-width: 10vw;
-height: 5vh;
-border: 0px;
-color: AliceBlue;
+  margin-bottom: 0.5em;
+  background-color: ForestGreen;
+  font-weight: bolder;
+  width: 10vw;
+  height: 5vh;
+  border: 0px;
+  color: AliceBlue;
   display: block;
 `;
 
 // const message = 'this is the validation message';
-const Form = ({
-  location,
-  addEvent,
-  closeModal,
-}) => {
+const Form = ({ location, addEvent, closeModal }) => {
   // Input fields
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
@@ -107,7 +103,15 @@ const Form = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title && date && description && isPublic) {
-      addEvent(title, location.name, location.location.lat, location.location.lng, date, description, isPublic);
+      addEvent(
+        title,
+        location.name,
+        location.location.lat,
+        location.location.lng,
+        date,
+        description,
+        isPublic
+      );
       setTitle('');
       setDate('');
       setDescription('');
@@ -128,14 +132,16 @@ const Form = ({
             type="text"
             placeholder="Name your event"
             name="eventName"
-            onChange={(e)=> setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
         </FormGroup>
 
         <FormGroup>
           <Label htmlFor="locationName">Location</Label>
-          <Message id="locationName" name="locationName">{location.name}</Message>
+          <Message id="locationName" name="locationName">
+            {location.name}
+          </Message>
         </FormGroup>
 
         <FormGroup>
@@ -144,7 +150,7 @@ const Form = ({
             type="date"
             id="date"
             name="date"
-            onChange={(e)=> setDate(e.target.value)}
+            onChange={(e) => setDate(e.target.value)}
             required
           />
         </FormGroup>
@@ -157,7 +163,7 @@ const Form = ({
             rows="4"
             cols="50"
             placeholder="Starts at noon near the gazebo./n Bring drinks!"
-            onChange={(e)=> setDescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
         </FormGroup>
@@ -167,17 +173,25 @@ const Form = ({
           <Select
             id="isPublic"
             name="isPublic"
-            onChange={(e)=> setIsPublic(e.target.value)}
+            onChange={(e) => setIsPublic(e.target.value)}
             required
           >
-            <Option disabled selected value=""> -- select an option -- </Option>
+            <Option disabled selected value="">
+              {' '}
+              -- select an option --{' '}
+            </Option>
             <Option value="true">True</Option>
             <Option value="false">False</Option>
           </Select>
         </FormGroup>
 
         <FormGroup>
-          <input type="hidden" id="location" name="location" value={location.location} />
+          <input
+            type="hidden"
+            id="location"
+            name="location"
+            value={location.location}
+          />
           {/* <input type="hidden" id="owner" name="owner" value={user._id} /> */}
         </FormGroup>
 
@@ -186,11 +200,8 @@ const Form = ({
         </FormGroup>
 
         <FormGroup>
-          <Button type="submit">
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </FormGroup>
-
       </form>
     </div>
   );

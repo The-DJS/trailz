@@ -59,6 +59,7 @@ const Navbar = ({
   unregister,
   addEvent,
   removeEvent,
+  created,
 }) => (
   <div>
     <div>
@@ -80,6 +81,11 @@ const Navbar = ({
           <Item>
             <LinkCss as={Link} to="/favorite">
               Favorite Trails
+            </LinkCss>
+          </Item>
+          <Item>
+            <LinkCss as={Link} to="/events">
+              Events
             </LinkCss>
           </Item>
         </Menu>
@@ -116,6 +122,21 @@ const Navbar = ({
               unregister={unregister}
               addEvent={addEvent}
               removeEvent={removeEvent}
+            />
+          </>
+        </Route>
+        <Route exact path="/events">
+          <>
+            <h2>Events</h2>
+            <Map
+              results={events}
+              position={position}
+              register={register}
+              unregister={unregister}
+              addEvent={addEvent}
+              removeEvent={removeEvent}
+              attending={attending}
+              created={created}
             />
           </>
         </Route>

@@ -4,7 +4,6 @@ const { User } = require('../database');
 const loggedIn = wrapAsync(async (req, res) => {
   const googleId = req.session.passport.user;
   const user = await User.findOne({ googleId });
-  console.log(user);
   res.send(user);
 });
 
@@ -16,7 +15,6 @@ const loggedOut = (req, res) => {
 const getCurrentUser = wrapAsync(async (req, res) => {
   const { googleId } = req.params;
   const user = await User.findOne({ googleId: googleId });
-  console.log('sever sider user', user);
   res.send(user);
 });
 
