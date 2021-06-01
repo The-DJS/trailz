@@ -21,7 +21,6 @@ passport.use(
       callbackURL: 'http://localhost:3000/auth/google/callback',
     },
     (accessToken, refreshToken, profile, cb) => {
-      console.log(profile);
       User.findOrCreate(
         {
           googleId: profile.id,

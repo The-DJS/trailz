@@ -8,7 +8,6 @@ const Search = ({ updateSearchResults, position, updatePosition }) => {
     axios
       .get(`/parks/searchResults/${lat}/${lng}/${search}`)
       .then(({ data: results }) => {
-        console.log(results);
         updateSearchResults(results.mappedResults);
         updatePosition(results.position);
         setSearch('');

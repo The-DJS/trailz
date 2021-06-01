@@ -58,6 +58,13 @@ const Navbar = ({
   updatePosition,
   logoutUser,
   user,
+  events,
+  attending,
+  register,
+  unregister,
+  addEvent,
+  removeEvent,
+  created,
 }) => (
   <div>
     <div>
@@ -88,6 +95,11 @@ const Navbar = ({
               </LinkCss>
             )}
           </Item>
+          <Item>
+            <LinkCss as={Link} to="/events">
+              Events
+            </LinkCss>
+          </Item>
         </Menu>
       </Nav>
     </div>
@@ -104,6 +116,10 @@ const Navbar = ({
               results={searchResults}
               addFavorite={addFavorite}
               position={position}
+              register={register}
+              unregister={unregister}
+              addEvent={addEvent}
+              removeEvent={removeEvent}
             />
           </>
         </Route>
@@ -123,6 +139,25 @@ const Navbar = ({
               results={favorites}
               removeFavorite={removeFavorite}
               position={position}
+              register={register}
+              unregister={unregister}
+              addEvent={addEvent}
+              removeEvent={removeEvent}
+            />
+          </>
+        </Route>
+        <Route exact path="/events">
+          <>
+            <h2>Events</h2>
+            <Map
+              results={events}
+              position={position}
+              register={register}
+              unregister={unregister}
+              addEvent={addEvent}
+              removeEvent={removeEvent}
+              attending={attending}
+              created={created}
             />
           </>
         </Route>

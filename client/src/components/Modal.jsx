@@ -14,7 +14,7 @@ const customStyles = {
   },
 };
 
-const CustomModal = ({ location }) => {
+const CustomModal = ({ location, addEvent }) => {
   let subtitle;
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -47,7 +47,7 @@ const CustomModal = ({ location }) => {
           X
         </button>
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Create an event</h2>
-        <Form location={location} />
+        <Form location={location} addEvent={addEvent} />
       </Modal>
     </div>
   );

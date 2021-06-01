@@ -18,12 +18,6 @@ const containerStyle = {
   width: "100vw",
 };
 
-// Default location of the map.
-// const defaultCenter = {
-//   lat: 29.9706145,
-//   lng: -90.1077311,
-// };
-
 // Options of the render (disable default UI and custom styles)
 const options = {
   styles: mapStyles,
@@ -31,7 +25,18 @@ const options = {
   zoomControl: true,
 };
 
-const Map = ({ results, addFavorite, removeFavorite, position }) => {
+const Map = ({
+  results,
+  addFavorite,
+  removeFavorite,
+  position,
+  register,
+  unregister,
+  addEvent,
+  removeEvent,
+  attending,
+  created,
+}) => {
   // Selected marker
   const [selected, setSelected] = useState({});
 
@@ -129,7 +134,30 @@ const Map = ({ results, addFavorite, removeFavorite, position }) => {
                   Remove from favs
                 </button>
               )}
-              <Modal location={selected.location} />
+              {!addFavorite &&
+              !removeFavorite &&
+              !attending.includes(selected) ? (
+                <>
+                  <button type="button" onClick={() => register(selected._id)}>
+                    Register
+                  </button>
+                </>
+              ) : null}
+              {!addFavorite &&
+              !removeFavorite &&
+              attending.includes(selected) ? (
+                <button type="button" onClick={() => unregister(selected._id)}>
+                  Unregister
+                </button>
+              ) : null}
+              {!addFavorite &&
+              !removeFavorite &&
+              created.includes(selected._id) ? (
+                <button type="button" onClick={() => removeEvent(selected._id)}>
+                  Delete
+                </button>
+              ) : null}
+              <Modal location={selected} addEvent={addEvent} />
             </div>
           </InfoWindow>
         )}
