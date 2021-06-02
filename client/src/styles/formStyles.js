@@ -7,13 +7,13 @@ const FormGroup = styled.div`
   margin-bottom: 2.5vh;
 `;
 
-const Label = styled.label`
+const FormLabel = styled.label`
   margin-bottom: 0.5em;
   color: ForestGreen;
   display: block;
 `;
 
-const Input = styled.input`
+const FormInput = styled.input`
   padding: 0.5em;
   color: SlateGray;
   background: AliceBlue;
@@ -26,7 +26,7 @@ const Input = styled.input`
   }
 `;
 
-const Textarea = styled.textarea`
+const FormTextarea = styled.textarea`
   padding: 0.5em;
   color: LightSlateGray;
   background: AliceBlue;
@@ -39,7 +39,7 @@ const Textarea = styled.textarea`
   }
 `;
 
-const Option = styled.option`
+const FormOption = styled.option`
   padding: 0.5em;
   color: LightSlateGray;
   background: AliceBlue;
@@ -49,7 +49,7 @@ const Option = styled.option`
   margin-bottom: 0.5em;
 `;
 
-const Select = styled.select`
+const FormSelect = styled.select`
   padding: 0.5em;
   color: SlateGray;
   background: AliceBlue;
@@ -62,7 +62,7 @@ const Select = styled.select`
   }
 `;
 
-const Message = styled.label`
+const FormMessage = styled.label`
   margin-bottom: 0.5em;
   background: AliceBlue;
   width: 100%;
@@ -70,7 +70,7 @@ const Message = styled.label`
   display: block;
 `;
 
-const RequiredMessage = styled.label`
+const FormRequiredMessage = styled.label`
   margin-bottom: 0.5em;
   margin-top:0.5rem;
   width: 100%;
@@ -79,7 +79,7 @@ const RequiredMessage = styled.label`
   display: block;
 `;
 
-const Button = styled.button`
+const FormButton = styled.button`
   margin-bottom: 0.5em;
   margin-top:0.5rem;
   background-color: ForestGreen;
@@ -93,12 +93,12 @@ const Button = styled.button`
 
 export {
   FormGroup,
-  Label,
-  Input,
-  Textarea,
-  Option,
-  Select,
-  Message,
-  RequiredMessage,
-  Button,
+  FormLabel,
+  FormInput,
+  FormTextarea,
+  FormOption,
+  FormSelect,
+  FormMessage,
+  FormRequiredMessage,
+  FormButton,
 }
