@@ -32,7 +32,7 @@ const App = () => {
     lng,
     time,
     description,
-    isPublic
+    isPublic,
   ) => {
     const { data: event } = await axios.post(`/events/${user._id}`, {
       eventName,
@@ -65,8 +65,8 @@ const App = () => {
       .then(() => {
         setFavorites(
           favorites.filter(
-            (currentPark) => park._id.toString() !== currentPark._id
-          )
+            (currentPark) => park._id.toString() !== currentPark._id,
+          ),
         );
       })
       .catch((err) => console.log(err));
@@ -93,7 +93,7 @@ const App = () => {
 
   const fetchFavorites = async (user) => {
     const { data: favoriteParks } = await axios.get(
-      `/parks/favorites/${user._id}`
+      `/parks/favorites/${user._id}`,
     );
     return favoriteParks;
   };
@@ -131,15 +131,14 @@ const App = () => {
   useEffect(() => {
     let currPosition;
     window.navigator.geolocation.getCurrentPosition(
-      (position) => (currPosition = position)
+      (position) => (currPosition = position),
     );
     if (currPosition) {
       window.navigator.geolocation.getCurrentPosition((position) =>
         setPosition({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-        })
-      );
+        }));
     } else {
       setPosition({
         lat: 29.976999,
