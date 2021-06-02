@@ -11,18 +11,43 @@ const App = () => {
   const [favorites, setFavorites] = useState([]);
   const [position, setPosition] = useState({});
   const [events, setEvents] = useState([]);
-  const [attending, setAttending] = useState([]);
-  const [created, setCreated] = useState([]);
+  // const [attending, setAttending] = useState([]);
+  // const [created, setCreated] = useState([]);
 
   // Events
   const unregister = async (eventId) => {
     await axios.delete(`/events/${user._id}/${eventId}`);
-    setAttending(attending.filter((event) => event._id !== eventId));
+    // setAttending(attending.filter((event) => event._id !== eventId));
+    const foundEvent = events.find((event) => event._id === eventId);
+    foundEvent.attendees = foundEvent.attendees.filter(
+      (attendee) => attendee !== `${user.firstName} ${user.lastName}`
+    );
+    setEvents(
+      events.map((event) => {
+        if (event._id === eventId) {
+          return foundEvent;
+        }
+        return event;
+      })
+    );
   };
 
   const register = async (eventId) => {
     await axios.post(`/events/${user._id}/${eventId}`);
-    setAttending([...attending, events.find((event) => event._id === eventId)]);
+    // setAttending([...attending, events.find((event) => event._id === eventId)]);
+    const foundEvent = events.find((event) => event._id === eventId);
+    foundEvent.attendees = [
+      ...foundEvent.attendees,
+      `${user.firstName} ${user.lastName}`,
+    ];
+    setEvents(
+      events.map((event) => {
+        if (event._id === eventId) {
+          return foundEvent;
+        }
+        return event;
+      })
+    );
   };
 
   const addEvent = async (
@@ -32,7 +57,7 @@ const App = () => {
     lng,
     time,
     description,
-    isPublic,
+    isPublic
   ) => {
     const { data: event } = await axios.post(`/events/${user._id}`, {
       eventName,
@@ -44,15 +69,15 @@ const App = () => {
       isPublic,
     });
     setEvents([...events, event]);
-    setAttending([...attending, event]);
-    setCreated([...created, event._id]);
+    // setAttending([...attending, event]);
+    // setCreated([...created, event._id]);
   };
 
   const removeEvent = async (eventId) => {
     await axios.delete(`/events/removeEvent/${eventId}`);
     setEvents(events.filter((event) => event._id !== eventId));
-    setAttending(attending.filter((event) => event._id !== eventId));
-    setCreated(created.filter((id) => id !== eventId));
+    // setAttending(attending.filter((event) => event._id !== eventId));
+    // setCreated(created.filter((id) => id !== eventId));
   };
 
   const updatePosition = (newPosition) => setPosition(newPosition);
@@ -65,8 +90,8 @@ const App = () => {
       .then(() => {
         setFavorites(
           favorites.filter(
-            (currentPark) => park._id.toString() !== currentPark._id,
-          ),
+            (currentPark) => park._id.toString() !== currentPark._id
+          )
         );
       })
       .catch((err) => console.log(err));
@@ -93,7 +118,7 @@ const App = () => {
 
   const fetchFavorites = async (user) => {
     const { data: favoriteParks } = await axios.get(
-      `/parks/favorites/${user._id}`,
+      `/parks/favorites/${user._id}`
     );
     return favoriteParks;
   };
@@ -105,13 +130,13 @@ const App = () => {
 
   const loginUser = (currentUser) => {
     setUser(currentUser);
-    setCreated(currentUser.createdEvents);
+    // setCreated(currentUser.createdEvents);
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))
       .catch((err) => console.log(err));
-    fetchAttending(currentUser)
-      .then(({ registeredEvents }) => setAttending(registeredEvents))
-      .catch((err) => console.log(err));
+    // fetchAttending(currentUser)
+    //   .then(({ registeredEvents }) => setAttending(registeredEvents))
+    //   .catch((err) => console.log(err));
   };
 
   const logoutUser = () => {
@@ -131,14 +156,15 @@ const App = () => {
   useEffect(() => {
     let currPosition;
     window.navigator.geolocation.getCurrentPosition(
-      (position) => (currPosition = position),
+      (position) => (currPosition = position)
     );
     if (currPosition) {
       window.navigator.geolocation.getCurrentPosition((position) =>
         setPosition({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-        }));
+        })
+      );
     } else {
       setPosition({
         lat: 29.976999,
@@ -169,13 +195,13 @@ const App = () => {
           position={position}
           updatePosition={updatePosition}
           events={events}
-          attending={attending}
+          // attending={attending}
           user={user}
           register={register}
           unregister={unregister}
           addEvent={addEvent}
           removeEvent={removeEvent}
-          created={created}
+          // created={created}
         />
       </div>
     </BrowserRouter>

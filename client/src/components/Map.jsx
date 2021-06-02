@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/jsx-boolean-value */
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { v4 as getKey } from 'uuid';
 import {
   GoogleMap,
@@ -15,8 +15,11 @@ import { eventNames } from '../../../server/database/models/Event';
 
 // The size of the map on the page
 const containerStyle = {
-  height: '87.8vh',
-  width: '100vw',
+  height: '50vh',
+  width: '67vw',
+  margin: '0 auto',
+  // height: '87.8vh',
+  // width: '100vw',
 };
 
 // Options of the render (disable default UI and custom styles)
@@ -35,13 +38,21 @@ const Map = ({
   unregister,
   addEvent,
   removeEvent,
-  attending,
-  created,
+  events,
+  user,
+  // attending,
+  // created,
 }) => {
+  const [center, setCenter] = useState({
+    lat: position.lat,
+    lng: position.lng,
+  });
+
   // Selected marker
   const [selected, setSelected] = useState({});
 
-  const onSelect = (item) => {
+  const onSelect = (item, lat, lng) => {
+    setCenter({ lat, lng });
     setSelected(item);
   };
 
@@ -55,7 +66,7 @@ const Map = ({
     mapRef.current = map;
     const bounds = results.reduce(
       (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
-      new window.google.maps.LatLngBounds(),
+      new window.google.maps.LatLngBounds()
     );
     mapRef.current.fitBounds(bounds);
   }, []);
@@ -70,19 +81,23 @@ const Map = ({
   if (loadError) return 'Error loading maps';
 
   // Default location of the map.
-  const { lat, lng } = position;
-  const defaultCenter = { lat, lng };
+  // const { lat, lng } = position;
+  // const defaultCenter = { lat, lng };
+
+  useEffect(() => {
+    setSelected({});
+  }, [results, userPins, addFavorite, removeFavorite, addEvent, removeEvent]);
 
   // Render the map
-  return isLoaded
-    ? (
-      <div>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={defaultCenter}
-          zoom={12}
-          options={options}
-          onClick={(event) => setUserPins((currentState) => [
+  return isLoaded ? (
+    <div>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={12}
+        options={options}
+        onClick={(event) => {
+          setUserPins((currentState) => [
             ...currentState,
             {
               name: 'Custom User Pin',
@@ -92,100 +107,100 @@ const Map = ({
               },
               time: new Date(),
             },
-          ])}
-          onLoad={onMapLoad}
-        >
-          {results.map((item) => (
+          ]);
+        }}
+        onLoad={onMapLoad}
+      >
+        {results.map((item) => (
+          <Marker
+            key={getKey()}
+            position={item.location}
+            // icon={{
+            //   url: './icons/hiking.svg',
+            // }}
+            onClick={() => onSelect(item, item.location.lat, item.location.lng)}
+          />
+        ))}
+        {addFavorite &&
+          userPins.map((pin) => (
             <Marker
               key={getKey()}
-              position={item.location}
+              position={pin.location}
               // icon={{
-              //   url: './icons/hiking.svg',
+              //   url: '/camping.svg',
               // }}
-              onClick={() => onSelect(item)}
+              onClick={() => onSelect(pin, pin.location.lat, pin.location.lng)}
             />
           ))}
-          {addFavorite
-            && userPins.map((pin) => (
-              <Marker
-                key={getKey()}
-                position={pin.location}
-                // icon={{
-                //   url: '/camping.svg',
-                // }}
-                onClick={() => onSelect(pin)}
-              />
-            ))}
-          {selected.location && (
-            <InfoWindow
-              position={selected.location}
-              clickable={true}
-              onCloseClick={() => setSelected({})}
-            >
-              <div className="map-info-window">
-                {selected.eventName
-                  ? (
-                    <div>
-                      <p>{selected.locationName}</p>
-                      <p>{selected.eventName}</p>
-                      <p>{selected.time}</p>
-                      <p>{selected.description}</p>
-                      <p>{selected.isPublic}</p>
-                      <p>{selected.attendees}</p>
-                    </div>
-                  )
-                  : <p>{selected.name}</p>}
-                {addFavorite && (
-                  <button type="button" onClick={() => addFavorite(selected)}>
-                    Add to favs
+        {selected.location && (
+          <InfoWindow
+            position={selected.location}
+            clickable={true}
+            onCloseClick={() => setSelected({})}
+          >
+            <div className="map-info-window">
+              {selected.eventName ? (
+                <div>
+                  <p>{selected.locationName}</p>
+                  <p>{selected.eventName}</p>
+                  <p>{selected.time}</p>
+                  <p>{selected.description}</p>
+                  <p>{selected.isPublic}</p>
+                  <p>{selected.attendees}</p>
+                </div>
+              ) : (
+                <p>{selected.name}</p>
+              )}
+              {addFavorite && (
+                <button type="button" onClick={() => addFavorite(selected)}>
+                  Add to favs
+                </button>
+              )}
+              {removeFavorite && (
+                <button type="button" onClick={() => removeFavorite(selected)}>
+                  Remove from favs
+                </button>
+              )}
+              {!addFavorite &&
+              !removeFavorite &&
+              !selected.attendees.includes(
+                `${user.firstName} ${user.lastName}`
+              ) ? (
+                <>
+                  <button type="button" onClick={() => register(selected._id)}>
+                    Register
                   </button>
-                )}
-                {removeFavorite && (
-                  <button type="button" onClick={() => removeFavorite(selected)}>
-                    Remove from favs
-                  </button>
-                )}
-                {!addFavorite
-                  && !removeFavorite
-                  && !attending.includes(selected)
-                  ? (
-                    <>
-                      <button type="button" onClick={() => register(selected._id)}>
-                        Register
-                      </button>
-                    </>
-                  )
-                  : null}
-                {!addFavorite
-                  && !removeFavorite
-                  && attending.includes(selected)
-                  ? (
-                    <button type="button" onClick={() => unregister(selected._id)}>
-                      Unregister
-                    </button>
-                  )
-                  : null}
-                {!addFavorite
-                  && !removeFavorite
-                  && created.includes(selected._id)
-                  ? (
-                    <button type="button" onClick={() => removeEvent(selected._id)}>
-                      Delete
-                    </button>
-                  )
-                  : null}
+                </>
+              ) : null}
+              {!addFavorite &&
+              !removeFavorite &&
+              selected.attendees.includes(
+                `${user.firstName} ${user.lastName}`
+              ) ? (
+                <button type="button" onClick={() => unregister(selected._id)}>
+                  Unregister
+                </button>
+              ) : null}
+              {!addFavorite &&
+              !removeFavorite &&
+              selected.owner.includes(`${user.firstName} ${user.lastName}`) ? (
+                <button type="button" onClick={() => removeEvent(selected._id)}>
+                  Delete
+                </button>
+              ) : null}
+              {addFavorite || removeFavorite ? (
                 <EventModal location={selected} addEvent={addEvent} />
-              </div>
-            </InfoWindow>
-          )}
-          <></>
-        </GoogleMap>
-      </div>
-    )
-    : (
-      // Display loading message while the script loads the map.
-      <h1>Loading Maps!</h1>
-    );
+              ) : null}
+            </div>
+          </InfoWindow>
+        )}
+        <></>
+      </GoogleMap>
+    </div>
+  ) : (
+    // Display loading message while the script loads the map.
+    <h1>Loading Maps!</h1>
+  );
 };
 
 export default Map;
