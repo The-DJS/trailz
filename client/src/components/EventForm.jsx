@@ -2,17 +2,16 @@
 import React, { useState } from 'react';
 import {
   FormGroup,
-  Label,
-  Input,
-  Textarea,
-  Option,
-  Select,
-  Message,
-  RequiredMessage,
-  Button,
+  FormLabel,
+  FormInput,
+  FormTextarea,
+  FormOption,
+  FormSelect,
+  FormMessage,
+  FormRequiredMessage,
+  FormButton,
 } from '../styles/formStyles';
 
-// const message = 'this is the validation message';
 const EventForm = ({ location, addEvent, closeModal }) => {
   // Input fields
   const [title, setTitle] = useState('');
@@ -50,8 +49,8 @@ const EventForm = ({ location, addEvent, closeModal }) => {
     <div>
       <form onSubmit={(e) => handleSubmit(e)}>
         <FormGroup>
-          <Label htmlFor="eventName">Title *</Label>
-          <Input
+          <FormLabel htmlFor="eventName">Title *</FormLabel>
+          <FormInput
             id="eventName"
             type="text"
             placeholder="Name your event"
@@ -62,34 +61,34 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="isPublic">
+          <FormLabel htmlFor="isPublic">
             What is the main activity for this event? *
-          </Label>
-          <Select
+          </FormLabel>
+          <FormSelect
             id="activity"
             name="activity"
             defaultValue=""
             onChange={(e) => setActivity(e.target.value)}
             required
           >
-            <Option disabled value="">
+            <FormOption disabled value="">
               -- select an activity --
-            </Option>
-            <Option value="true">Hiking</Option>
-            <Option value="false">Biking</Option>
-            <Option value="false">Fishing</Option>
-            <Option value="false">Camping</Option>
-            <Option value="false">Running</Option>
-            <Option value="false">Other</Option>
-          </Select>
+            </FormOption>
+            <FormOption value="true">Hiking</FormOption>
+            <FormOption value="false">Biking</FormOption>
+            <FormOption value="false">Fishing</FormOption>
+            <FormOption value="false">Camping</FormOption>
+            <FormOption value="false">Running</FormOption>
+            <FormOption value="false">Other</FormOption>
+          </FormSelect>
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="locationName">Location *</Label>
-          <Message id="locationName" name="locationName">
-            {location.name === 'Custom User Pin'
-              ? (
-                <Input
+          {location.name === 'Custom User Pin'
+            ? (
+              <>
+                <FormLabel htmlFor="locationName">Location *</FormLabel>
+                <FormInput
                   id="locationName"
                   type="text"
                   placeholder="Name your custom location"
@@ -97,16 +96,19 @@ const EventForm = ({ location, addEvent, closeModal }) => {
                   onChange={(e) => setCustomName(e.target.value)}
                   required
                 />
-              )
-              : (
-                location.name
-              )}
-          </Message>
+              </>
+            )
+            : (
+              <>
+                <FormLabel htmlFor="locationName">Location</FormLabel>
+                <FormMessage><strong>{location.name}</strong></FormMessage>
+              </>
+            )}
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="date">Date *</Label>
-          <Input
+          <FormLabel htmlFor="date">Date *</FormLabel>
+          <FormInput
             type="date"
             id="date"
             name="date"
@@ -116,8 +118,8 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="description">Description *</Label>
-          <Textarea
+          <FormLabel htmlFor="description">Description *</FormLabel>
+          <FormTextarea
             id="description"
             name="description"
             rows="4"
@@ -129,35 +131,34 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="isPublic">Is this a public event? *</Label>
-          <Select
+          <FormLabel htmlFor="isPublic">Is this a public event? *</FormLabel>
+          <FormSelect
             id="isPublic"
             name="isPublic"
             defaultValue=""
             onChange={(e) => setIsPublic(e.target.value)}
             required
           >
-            <Option disabled value="">
+            <FormOption disabled value="">
               -- select an option --
-            </Option>
-            <Option value="true">True</Option>
-            <Option value="false">False</Option>
-          </Select>
+            </FormOption>
+            <FormOption value="true">True</FormOption>
+            <FormOption value="false">False</FormOption>
+          </FormSelect>
         </FormGroup>
 
         <FormGroup>
-          <input
+          <FormInput
             type="hidden"
             id="location"
             name="location"
             value={location.location}
           />
-          {/* <input type="hidden" id="owner" name="owner" value={user._id} /> */}
         </FormGroup>
 
         <FormGroup>
-          <RequiredMessage>Required fields *</RequiredMessage>
-          <Button type="submit">Submit</Button>
+          <FormRequiredMessage>Required fields *</FormRequiredMessage>
+          <FormButton type="submit">Submit</FormButton>
         </FormGroup>
       </form>
     </div>
