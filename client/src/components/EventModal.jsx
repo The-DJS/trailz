@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import EventForm from './EventForm.jsx';
 
 const CustomModal = styled.div`
-    top: 63vh;
-    left: 43vw;
+    top: 65vh;
+    left: 44.5vw;
     bottom: auto;
     position: absolute;
     margin-right: -50%;

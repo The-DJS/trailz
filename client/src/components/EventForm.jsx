@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const FormGroup = styled.div`
   color: SlateGray;
   display: block;
-  width: 80vw;
+  width: 85vw;
   margin: 50px auto;
 `;
 
@@ -99,13 +99,16 @@ const EventForm = ({ location, addEvent, closeModal }) => {
   const [description, setDescription] = useState('');
   const [isPublic, setIsPublic] = useState('');
   const [activity, setActivity] = useState('');
+  const [customName, setCustomName] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title && date && description && isPublic && activity) {
       addEvent(
         title,
-        location.name,
+        location.name === 'Custom User Pin'
+          ? customName
+          : location, name,
         location.location.lat,
         location.location.lng,
         date,
@@ -157,9 +160,20 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="locationName">Location</Label>
+          <Label htmlFor="locationName">Location *</Label>
           <Message id="locationName" name="locationName">
-            {location.name}
+            {location.name === 'Custom User Pin'
+              ? (
+                <Input
+                  id="locationName"
+                  type="text"
+                  placeholder="Name your custom location"
+                  name="locationName"
+                  onChange={(e) => setCustomName(e.target.value)}
+                  required
+                />
+              )
+              : location.name }
           </Message>
         </FormGroup>
 
