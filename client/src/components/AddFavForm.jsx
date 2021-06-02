@@ -13,7 +13,7 @@ import {
 } from '../styles/formStyles';
 
 // const message = 'this is the validation message';
-const EventForm = ({ location, addEvent, closeModal }) => {
+const AddFavForm = ({ location, addEvent, closeModal }) => {
   // Input fields
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
@@ -164,4 +164,4 @@ const EventForm = ({ location, addEvent, closeModal }) => {
   );
 };
 
-export default EventForm;
+export default AddFavForm;

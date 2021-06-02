@@ -8,7 +8,7 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
-import mapStyles from './mapStyles';
+import mapStyles from '../styles/mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import EventModal from './EventModal.jsx';
 import { eventNames } from '../../../server/database/models/Event';
@@ -18,8 +18,8 @@ const containerStyle = {
   height: '50vh',
   width: '67vw',
   margin: '0 auto',
-  // height: '87.8vh',
-  // width: '100vw',
+  height: '87.8vh',
+  width: '100vw',
 };
 
 // Options of the render (disable default UI and custom styles)
