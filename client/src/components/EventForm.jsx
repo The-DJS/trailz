@@ -106,14 +106,12 @@ const EventForm = ({ location, addEvent, closeModal }) => {
     if (title && date && description && isPublic && activity) {
       addEvent(
         title,
-        location.name === 'Custom User Pin'
-          ? customName
-          : location, name,
+        location.name === 'Custom User Pin' ? customName : location.name,
         location.location.lat,
         location.location.lng,
         date,
         description,
-        isPublic,
+        isPublic
       );
       setTitle('');
       setDate('');
@@ -141,7 +139,9 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="isPublic">What is the main activity for this event? *</Label>
+          <Label htmlFor="isPublic">
+            What is the main activity for this event? *
+          </Label>
           <Select
             id="activity"
             name="activity"
@@ -149,7 +149,9 @@ const EventForm = ({ location, addEvent, closeModal }) => {
             onChange={(e) => setActivity(e.target.value)}
             required
           >
-            <Option disabled value="">-- select an activity --</Option>
+            <Option disabled value="">
+              -- select an activity --
+            </Option>
             <Option value="true">Hiking</Option>
             <Option value="false">Biking</Option>
             <Option value="false">Fishing</Option>
@@ -162,18 +164,18 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         <FormGroup>
           <Label htmlFor="locationName">Location *</Label>
           <Message id="locationName" name="locationName">
-            {location.name === 'Custom User Pin'
-              ? (
-                <Input
-                  id="locationName"
-                  type="text"
-                  placeholder="Name your custom location"
-                  name="locationName"
-                  onChange={(e) => setCustomName(e.target.value)}
-                  required
-                />
-              )
-              : location.name }
+            {location.name === 'Custom User Pin' ? (
+              <Input
+                id="locationName"
+                type="text"
+                placeholder="Name your custom location"
+                name="locationName"
+                onChange={(e) => setCustomName(e.target.value)}
+                required
+              />
+            ) : (
+              location.name
+            )}
           </Message>
         </FormGroup>
 
@@ -210,7 +212,9 @@ const EventForm = ({ location, addEvent, closeModal }) => {
             onChange={(e) => setIsPublic(e.target.value)}
             required
           >
-            <Option disabled value="">-- select an option --</Option>
+            <Option disabled value="">
+              -- select an option --
+            </Option>
             <Option value="true">True</Option>
             <Option value="false">False</Option>
           </Select>

@@ -47,7 +47,13 @@ const addNewEvent = wrapAsync(async (req, res) => {
   user.createdEvents = [...new Set([...user.createdEvents, event])];
   user.registeredEvents = [...new Set([...user.registeredEvents, event])];
   await user.save();
-  res.send(event);
+  const formattedEvent = {
+    ...event._doc,
+    attendees: [`${user.firstName} ${user.lastName}`],
+    owner: `${user.firstName} ${user.lastName}`,
+  };
+  console.log(formattedEvent);
+  res.send(formattedEvent);
 });
 
 const removeEvent = wrapAsync(async (req, res) => {

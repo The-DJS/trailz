@@ -7,7 +7,7 @@ import Search from './Search.jsx';
 // import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
 import Map from './Map.jsx';
-import Login from  './Login.jsx';
+import Login from './Login.jsx';
 import Events from './Events.jsx';
 
 const Nav = styled.nav`
@@ -59,12 +59,12 @@ const Navbar = ({
   logoutUser,
   user,
   events,
-  attending,
+  // attending,
   register,
   unregister,
   addEvent,
   removeEvent,
-  created,
+  // created,
 }) => (
   <div>
     <div>
@@ -75,7 +75,11 @@ const Navbar = ({
         <Menu>
           <Item>
             <LinkCss as={Link} to="/">
-              <Login loginUser={loginUser} logoutUser={logoutUser} user={user} />
+              <Login
+                loginUser={loginUser}
+                logoutUser={logoutUser}
+                user={user}
+              />
             </LinkCss>
           </Item>
           <Item>
@@ -89,7 +93,7 @@ const Navbar = ({
             </LinkCss>
           </Item>
           <Item>
-            { user && (
+            {user && (
               <LinkCss as={Link} to="/favorite">
                 Favorite Trails
               </LinkCss>
@@ -126,11 +130,12 @@ const Navbar = ({
         <Route exact path="/favorite">
           <>
             <br />
-            <h2 style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            <h2
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
             >
               Favorite Trails
             </h2>
@@ -156,8 +161,10 @@ const Navbar = ({
               unregister={unregister}
               addEvent={addEvent}
               removeEvent={removeEvent}
-              attending={attending}
-              created={created}
+              events={events}
+              user={user}
+              // attending={attending}
+              // created={created}
             />
           </>
         </Route>
