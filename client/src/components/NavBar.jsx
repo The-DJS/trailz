@@ -7,7 +7,7 @@ import Search from './Search.jsx';
 // import FavoriteTrails from './FavoriteTrails.jsx';
 import Home from './HomeScreen.jsx';
 import Map from './Map.jsx';
-import Login from  './Login.jsx'
+import Login from  './Login.jsx';
 import Events from './Events.jsx';
 
 const Nav = styled.nav`
