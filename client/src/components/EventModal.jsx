@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import {
   CustomModal,
   ModalExitButton,
+  InfoButton,
 } from '../styles/modalStyles';
 import EventForm from './EventForm.jsx';
 
@@ -27,9 +28,9 @@ const EventModal = ({ location, addEvent }) => {
 
   return (
     <div>
-      <button type="button" onClick={openModal}>
+      <InfoButton type="button" onClick={openModal}>
         Create an event
-      </button>
+      </InfoButton>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}

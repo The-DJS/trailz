@@ -18,6 +18,11 @@ const CustomInfoWindow = ({
     position={selected.location}
     clickable
     onCloseClick={() => setSelected({})}
+    options={{
+      pane: "overlayLayer",
+      pixelOffset: new google.maps.Size(0, -45),
+      alignBottom: true,
+    }}
   >
     <div className="map-info-window">
       {selected.eventName

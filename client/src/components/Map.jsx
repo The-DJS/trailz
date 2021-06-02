@@ -17,8 +17,8 @@ const containerStyle = {
   height: '50vh',
   width: '100vw',
   margin: '0 auto',
-  // height: '87.8vh',
-  // width: '100vw',
+  height: '87.8vh',
+  width: '100vw',
 };
 
 // Options of the render (disable default UI and custom styles)
@@ -67,9 +67,8 @@ const Map = ({
     mapRef.current = map;
     if (results.length > 1) {
       const bounds = results.reduce(
-        (boundsObj, { location: { lat, lng } }) =>
-          boundsObj.extend({ lat, lng }),
-        new window.google.maps.LatLngBounds()
+        (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
+        new window.google.maps.LatLngBounds(),
       );
       mapRef.current.fitBounds(bounds);
     } else if (results.length === 1) {
@@ -98,9 +97,8 @@ const Map = ({
       setSelected({});
       if (results.length > 1) {
         const bounds = results.reduce(
-          (boundsObj, { location: { lat, lng } }) =>
-            boundsObj.extend({ lat, lng }),
-          new window.google.maps.LatLngBounds()
+          (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
+          new window.google.maps.LatLngBounds(),
         );
         const center = bounds.getCenter();
         setCenter({ lat: center.lat(), lng: center.lng() });
@@ -125,40 +123,41 @@ const Map = ({
   useEffect(() => console.log(position), [position]);
 
   // Render the map
-  return isLoaded ? (
-    <div>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={zoom}
-        options={options}
-        onClick={(event) => {
-          setUserPins((currentState) => [
-            ...currentState,
-            {
-              name: 'Custom User Pin',
-              location: {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
+  return isLoaded
+    ? (
+      <div>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={zoom}
+          options={options}
+          onClick={(event) => {
+            setUserPins((currentState) => [
+              ...currentState,
+              {
+                name: 'Custom User Pin',
+                location: {
+                  lat: event.latLng.lat(),
+                  lng: event.latLng.lng(),
+                },
+                time: new Date(),
               },
-              time: new Date(),
-            },
-          ]);
-        }}
-        onLoad={onMapLoad}
-      >
-        {results.map((item) => (
-          <Marker
-            key={getKey()}
-            position={item.location}
-            // icon={{
-            //   url: './icons/hiking.svg',
-            // }}
-            onClick={() => onSelect(item, item.location.lat, item.location.lng)}
-          />
-        ))}
-        {addFavorite &&
-          userPins.map((pin) => (
+            ]);
+          }}
+          onLoad={onMapLoad}
+        >
+          {results.map((item) => (
+            <Marker
+              key={getKey()}
+              position={item.location}
+              // icon={{
+              //   url: './icons/hiking.svg',
+              // }}
+              onClick={() => onSelect(item, item.location.lat, item.location.lng)}
+            />
+          ))}
+          {addFavorite
+          && userPins.map((pin) => (
             <Marker
               key={getKey()}
               position={pin.location}
@@ -168,26 +167,27 @@ const Map = ({
               onClick={() => onSelect(pin, pin.location.lat, pin.location.lng)}
             />
           ))}
-        {selected.location && (
-          <CustomInfoWindow
-            selected={selected}
-            setSelected={setSelected}
-            addFavorite={addFavorite}
-            removeFavorite={removeFavorite}
-            user={user}
-            register={register}
-            unregister={unregister}
-            removeEvent={removeEvent}
-            addEvent={addEvent}
-          />
-        )}
-        <></>
-      </GoogleMap>
-    </div>
-  ) : (
+          {selected.location && (
+            <CustomInfoWindow
+              selected={selected}
+              setSelected={setSelected}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              user={user}
+              register={register}
+              unregister={unregister}
+              removeEvent={removeEvent}
+              addEvent={addEvent}
+            />
+          )}
+          <></>
+        </GoogleMap>
+      </div>
+    )
+    : (
     // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+      <h1>Loading Maps!</h1>
+    );
 };
 
 export default Map;
