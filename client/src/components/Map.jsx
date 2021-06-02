@@ -8,10 +8,9 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
-import mapStyles from './mapStyles';
+import { mapStyles } from '../styles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import EventModal from './EventModal.jsx';
-import { eventNames } from '../../../server/database/models/Event';
 
 // The size of the map on the page
 const containerStyle = {
@@ -48,6 +47,8 @@ const Map = ({
     lng: position.lng,
   });
 
+  const [zoom, setZoom] = useState(12);
+
   // Selected marker
   const [selected, setSelected] = useState({});
 
@@ -64,11 +65,17 @@ const Map = ({
 
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
-    const bounds = results.reduce(
-      (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
-      new window.google.maps.LatLngBounds()
-    );
-    mapRef.current.fitBounds(bounds);
+    if (results.length > 1) {
+      const bounds = results.reduce(
+        (boundsObj, { location: { lat, lng } }) =>
+          boundsObj.extend({ lat, lng }),
+        new window.google.maps.LatLngBounds()
+      );
+      mapRef.current.fitBounds(bounds);
+    } else if (results.length === 1) {
+      setZoom(12);
+      setCenter({ lat: results[0].location.lat, lng: results[0].location.lng });
+    }
   }, []);
 
   // Load script
@@ -84,9 +91,40 @@ const Map = ({
   // const { lat, lng } = position;
   // const defaultCenter = { lat, lng };
 
+  // useEffect(() => {
+  //   setSelected({});
+  // }, [results, userPins, addFavorite, removeFavorite, addEvent, removeEvent]);
+
   useEffect(() => {
-    setSelected({});
-  }, [results, userPins, addFavorite, removeFavorite, addEvent, removeEvent]);
+    if (window.google) {
+      setSelected({});
+      if (results.length > 1) {
+        const bounds = results.reduce(
+          (boundsObj, { location: { lat, lng } }) =>
+            boundsObj.extend({ lat, lng }),
+          new window.google.maps.LatLngBounds()
+        );
+        const center = bounds.getCenter();
+        setCenter({ lat: center.lat(), lng: center.lng() });
+      }
+      if (results.length === 1) {
+        setZoom(12);
+        setCenter({
+          lat: results[0].location.lat,
+          lng: results[0].location.lng,
+        });
+      }
+      if (!results.length) {
+        setZoom(12);
+        setCenter({
+          lat: position.lat,
+          lng: position.lng,
+        });
+      }
+    }
+  }, [results]);
+
+  useEffect(() => console.log(position), [position]);
 
   // Render the map
   return isLoaded ? (
@@ -94,7 +132,7 @@ const Map = ({
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={12}
+        zoom={zoom}
         options={options}
         onClick={(event) => {
           setUserPins((currentState) => [
