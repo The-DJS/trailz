@@ -1,12 +1,6 @@
 /* eslint-disable import/extensions */
 import React from 'react';
-import {
-  Nav,
-  LinkCss,
-  Logo,
-  Menu,
-  Item,
-} from '../styles/navBarStyles';
+import { Nav, LinkCss, Logo, Menu, Item } from '../styles/navBarStyles';
 import { Route, Switch, Link } from 'react-router-dom';
 // import GoogleButton from 'react-google-button';
 import Search from './Search.jsx';
@@ -14,7 +8,6 @@ import Search from './Search.jsx';
 import Home from './HomeScreen.jsx';
 import Map from './Map.jsx';
 import Login from './Login.jsx';
-import Events from './Events.jsx';
 
 const Navbar = ({
   searchResults,
