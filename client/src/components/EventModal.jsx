@@ -1,29 +1,11 @@
 /* eslint-disable import/extensions */
 import React from 'react';
 import Modal from 'react-modal';
-import styled from 'styled-components';
+import {
+  CustomModal,
+  ExitButton,
+} from '../styles/modalStyles';
 import EventForm from './EventForm.jsx';
-
-const CustomModal = styled.div`
-    top: 65vh;
-    left: 44.5vw;
-    bottom: auto;
-    position: absolute;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    overflow-y: auto;
-`;
-
-const Button = styled.button`
-  background-color: ForestGreen;
-  font-weight: bolder;
-  font-size: 1.5rem;
-  width: 8vw;
-  height: 5vh;
-  border: 0px;
-  color: AliceBlue;
-  display: block;
-`;
 
 const EventModal = ({ location, addEvent }) => {
   let subtitle;
@@ -36,6 +18,7 @@ const EventModal = ({ location, addEvent }) => {
   const afterOpenModal = () => {
     // references are now sync'd and can be accessed.
     subtitle.style.color = 'ForestGreen';
+    subtitle.style.marginLeft = '32%';
   };
 
   const closeModal = () => {
@@ -54,10 +37,12 @@ const EventModal = ({ location, addEvent }) => {
         contentLabel="Example Modal"
       >
         <CustomModal>
-          <Button type="button" onClick={closeModal}>
-            X
-          </Button>
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Create an event</h2>
+          <div>
+            <ExitButton type="button" onClick={closeModal}>
+              X
+            </ExitButton>
+            <h1 ref={(_subtitle) => (subtitle = _subtitle)}>Create an event</h1>
+          </div>
           <EventForm
             location={location}
             addEvent={addEvent}

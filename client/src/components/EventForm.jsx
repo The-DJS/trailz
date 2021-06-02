@@ -1,95 +1,16 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
-import styled from 'styled-components';
-
-const FormGroup = styled.div`
-  color: SlateGray;
-  display: block;
-  width: 85vw;
-  margin: 50px auto;
-`;
-
-const Label = styled.label`
-  margin-bottom: 0.5em;
-  color: ForestGreen;
-  display: block;
-`;
-
-const Input = styled.input`
-  padding: 0.5em;
-  color: SlateGray;
-  background: AliceBlue;
-  border: none;
-  border-radius: 3px;
-  width: 100%;
-  margin-bottom: 0.5em;
-  &:invalid {
-    border: 2px solid red;
-  }
-`;
-
-const Textarea = styled.textarea`
-  padding: 0.5em;
-  color: LightSlateGray;
-  background: AliceBlue;
-  border: none;
-  border-radius: 3px;
-  width: 100%;
-  margin-bottom: 0.5em;
-  &:invalid {
-    border: 2px solid red;
-  }
-`;
-
-const Option = styled.option`
-  padding: 0.5em;
-  color: LightSlateGray;
-  background: AliceBlue;
-  border: none;
-  border-radius: 3px;
-  width: 100%;
-  margin-bottom: 0.5em;
-`;
-
-const Select = styled.select`
-  padding: 0.5em;
-  color: SlateGray;
-  background: AliceBlue;
-  border: none;
-  border-radius: 3px;
-  width: 100%;
-  margin-bottom: 0.5em;
-  &:invalid {
-    border: 2px solid red;
-  }
-`;
-
-const Message = styled.label`
-  margin-bottom: 0.5em;
-  background: AliceBlue;
-  width: 100%;
-  color: SlateGray;
-  display: block;
-`;
-
-const RequiredMessage = styled.label`
-  margin-bottom: 0.5em;
-  width: 100%;
-  font-weight: bold;
-  color: red;
-  display: block;
-`;
-
-const Button = styled.button`
-  margin-bottom: 0.5em;
-  background-color: ForestGreen;
-  font-weight: bolder;
-  width: 10vw;
-  height: 5vh;
-  border: 0px;
-  color: AliceBlue;
-  display: block;
-`;
+import {
+  FormGroup,
+  Label,
+  Input,
+  Textarea,
+  Option,
+  Select,
+  Message,
+  RequiredMessage,
+  Button,
+} from '../styles/formStyles';
 
 // const message = 'this is the validation message';
 const EventForm = ({ location, addEvent, closeModal }) => {
@@ -106,12 +27,14 @@ const EventForm = ({ location, addEvent, closeModal }) => {
     if (title && date && description && isPublic && activity) {
       addEvent(
         title,
-        location.name === 'Custom User Pin' ? customName : location.name,
+        location.name === 'Custom User Pin'
+          ? customName
+          : location.name,
         location.location.lat,
         location.location.lng,
         date,
         description,
-        isPublic
+        isPublic,
       );
       setTitle('');
       setDate('');
@@ -164,18 +87,20 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         <FormGroup>
           <Label htmlFor="locationName">Location *</Label>
           <Message id="locationName" name="locationName">
-            {location.name === 'Custom User Pin' ? (
-              <Input
-                id="locationName"
-                type="text"
-                placeholder="Name your custom location"
-                name="locationName"
-                onChange={(e) => setCustomName(e.target.value)}
-                required
-              />
-            ) : (
-              location.name
-            )}
+            {location.name === 'Custom User Pin'
+              ? (
+                <Input
+                  id="locationName"
+                  type="text"
+                  placeholder="Name your custom location"
+                  name="locationName"
+                  onChange={(e) => setCustomName(e.target.value)}
+                  required
+                />
+              )
+              : (
+                location.name
+              )}
           </Message>
         </FormGroup>
 
@@ -232,9 +157,6 @@ const EventForm = ({ location, addEvent, closeModal }) => {
 
         <FormGroup>
           <RequiredMessage>Required fields *</RequiredMessage>
-        </FormGroup>
-
-        <FormGroup>
           <Button type="submit">Submit</Button>
         </FormGroup>
       </form>
