@@ -5,9 +5,9 @@ import {
   CustomModal,
   ExitButton,
 } from '../styles/modalStyles';
-import EventForm from './EventForm.jsx';
+import AddEventForm from './AddEventForm.jsx';
 
-const EventModal = ({ location, addEvent }) => {
+const AddFavModal = ({ location, addEvent }) => {
   let subtitle;
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -28,22 +28,22 @@ const EventModal = ({ location, addEvent }) => {
   return (
     <div>
       <button type="button" onClick={openModal}>
-        Create an event
+        Add to favs
       </button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        contentLabel="Create Event Modal"
+        contentLabel="Add Fav Modal"
       >
         <CustomModal>
           <div>
             <ExitButton type="button" onClick={closeModal}>
               X
             </ExitButton>
-            <h1 ref={(_subtitle) => (subtitle = _subtitle)}>Create an Event</h1>
+            <h1 ref={(_subtitle) => (subtitle = _subtitle)}>Add Custom Location to Favs</h1>
           </div>
-          <EventForm
+          <AddEventForm
             location={location}
             addEvent={addEvent}
             closeModal={closeModal}
@@ -54,4 +54,4 @@ const EventModal = ({ location, addEvent }) => {
   );
 };
 
-export default EventModal;
+export default AddFavModal;
