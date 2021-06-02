@@ -3,7 +3,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import {
   CustomModal,
-  ExitButton,
+  ModalExitButton,
 } from '../styles/modalStyles';
 import EventForm from './EventForm.jsx';
 
@@ -38,9 +38,9 @@ const EventModal = ({ location, addEvent }) => {
       >
         <CustomModal>
           <div>
-            <ExitButton type="button" onClick={closeModal}>
+            <ModalExitButton type="button" onClick={closeModal}>
               X
-            </ExitButton>
+            </ModalExitButton>
             <h1 ref={(_subtitle) => (subtitle = _subtitle)}>Create an Event</h1>
           </div>
           <EventForm

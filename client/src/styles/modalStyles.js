@@ -12,7 +12,7 @@ const CustomModal = styled.div`
     overflow-y: auto;
 `;
 
-const ExitButton = styled.button`
+const ModalExitButton = styled.button`
   background-color: ForestGreen;
   font-weight: bolder;
   font-size: 1.5rem;
@@ -25,5 +25,5 @@ const ExitButton = styled.button`
 
 export {
   CustomModal,
-  ExitButton,
+  ModalExitButton,
 };
