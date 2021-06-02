@@ -120,6 +120,7 @@ const App = () => {
   };
 
   const loginUser = (currentUser) => {
+    console.log('in login user', currentUser);
     setUser(currentUser);
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))
