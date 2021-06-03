@@ -31,12 +31,13 @@ const CustomInfoWindow = ({
       <div className="map-info-window">
         {selected.eventName ? (
           <div>
+            <h4>{selected.eventName}</h4>
             <h5>{selected.locationName}</h5>
-            <p>{selected.eventName}</p>
+            <h6>{selected.owner}</h6>
             <p>{selected.time}</p>
             <p>{selected.description}</p>
-            <p>{selected.isPublic}</p>
-            <p>{selected.attendees}</p>
+            {selected.isPublic ? <p>Public</p> : <p>Private</p>}
+            <p>{selected.attendees.join(', ')}</p>
           </div>
         ) : (
           <h5>{selected.name}</h5>

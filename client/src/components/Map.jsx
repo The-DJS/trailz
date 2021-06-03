@@ -98,7 +98,7 @@ const Map = ({
                 lat: event.latLng.lat(),
                 lng: event.latLng.lng(),
               },
-              time: new Date(),
+              parkId: getKey(),
             },
           ])
         }
