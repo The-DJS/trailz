@@ -56,6 +56,7 @@ const Map = ({
       }
     }
   };
+  console.log(events);
   const { lat, lng } = position;
   const [center, setCenter] = useState({ lat, lng });
 
@@ -124,12 +125,7 @@ const Map = ({
             // icon={{
             //   url: './icons/hiking.svg',
             // }}
-            onClick={() => {
-              const {
-                location: { lat, lng },
-              } = item;
-              onSelect(item, lat, lng);
-            }}
+            onClick={() => onSelect(item, item.location.lat, item.location.lng)}
           />
         ))}
         {addFavorite &&
@@ -140,12 +136,7 @@ const Map = ({
               // icon={{
               //   url: '/camping.svg',
               // }}
-              onClick={() => {
-                const {
-                  location: { lat, lng },
-                } = pin;
-                onSelect(pin, lat, lng);
-              }}
+              onClick={() => onSelect(pin, pin.location.lat, pin.location.lng)}
             />
           ))}
         {selected.location && (
