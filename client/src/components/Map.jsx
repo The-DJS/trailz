@@ -33,9 +33,8 @@ const Map = ({
     if (window.google && mapRef.current) {
       if (results.length > 1) {
         const bounds = results.reduce(
-          (boundsObj, { location: { lat, lng } }) =>
-            boundsObj.extend({ lat, lng }),
-          new window.google.maps.LatLngBounds()
+          (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
+          new window.google.maps.LatLngBounds(),
         );
         mapRef.current.fitBounds(bounds);
       } else if (results.length === 1) {
@@ -90,42 +89,36 @@ const Map = ({
           center={center}
           zoom={zoom}
           options={options}
-          onClick={(event) => {
-            setUserPins((currentState) => [
-              ...currentState,
-              {
-                name: 'Custom User Pin',
-                location: {
-                  lat: event.latLng.lat(),
-                  lng: event.latLng.lng(),
-                },
-                // Attempting to create a parkId for custom pins
-                parkId: getKey(),
-                time: new Date(),
+          onClick={(event) => setUserPins((currentState) => [
+            ...currentState,
+            {
+              name: 'Custom User Pin',
+              location: {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
               },
               time: new Date(),
             },
-          ])
-        }
-        onLoad={onMapLoad}
-      >
-        {results.map((item) => (
-          <Marker
-            key={getKey()}
-            position={item.location}
-            // icon={{
-            //   url: './icons/hiking.svg',
-            // }}
-            onClick={() => {
-              const {
-                location: { lat, lng },
-              } = item;
-              onSelect(item, lat, lng);
-            }}
-          />
-        ))}
-        {addFavorite &&
-          userPins.map((pin) => (
+          ])}
+          onLoad={onMapLoad}
+        >
+          {results.map((item) => (
+            <Marker
+              key={getKey()}
+              position={item.location}
+              // icon={{
+              //   url: './icons/hiking.svg',
+              // }}
+              onClick={() => {
+                const {
+                  location: { lat, lng },
+                } = item;
+                onSelect(item, lat, lng);
+              }}
+            />
+          ))}
+          {addFavorite
+          && userPins.map((pin) => (
             <Marker
               key={getKey()}
               position={pin.location}
@@ -140,26 +133,26 @@ const Map = ({
               }}
             />
           ))}
-        {selected.location && (
-          <CustomInfoWindow
-            selected={selected}
-            setSelected={setSelected}
-            addFavorite={addFavorite}
-            removeFavorite={removeFavorite}
-            user={user}
-            register={register}
-            unregister={unregister}
-            removeEvent={removeEvent}
-            addEvent={addEvent}
-          />
-        )}
-        <></>
-      </GoogleMap>
-    </div>
-  )
-  : (
+          {selected.location && (
+            <CustomInfoWindow
+              selected={selected}
+              setSelected={setSelected}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              user={user}
+              register={register}
+              unregister={unregister}
+              removeEvent={removeEvent}
+              addEvent={addEvent}
+            />
+          )}
+          <></>
+        </GoogleMap>
+      </div>
+    )
+    : (
     // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+      <h1>Loading Maps!</h1>
+    );
 };
 export default Map;
