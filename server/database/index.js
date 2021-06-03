@@ -28,3 +28,5 @@ module.exports = {
   Park,
   Event,
 };
+
+////database is running on mongo atlas now
