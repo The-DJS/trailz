@@ -3,23 +3,26 @@ const { wrapAsync } = require('../helpers');
 
 const getAllEvents = wrapAsync(async (req, res) => {
   const events = await Event.find();
-  const mappedEvents = await Promise.all(
-    events.map(async (event) => {
-      const { firstName, lastName } = await User.findById(event.owner);
-      const mappedAttendees = await Promise.all(
-        event.attendees.map(async (attendeeId) => {
-          const attendeeObj = await User.findById(attendeeId);
-          return `${attendeeObj.firstName} ${attendeeObj.lastName}`;
-        })
-      );
-      return {
-        ...event._doc, // why ???
-        owner: `${firstName} ${lastName}`,
-        attendees: mappedAttendees,
-      };
-    })
-  );
-  res.send(mappedEvents);
+  if (events.length) {
+    const mappedEvents = await Promise.all(
+      events.map(async (event) => {
+        const { firstName, lastName } = await User.findById(event.owner);
+        const mappedAttendees = await Promise.all(
+          event.attendees.map(async (attendeeId) => {
+            const attendeeObj = await User.findById(attendeeId);
+            return `${attendeeObj.firstName} ${attendeeObj.lastName}`;
+          })
+        );
+        return {
+          ...event._doc, // why ???
+          owner: `${firstName} ${lastName}`,
+          attendees: mappedAttendees,
+        };
+      })
+    );
+    return res.send(mappedEvents);
+  }
+  res.send(events);
 });
 
 const getUserEvents = wrapAsync(async (req, res) => {
