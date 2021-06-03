@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
-const FormGroup = styled.div`
+const EventFormGroup = styled.div`
   color: SlateGray;
   display: block;
   width: 80vw;
   margin-bottom: 2.5vh;
 `;
 
-const FormLabel = styled.label`
+const EventFormLabel = styled.label`
   margin-bottom: 0.5em;
   color: ForestGreen;
   display: block;
 `;
 
-const FormInput = styled.input`
+const EventFormInput = styled.input`
   padding: 0.5em;
   color: SlateGray;
   background: AliceBlue;
@@ -26,7 +26,7 @@ const FormInput = styled.input`
   }
 `;
 
-const FormTextarea = styled.textarea`
+const EventFormTextarea = styled.textarea`
   padding: 0.5em;
   color: LightSlateGray;
   background: AliceBlue;
@@ -39,7 +39,7 @@ const FormTextarea = styled.textarea`
   }
 `;
 
-const FormOption = styled.option`
+const EventFormOption = styled.option`
   padding: 0.5em;
   color: LightSlateGray;
   background: AliceBlue;
@@ -49,7 +49,7 @@ const FormOption = styled.option`
   margin-bottom: 0.5em;
 `;
 
-const FormSelect = styled.select`
+const EventFormSelect = styled.select`
   padding: 0.5em;
   color: SlateGray;
   background: AliceBlue;
@@ -62,7 +62,7 @@ const FormSelect = styled.select`
   }
 `;
 
-const FormMessage = styled.label`
+const EventFormMessage = styled.label`
   margin-bottom: 0.5em;
   background: AliceBlue;
   width: 100%;
@@ -70,7 +70,7 @@ const FormMessage = styled.label`
   display: block;
 `;
 
-const FormRequiredMessage = styled.label`
+const EventFormRequiredMessage = styled.label`
   margin-bottom: 0.5em;
   margin-top:0.5rem;
   width: 100%;
@@ -79,7 +79,7 @@ const FormRequiredMessage = styled.label`
   display: block;
 `;
 
-const FormButton = styled.button`
+const EventFormButton = styled.button`
   margin-bottom: 0.5em;
   margin-top:0.5rem;
   background-color: ForestGreen;
@@ -92,13 +92,13 @@ const FormButton = styled.button`
 `;
 
 export {
-  FormGroup,
-  FormLabel,
-  FormInput,
-  FormTextarea,
-  FormOption,
-  FormSelect,
-  FormMessage,
-  FormRequiredMessage,
-  FormButton,
+  EventFormGroup,
+  EventFormLabel,
+  EventFormInput,
+  EventFormTextarea,
+  EventFormOption,
+  EventFormSelect,
+  EventFormMessage,
+  EventFormRequiredMessage,
+  EventFormButton,
 }

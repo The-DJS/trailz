@@ -1,7 +1,9 @@
 /* eslint-disable import/extensions */
 import React from 'react';
+import { InfoButton } from '../styles/infoWindowStyles.js';
 import { InfoWindow } from '@react-google-maps/api';
 import EventModal from './EventModal.jsx';
+import FavModal from './FavModal.jsx';
 
 const CustomInfoWindow = ({
   selected,
@@ -29,7 +31,7 @@ const CustomInfoWindow = ({
       <div className="map-info-window">
         {selected.eventName ? (
           <div>
-            <p>{selected.locationName}</p>
+            <h5>{selected.locationName}</h5>
             <p>{selected.eventName}</p>
             <p>{selected.time}</p>
             <p>{selected.description}</p>
@@ -37,40 +39,36 @@ const CustomInfoWindow = ({
             <p>{selected.attendees}</p>
           </div>
         ) : (
-          <p>{selected.name}</p>
+          <h5>{selected.name}</h5>
         )}
-        {addFavorite && (
-          <button type="button" onClick={() => addFavorite(selected)}>
-            Add to favs
-          </button>
-        )}
+        {addFavorite && <FavModal location={selected} addFav={addFavorite} />}
         {removeFavorite && (
-          <button type="button" onClick={() => removeFavorite(selected)}>
+          <InfoButton type="button" onClick={() => removeFavorite(selected)}>
             Remove from favs
-          </button>
+          </InfoButton>
         )}
         {!addFavorite &&
         !removeFavorite &&
         !selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
           <>
-            <button type="button" onClick={() => register(selected._id)}>
+            <InfoButton type="button" onClick={() => register(selected._id)}>
               Register
-            </button>
+            </InfoButton>
           </>
         ) : null}
         {!addFavorite &&
         !removeFavorite &&
         selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
-          <button type="button" onClick={() => unregister(selected._id)}>
+          <InfoButton type="button" onClick={() => unregister(selected._id)}>
             Unregister
-          </button>
+          </InfoButton>
         ) : null}
         {!addFavorite &&
         !removeFavorite &&
         selected.owner.includes(`${user.firstName} ${user.lastName}`) ? (
-          <button type="button" onClick={() => removeEvent(selected._id)}>
+          <InfoButton type="button" onClick={() => removeEvent(selected._id)}>
             Delete
-          </button>
+          </InfoButton>
         ) : null}
         {addFavorite || removeFavorite ? (
           <EventModal location={selected} addEvent={addEvent} />

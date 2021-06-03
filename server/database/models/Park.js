@@ -11,7 +11,7 @@ const parkSchema = mongoose.Schema({
   },
   address: {
     type: String,
-    required: true,
+    // required: true,
   },
   location: {
     lat: {
