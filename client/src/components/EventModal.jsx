@@ -2,10 +2,10 @@
 import React from 'react';
 import Modal from 'react-modal';
 import {
-  CustomModal,
-  ModalExitButton,
-  InfoButton,
-} from '../styles/modalStyles';
+  EventCustomModal,
+  EventModalExitButton,
+  EventInfoButton,
+} from '../styles/eventModalStyles';
 import EventForm from './EventForm.jsx';
 
 const EventModal = ({ location, addEvent }) => {
@@ -28,20 +28,20 @@ const EventModal = ({ location, addEvent }) => {
 
   return (
     <div>
-      <InfoButton type="button" onClick={openModal}>
+      <EventInfoButton type="button" onClick={openModal}>
         Create an event
-      </InfoButton>
+      </EventInfoButton>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         contentLabel="Create Event Modal"
       >
-        <CustomModal>
+        <EventCustomModal>
           <div>
-            <ModalExitButton type="button" onClick={closeModal}>
+            <EventModalExitButton type="button" onClick={closeModal}>
               X
-            </ModalExitButton>
+            </EventModalExitButton>
             <h1 ref={(_subtitle) => (subtitle = _subtitle)}>Create an Event</h1>
           </div>
           <EventForm
@@ -49,7 +49,7 @@ const EventModal = ({ location, addEvent }) => {
             addEvent={addEvent}
             closeModal={closeModal}
           />
-        </CustomModal>
+        </EventCustomModal>
       </Modal>
     </div>
   );
