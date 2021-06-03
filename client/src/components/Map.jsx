@@ -2,29 +2,21 @@
 /* eslint-disable react/jsx-boolean-value */
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { v4 as getKey } from 'uuid';
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from '@react-google-maps/api';
-import mapStyles from './mapStyles';
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import mapStyles from '../styles/mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
-import Modal from './Modal.jsx';
-
+import CustomInfoWindow from './InfoWindow.jsx';
 // The size of the map on the page
 const containerStyle = {
-  height: "100vh",
-  width: "100vw",
+  height: '87.8vh',
+  width: '100vw',
 };
-
 // Options of the render (disable default UI and custom styles)
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
 };
-
 const Map = ({
   results,
   addFavorite,
@@ -34,51 +26,68 @@ const Map = ({
   unregister,
   addEvent,
   removeEvent,
-  attending,
-  created,
+  events,
+  user,
 }) => {
+  const setBounds = () => {
+    if (window.google && mapRef.current) {
+      if (results.length > 1) {
+        const bounds = results.reduce(
+          (boundsObj, { location: { lat, lng } }) =>
+            boundsObj.extend({ lat, lng }),
+          new window.google.maps.LatLngBounds()
+        );
+        mapRef.current.fitBounds(bounds);
+      } else if (results.length === 1) {
+        const [
+          {
+            location: { lat, lng },
+          },
+        ] = results;
+        setZoom(12);
+        setCenter({ lat, lng });
+      } else {
+        const { lat, lng } = position;
+        setZoom(12);
+        setCenter({ lat, lng });
+      }
+    }
+  };
+  const { lat, lng } = position;
+  const [center, setCenter] = useState({ lat, lng });
+  const [zoom, setZoom] = useState(12);
   // Selected marker
   const [selected, setSelected] = useState({});
-
-  const onSelect = (item) => {
+  const onSelect = (item, selectedLat, selectedLng) => {
+    setCenter({ selectedLat, selectedLng });
     setSelected(item);
   };
-
   // Custom pins
   const [userPins, setUserPins] = useState([]);
-
   // Location references to keep the center when the map re-renders.
   const mapRef = useRef();
-
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
-    const bounds = results.reduce(
-      (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
-      new window.google.maps.LatLngBounds()
-    );
-    mapRef.current.fitBounds(bounds);
+    setBounds();
   }, []);
-
   // Load script
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
   });
-
   // Show error if there was an error loading the script.
   if (loadError) return 'Error loading maps';
-
-  // Default location of the map.
-  const { lat, lng } = position;
-  const defaultCenter = { lat, lng };
-
+  useEffect(() => {
+    setSelected({});
+    setBounds();
+  }, [results]);
   // Render the map
   return isLoaded ? (
     <div>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={defaultCenter}
-        zoom={12}
+        center={center}
+        zoom={zoom}
         options={options}
         onClick={(event) =>
           setUserPins((currentState) => [
@@ -102,7 +111,12 @@ const Map = ({
             // icon={{
             //   url: './icons/hiking.svg',
             // }}
-            onClick={() => onSelect(item)}
+            onClick={() => {
+              const {
+                location: { lat, lng },
+              } = item;
+              onSelect(item, lat, lng);
+            }}
           />
         ))}
         {addFavorite &&
@@ -113,62 +127,33 @@ const Map = ({
               // icon={{
               //   url: '/camping.svg',
               // }}
-              onClick={() => onSelect(pin)}
+              onClick={() => {
+                const {
+                  location: { lat, lng },
+                } = pin;
+                onSelect(pin, lat, lng);
+              }}
             />
           ))}
         {selected.location && (
-          <InfoWindow
-            position={selected.location}
-            clickable={true}
-            onCloseClick={() => setSelected({})}
-          >
-            <div className="map-info-window">
-              <p>{selected.name}</p>
-              {addFavorite && (
-                <button type="button" onClick={() => addFavorite(selected)}>
-                  Add to favs
-                </button>
-              )}
-              {removeFavorite && (
-                <button type="button" onClick={() => removeFavorite(selected)}>
-                  Remove from favs
-                </button>
-              )}
-              {!addFavorite &&
-              !removeFavorite &&
-              !attending.includes(selected) ? (
-                <>
-                  <button type="button" onClick={() => register(selected._id)}>
-                    Register
-                  </button>
-                </>
-              ) : null}
-              {!addFavorite &&
-              !removeFavorite &&
-              attending.includes(selected) ? (
-                <button type="button" onClick={() => unregister(selected._id)}>
-                  Unregister
-                </button>
-              ) : null}
-              {!addFavorite &&
-              !removeFavorite &&
-              created.includes(selected._id) ? (
-                <button type="button" onClick={() => removeEvent(selected._id)}>
-                  Delete
-                </button>
-              ) : null}
-              <Modal location={selected} addEvent={addEvent} />
-            </div>
-          </InfoWindow>
+          <CustomInfoWindow
+            selected={selected}
+            setSelected={setSelected}
+            addFavorite={addFavorite}
+            removeFavorite={removeFavorite}
+            user={user}
+            register={register}
+            unregister={unregister}
+            removeEvent={removeEvent}
+            addEvent={addEvent}
+          />
         )}
         <></>
       </GoogleMap>
     </div>
-  )
-    : (
+  ) : (
     // Display loading message while the script loads the map.
-      <h1>Loading Maps!</h1>
-    );
+    <h1>Loading Maps!</h1>
+  );
 };
-
 export default Map;

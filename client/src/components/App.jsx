@@ -11,18 +11,38 @@ const App = () => {
   const [favorites, setFavorites] = useState([]);
   const [position, setPosition] = useState({});
   const [events, setEvents] = useState([]);
-  const [attending, setAttending] = useState([]);
-  const [created, setCreated] = useState([]);
 
-  // Events
   const unregister = async (eventId) => {
     await axios.delete(`/events/${user._id}/${eventId}`);
-    setAttending(attending.filter((event) => event._id !== eventId));
+    const foundEvent = events.find((event) => event._id === eventId);
+    foundEvent.attendees = foundEvent.attendees.filter(
+      (attendee) => attendee !== `${user.firstName} ${user.lastName}`
+    );
+    setEvents(
+      events.map((event) => {
+        if (event._id === eventId) {
+          return foundEvent;
+        }
+        return event;
+      })
+    );
   };
 
   const register = async (eventId) => {
     await axios.post(`/events/${user._id}/${eventId}`);
-    setAttending([...attending, events.find((event) => event._id === eventId)]);
+    const foundEvent = events.find((event) => event._id === eventId);
+    foundEvent.attendees = [
+      ...foundEvent.attendees,
+      `${user.firstName} ${user.lastName}`,
+    ];
+    setEvents(
+      events.map((event) => {
+        if (event._id === eventId) {
+          return foundEvent;
+        }
+        return event;
+      })
+    );
   };
 
   const addEvent = async (
@@ -44,15 +64,11 @@ const App = () => {
       isPublic,
     });
     setEvents([...events, event]);
-    setAttending([...attending, event]);
-    setCreated([...created, event._id]);
   };
 
   const removeEvent = async (eventId) => {
     await axios.delete(`/events/removeEvent/${eventId}`);
     setEvents(events.filter((event) => event._id !== eventId));
-    setAttending(attending.filter((event) => event._id !== eventId));
-    setCreated(created.filter((id) => id !== eventId));
   };
 
   const updatePosition = (newPosition) => setPosition(newPosition);
@@ -104,13 +120,10 @@ const App = () => {
   };
 
   const loginUser = (currentUser) => {
+    console.log('in login user', currentUser);
     setUser(currentUser);
-    setCreated(currentUser.createdEvents);
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))
-      .catch((err) => console.log(err));
-    fetchAttending(currentUser)
-      .then(({ registeredEvents }) => setAttending(registeredEvents))
       .catch((err) => console.log(err));
   };
 
@@ -170,13 +183,13 @@ const App = () => {
           position={position}
           updatePosition={updatePosition}
           events={events}
-          attending={attending}
+          // attending={attending}
           user={user}
           register={register}
           unregister={unregister}
           addEvent={addEvent}
           removeEvent={removeEvent}
-          created={created}
+          // created={created}
         />
       </div>
     </BrowserRouter>

@@ -9,18 +9,19 @@ const Search = ({ updateSearchResults, position, updatePosition }) => {
       .get(`/parks/searchResults/${lat}/${lng}/${search}`)
       .then(({ data: results }) => {
         updateSearchResults(results.mappedResults);
-        updatePosition(results.position);
+        // updatePosition(results.position);
         setSearch('');
       })
       .catch((err) => console.log(err));
   };
   return (
     <div>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
       >
         {/* <h3 className="title">Search</h3> */}
         <input

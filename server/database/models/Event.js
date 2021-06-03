@@ -34,6 +34,10 @@ const eventSchema = new mongoose.Schema({
   attendees: [
     { type: mongoose.Schema.Types.ObjectId, required: true, default: [] },
   ],
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Event', eventSchema);

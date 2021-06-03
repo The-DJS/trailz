@@ -7,7 +7,7 @@ const loggedIn = wrapAsync(async (req, res) => {
   res.send(user);
 });
 
-const loggedOut = (req, res, next) => {
+const loggedOut = (req, res) => {
   req.logout();
   // res.redirect('https://accounts.google.com/logout');
   req.session.destroy();
@@ -16,7 +16,18 @@ const loggedOut = (req, res, next) => {
 
 const getCurrentUser = wrapAsync(async (req, res) => {
   const { googleId } = req.params;
-  const user = await User.findOne({ googleId: googleId });
+  const user = await User.findOne({ googleId });
+  if (!user) {
+    return res.send(false);
+  }
+  console.log(user);
+  res.send(user);
+});
+
+const createUser = wrapAsync(async (req, res) => {
+  const { googleId } = req.params;
+  const { firstName, lastName } = req.body;
+  const user = await new User({ googleId, firstName, lastName }).save();
   res.send(user);
 });
 
@@ -24,4 +35,5 @@ module.exports = {
   loggedIn,
   loggedOut,
   getCurrentUser,
+  createUser,
 };
