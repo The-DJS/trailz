@@ -30,43 +30,60 @@ const Navbar = ({
 }) => (
   <div>
     <div>
-      <Nav>
-        <Logo as={Link} to="/" style={{ fontsize: '40px' }}>
-          TRAILZ
-        </Logo>
-        <Menu>
-          <Item>
-            <LinkCss as={Link} to="/">
-              <Login
-                loginUser={loginUser}
-                logoutUser={logoutUser}
-                user={user}
-              />
-            </LinkCss>
-          </Item>
-          <Item>
-            <LinkCss as={Link} to="/">
-              Home
-            </LinkCss>
-          </Item>
-          <Item>
-            <LinkCss as={Link} to="/search">
-              Search
-            </LinkCss>
-          </Item>
-          <Item>
-            {user && (
-              <LinkCss as={Link} to="/favorite">
-                Favorite Trails
-              </LinkCss>
-            )}
-          </Item>
-          <Item>
-            <LinkCss as={Link} to="/events">
-              Events
-            </LinkCss>
-          </Item>
-        </Menu>
+      <Nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container-fluid">
+          <a href="#" className="navbar-brand">
+            <Logo as={Link} to="/" style={{ fontsize: '40px' }}>
+              TRAILZ
+            </Logo>
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <Menu className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <Item className="nav-item">
+                <LinkCss as={Link} to="/" className="nav-link">
+                  <Login
+                    loginUser={loginUser}
+                    logoutUser={logoutUser}
+                    user={user}
+                  />
+                </LinkCss>
+              </Item>
+              <Item className="nav-item">
+                <LinkCss as={Link} to="/" className="nav-link">
+                  Home
+                </LinkCss>
+              </Item>
+              <Item className="nav-item">
+                <LinkCss as={Link} to="/search" className="nav-link">
+                  Search
+                </LinkCss>
+              </Item>
+              <Item className="nav-item">
+                {user && (
+                  <LinkCss as={Link} to="/favorite" className="nav-link">
+                    Favorite Trails
+                  </LinkCss>
+                )}
+              </Item>
+              <Item className="nav-item">
+                <LinkCss as={Link} to="/events" className="nav-link">
+                  Events
+                </LinkCss>
+              </Item>
+            </Menu>
+          </div>
+        </div>
       </Nav>
     </div>
     <div>

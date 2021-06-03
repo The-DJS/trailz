@@ -27,20 +27,14 @@ const Logo = styled.h1`
 const Menu = styled.ul`
   list-style: none;
   display: flex;
-  li:nth-child(odd) {
+  /* li:nth-child(odd) {
     margin: 0px 20px;
-  }
-  @media (max-width: 768px) {
+  } */
+  /* @media (max-width: 768px) {
     display: none;
-  }
+  } */
 `;
 
 const Item = styled.li``;
 
-export {
-  Nav,
-  LinkCss,
-  Logo,
-  Menu,
-  Item,
-};
+export { Nav, LinkCss, Logo, Menu, Item };

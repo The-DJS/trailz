@@ -24,9 +24,6 @@ const addFavoritePark = wrapAsync(async (req, res) => {
     name,
     address,
     location: { lat, lng },
-    // icon,
-    // imageUrl,
-    // anchorTag,
   }).save();
   user.favoriteParks.push(newPark);
   await user.save();

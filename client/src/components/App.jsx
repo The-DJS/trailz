@@ -63,7 +63,8 @@ const App = () => {
       description,
       isPublic,
     });
-    setEvents([...events, event]);
+    console.log(event);
+    setEvents((currEvents) => [...currEvents, event]);
   };
 
   const removeEvent = async (eventId) => {
@@ -114,13 +115,7 @@ const App = () => {
     return favoriteParks;
   };
 
-  const fetchAttending = async (currUser) => {
-    const { data } = await axios.get(`/events/${currUser._id}`);
-    return data;
-  };
-
   const loginUser = (currentUser) => {
-    console.log('in login user', currentUser);
     setUser(currentUser);
     fetchFavorites(currentUser)
       .then((favoriteParks) => setFavorites(favoriteParks))

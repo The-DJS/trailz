@@ -2,5 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App.jsx';
+import { AppProvider } from './context/context.jsx';
 
-ReactDOM.render(<App />, document.getElementById('trailz'));
+ReactDOM.render(
+  <AppProvider>
+    <App />
+  </AppProvider>,
+  document.getElementById('trailz')
+);

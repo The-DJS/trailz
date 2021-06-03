@@ -15,20 +15,21 @@ const CustomInfoWindow = ({
   unregister,
   removeEvent,
   addEvent,
-}) => (
-  <InfoWindow
-    position={selected.location}
-    clickable
-    onCloseClick={() => setSelected({})}
-    options={{
-      pane: "overlayLayer",
-      pixelOffset: new google.maps.Size(0, -45),
-      alignBottom: true,
-    }}
-  >
-    <div className="map-info-window">
-      {selected.eventName
-        ? (
+}) => {
+  console.log(user);
+  return (
+    <InfoWindow
+      position={selected.location}
+      clickable
+      onCloseClick={() => setSelected({})}
+      options={{
+        pane: 'overlayLayer',
+        pixelOffset: new google.maps.Size(0, -45),
+        alignBottom: true,
+      }}
+    >
+      <div className="map-info-window">
+        {selected.eventName ? (
           <div>
             <h4>{selected.eventName}</h4>
             <h5>{selected.locationName}</h5>
@@ -38,54 +39,44 @@ const CustomInfoWindow = ({
             {selected.isPublic ? <p>Public</p> : <p>Private</p>}
             <p>{selected.attendees.join(', ')}</p>
           </div>
-        )
-        : (
+        ) : (
           <h5>{selected.name}</h5>
         )}
-      {addFavorite && (
-        <FavModal location={selected} addFav={addFavorite} />
-      )}
-      {removeFavorite && (
-        <InfoButton type="button" onClick={() => removeFavorite(selected)}>
-          Remove from favs
-        </InfoButton>
-      )}
-      {!addFavorite
-        && !removeFavorite
-        && !selected.attendees.includes(`${user.firstName} ${user.lastName}`)
-        ? (
+        {addFavorite && <FavModal location={selected} addFav={addFavorite} />}
+        {removeFavorite && (
+          <InfoButton type="button" onClick={() => removeFavorite(selected)}>
+            Remove from favs
+          </InfoButton>
+        )}
+        {!addFavorite &&
+        !removeFavorite &&
+        !selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
           <>
             <InfoButton type="button" onClick={() => register(selected._id)}>
               Register
             </InfoButton>
           </>
-        )
-        : null}
-      {!addFavorite
-        && !removeFavorite
-        && selected.attendees.includes(`${user.firstName} ${user.lastName}`)
-        ? (
+        ) : null}
+        {!addFavorite &&
+        !removeFavorite &&
+        selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
           <InfoButton type="button" onClick={() => unregister(selected._id)}>
             Unregister
           </InfoButton>
-        )
-        : null}
-      {!addFavorite
-        && !removeFavorite
-        && selected.owner.includes(`${user.firstName} ${user.lastName}`)
-        ? (
+        ) : null}
+        {!addFavorite &&
+        !removeFavorite &&
+        selected.owner.includes(`${user.firstName} ${user.lastName}`) ? (
           <InfoButton type="button" onClick={() => removeEvent(selected._id)}>
             Delete
           </InfoButton>
-        )
-        : null}
-      {addFavorite || removeFavorite
-        ? (
+        ) : null}
+        {addFavorite || removeFavorite ? (
           <EventModal location={selected} addEvent={addEvent} />
-        )
-        : null}
-    </div>
-  </InfoWindow>
-);
+        ) : null}
+      </div>
+    </InfoWindow>
+  );
+};
 
 export default CustomInfoWindow;
