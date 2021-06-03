@@ -100,7 +100,7 @@ const Map = ({
             key={getKey()}
             position={item.location}
             // icon={{
-            //   url: './camping.svg',
+            //   url: './icons/hiking.svg',
             // }}
             onClick={() => onSelect(item)}
           />
