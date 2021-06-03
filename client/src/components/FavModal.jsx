@@ -13,7 +13,7 @@ const FavModal = ({ location, addFav }) => {
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const openModal = () => {
-    if (location.name === 'Custom User Pin') {
+    if (location.name === 'Dropped Pin') {
       setIsOpen(true);
     } else {
       addFav(location);
