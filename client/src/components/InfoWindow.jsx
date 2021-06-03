@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import React from 'react';
-import { InfoInfoButton } from '../styles/infoWindowStyles.js';
+import { InfoButton } from '../styles/infoWindowStyles.js';
 import { InfoWindow } from '@react-google-maps/api';
 import EventModal from './EventModal.jsx';
 import FavModal from './FavModal.jsx';

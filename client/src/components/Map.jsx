@@ -140,6 +140,8 @@ const Map = ({
                   lat: event.latLng.lat(),
                   lng: event.latLng.lng(),
                 },
+                // Attempting to create a parkId for custom pins
+                parkId: getKey(),
                 time: new Date(),
               },
             ]);
