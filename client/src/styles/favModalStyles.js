@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const CustomModal = styled.div`
-    top: 50vh;
+const FavCustomModal = styled.div`
+    top: 46vh;
     left: 44vw;
     margin: auto;
     bottom: auto;
@@ -12,7 +12,7 @@ const CustomModal = styled.div`
     overflow-y: auto;
 `;
 
-const ModalExitButton = styled.button`
+const FavModalExitButton = styled.button`
   background-color: ForestGreen;
   font-weight: bolder;
   font-size: 1.5rem;
@@ -23,7 +23,7 @@ const ModalExitButton = styled.button`
   float: right;
 `;
 
-const InfoButton = styled.button`
+const FavInfoButton = styled.button`
   margin: 0.5rem 0%;
   background-color: ForestGreen;
   font-weight: 800;
@@ -36,7 +36,7 @@ const InfoButton = styled.button`
 `;
 
 export {
-  CustomModal,
-  ModalExitButton,
-  InfoButton,
+  FavCustomModal,
+  FavModalExitButton,
+  FavInfoButton,
 };
