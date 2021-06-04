@@ -1,6 +1,12 @@
 const { Event, User } = require('../database');
 const { wrapAsync } = require('../helpers');
 
+const doesEventExist = wrapAsync(async (req, res) => {
+  const { eventId } = req.params;
+  const event = await Event.findById(eventId);
+  res.send(event ? true : false);
+});
+
 const getAllEvents = wrapAsync(async (req, res) => {
   const events = await Event.find();
   if (events.length) {
@@ -55,7 +61,6 @@ const addNewEvent = wrapAsync(async (req, res) => {
     attendees: [`${user.firstName} ${user.lastName}`],
     owner: `${user.firstName} ${user.lastName}`,
   };
-  console.log(formattedEvent);
   res.send(formattedEvent);
 });
 
@@ -94,6 +99,11 @@ const unregisterForEvent = wrapAsync(async (req, res) => {
     (id) => id.toString() !== eventId
   );
   await user.save();
+  const event = await Event.findById(eventId);
+  event.attendees = [...event.attendees].filter(
+    (id) => id.toString() !== userId
+  );
+  await event.save();
   res.send(true);
 });
 
@@ -104,4 +114,5 @@ module.exports = {
   removeEvent,
   registerForEvent,
   unregisterForEvent,
+  doesEventExist,
 };
