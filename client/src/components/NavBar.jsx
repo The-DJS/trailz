@@ -1,6 +1,5 @@
 /* eslint-disable import/extensions */
 import React from 'react';
-import styled from 'styled-components';
 import { Route, Switch, Link } from 'react-router-dom';
 import { Nav, LinkCss, Logo, Menu, Item } from '../styles/navBarStyles';
 // import GoogleButton from 'react-google-button';

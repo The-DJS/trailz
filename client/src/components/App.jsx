@@ -15,6 +15,12 @@ const App = () => {
 
   const unregister = async (eventId) => {
     if (!user) return;
+    const { data: eventExists } = await axios.get(`events/validate/${eventId}`);
+    if (!eventExists) {
+      setEvents(events.filter((currentEvent) => currentEvent._id !== eventId));
+      setShowAlert(true);
+      return;
+    }
     await axios.delete(`/events/${user._id}/${eventId}`);
     const foundEvent = events.find((event) => event._id === eventId);
     foundEvent.attendees = foundEvent.attendees.filter(
