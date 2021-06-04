@@ -6,17 +6,20 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import mapStyles from '../../styles/mapStyles.js';
 import GOOGLE_MAPS_API_KEY from '../../../../server/google-maps/API.js';
 import CustomInfoWindow from './InfoWindow.jsx';
+
 // The size of the map on the page
 const containerStyle = {
-  height: '87.8vh',
+  height: '91vh',
   width: '100vw',
 };
+
 // Options of the render (disable default UI and custom styles)
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
 };
+
 const Map = ({
   results,
   addFavorite,
@@ -28,6 +31,7 @@ const Map = ({
   removeEvent,
   events,
   user,
+  toggleSearch,
   updateEvents,
 }) => {
   const [shouldUpdate, setShouldUpdate] = useState(true);
@@ -61,9 +65,8 @@ const Map = ({
     if (window.google && mapRef.current) {
       if (results.length > 1) {
         const bounds = results.reduce(
-          (boundsObj, { location: { lat, lng } }) =>
-            boundsObj.extend({ lat, lng }),
-          new window.google.maps.LatLngBounds()
+          (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
+          new window.google.maps.LatLngBounds(),
         );
         mapRef.current.fitBounds(bounds);
       } else if (results.length === 1) {
@@ -96,73 +99,83 @@ const Map = ({
       clearInterval(id);
     };
   }, []);
+
   // Render the map
-  return isLoaded ? (
-    <div>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={zoom}
-        options={options}
-        onClick={(event) =>
-          setUserPins((currentState) => [
-            ...currentState,
+  return isLoaded
+    ? (
+      <div>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={zoom}
+          options={options}
+          onClick={(event) => setUserPins(() => [
             {
-              name: 'Custom User Pin',
+              name: 'Dropped Pin',
               location: {
                 lat: event.latLng.lat(),
                 lng: event.latLng.lng(),
               },
               parkId: getKey(),
             },
-          ])
-        }
-        onLoad={onMapLoad}
-      >
-        {results.map((item) => (
-          <Marker
-            key={getKey()}
-            position={item.location}
-            // icon={{
-            //   url: './icons/hiking.svg',
-            // }}
-            onClick={() => {
-              onSelect(item, item.location.lat, item.location.lng);
-            }}
-          />
-        ))}
-        {addFavorite &&
-          userPins.map((pin) => (
+          ])}
+          onLoad={onMapLoad}
+        >
+          {results.map((item) => (
+            <Marker
+              key={getKey()}
+              position={item.location}
+              icon={{
+                url: './icons/park.svg',
+                scaledSize: new window.google.maps.Size(30, 30),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15),
+              }}
+              onClick={() => {
+                const {
+                  location: { lat, lng },
+                } = item;
+                onSelect(item, lat, lng);
+              }}
+            />
+          ))}
+          {addFavorite
+          && userPins.map((pin) => (
             <Marker
               key={getKey()}
               position={pin.location}
-              // icon={{
-              //   url: '/camping.svg',
-              // }}
+              icon={{
+                url: './icons/park.svg',
+                scaledSize: new window.google.maps.Size(30, 30),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15),
+              }}
               onClick={() => {
                 onSelect(pin, pin.location.lat, pin.location.lng);
               }}
             />
           ))}
-        {selected.location && (
-          <CustomInfoWindow
-            selected={selected}
-            setSelected={setSelected}
-            addFavorite={addFavorite}
-            removeFavorite={removeFavorite}
-            user={user}
-            register={register}
-            unregister={unregister}
-            removeEvent={removeEvent}
-            addEvent={addEvent}
-          />
-        )}
-        <></>
-      </GoogleMap>
-    </div>
-  ) : (
+          {selected.location && (
+            <CustomInfoWindow
+              selected={selected}
+              setSelected={setSelected}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              user={user}
+              register={register}
+              unregister={unregister}
+              removeEvent={removeEvent}
+              addEvent={addEvent}
+              toggleSearch={toggleSearch}
+            />
+          )}
+          <></>
+        </GoogleMap>
+      </div>
+    )
+    : (
     // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+      <h1>Loading Maps!</h1>
+    );
 };
 export default Map;

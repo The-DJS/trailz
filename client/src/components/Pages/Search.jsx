@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import SearchBar from '../../styles/search';
 
-const Search = ({ updateSearchResults, position, updatePosition }) => {
+const Search = ({ updateSearchResults, position, updatePosition, isSearchVisible }) => {
   const [search, setSearch] = useState('');
-  const handleClick = () => {
+  const handleSearch = () => {
     const { lat, lng } = position;
     axios
       .get(`/parks/searchResults/${lat}/${lng}/${search}`)
@@ -16,26 +17,18 @@ const Search = ({ updateSearchResults, position, updatePosition }) => {
   };
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {/* <h3 className="title">Search</h3> */}
-        <input
-          type="text"
-          placeholder="Search Trails"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <br />
-        <br />
-        <button type="button" onClick={handleClick}>
-          Search Parks
-        </button>
-      </div>
+      {isSearchVisible
+        ? (
+          <SearchBar
+            className="form-control"
+            type="text"
+            placeholder="Search Trails"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+          />
+        )
+        : <></>}
     </div>
   );
 };

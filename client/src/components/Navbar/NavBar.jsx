@@ -28,6 +28,8 @@ const Navbar = ({
   removeEvent,
   showAlert,
   setShowAlert,
+  toggleSearch,
+  isSearchVisible,
   updateEvents,
 }) => (
   <div>
@@ -98,6 +100,7 @@ const Navbar = ({
               updateSearchResults={updateSearchResults}
               position={position}
               updatePosition={updatePosition}
+              isSearchVisible={isSearchVisible}
             />
             <Map
               results={searchResults}
@@ -107,6 +110,7 @@ const Navbar = ({
               unregister={unregister}
               addEvent={addEvent}
               removeEvent={removeEvent}
+              toggleSearch={toggleSearch}
             />
           </>
         </Route>
