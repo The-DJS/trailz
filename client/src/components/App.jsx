@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
-import NavBar from './NavBar.jsx';
+import NavBar from './Navbar/NavBar.jsx';
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -35,7 +35,6 @@ const App = () => {
       })
     );
   };
-
   const register = async (eventId) => {
     if (!user) return;
     const { data: eventExists } = await axios.get(`events/validate/${eventId}`);
@@ -158,6 +157,15 @@ const App = () => {
     return data;
   };
 
+  const updateEvents = () => {
+    const currentEvents = events;
+    fetchEvents()
+      .then((events) => {
+        setEvents(events);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     let currPosition;
     window.navigator.geolocation.getCurrentPosition(
@@ -190,23 +198,22 @@ const App = () => {
     <BrowserRouter>
       <div>
         <NavBar
-          searchResults={searchResults}
+          user={user}
           loginUser={loginUser}
           logoutUser={logoutUser}
+          searchResults={searchResults}
+          updateSearchResults={updateSearchResults}
           favorites={favorites}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
-          updateSearchResults={updateSearchResults}
           position={position}
           updatePosition={updatePosition}
           events={events}
-          // attending={attending}
-          user={user}
           register={register}
           unregister={unregister}
           addEvent={addEvent}
           removeEvent={removeEvent}
-          // created={created}
+          updateEvents={updateEvents}
           showAlert={showAlert}
           setShowAlert={setShowAlert}
         />

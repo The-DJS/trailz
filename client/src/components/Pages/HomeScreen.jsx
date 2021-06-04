@@ -18,7 +18,10 @@ const HomeScreen = ({ loginUser, logoutUser, user }) => {
   const logout = (response) => {
     axios
       .get('/auth/google/logout')
-      .then(({ data }) => { console.info(data); logoutUser(); })
+      .then(({ data }) => {
+        console.info(data);
+        logoutUser();
+      })
       .catch((err) => console.warn(err));
     console.info('response!!!!!', response);
     // console.log('logout');
@@ -27,8 +30,7 @@ const HomeScreen = ({ loginUser, logoutUser, user }) => {
   return (
     <div
       style={{
-        backgroundImage:
-          'url("https://wallpaperaccess.com/full/825191.jpg")',
+        backgroundImage: 'url("https://wallpaperaccess.com/full/825191.jpg")',
         height: '1000px',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
@@ -67,7 +69,6 @@ const HomeScreen = ({ loginUser, logoutUser, user }) => {
             buttonText="Sign out"
             onLogoutSuccess={logout}
           /> */}
-        )}
     </div>
   );
 };

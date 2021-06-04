@@ -1,4 +1,4 @@
-# trailz
+# Trailz
 
 # DESCRIPTION
 Are you looking for parks nearby, places to hike, and what events are happening near you. This is the app for you! Our app allows users to search for local parks in our search tab which has features that will allow users to save their favorite parks and create events. 
@@ -14,6 +14,11 @@ Are you looking for parks nearby, places to hike, and what events are happening 
 8. You can unregister from an event and you can delete a event that you created
 
 # Requirements
+1. Make sure mongo is running
+2. Then in your terminal, type mongo
+3. show dbs
+4. use trailzDb
+5. and now you are in the the trailz database
 
 # Tech Stack
 1. MongoDB/Mongoose (/5.10.15)
@@ -34,6 +39,9 @@ Are you looking for parks nearby, places to hike, and what events are happening 
 2. npm run start -- to start up the server
 3. npm run build -- to run the webpack
 
+# What are in the folder
+1. Server -- in the server folder you will have the controllers, database, helper functions, middleware and routers
+2. Client -- in the scr folder you will have a folder for Forms, Modals, Navbar, Pages, and Styles
 
 
 
