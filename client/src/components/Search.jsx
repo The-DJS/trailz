@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Search = ({ updateSearchResults, position, updatePosition }) => {
   const [search, setSearch] = useState('');
-  const handleClick = () => {
+  const handleSearch = () => {
     const { lat, lng } = position;
     axios
       .get(`/parks/searchResults/${lat}/${lng}/${search}`)
@@ -30,6 +30,7 @@ const Search = ({ updateSearchResults, position, updatePosition }) => {
           placeholder="Search Trails"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
         />
         <br />
         <br />
