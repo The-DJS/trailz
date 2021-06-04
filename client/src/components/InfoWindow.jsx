@@ -37,7 +37,7 @@ const CustomInfoWindow = ({
     onCloseClick={() => setSelected({})}
     options={{
       pane: 'overlayLayer',
-      pixelOffset: new google.maps.Size(0, -45),
+      pixelOffset: new google.maps.Size(0, -37),
       alignBottom: true,
     }}
   >
@@ -45,6 +45,7 @@ const CustomInfoWindow = ({
       {selected.eventName
         ? (
           <div>
+            <title>Hello World!!</title>
             <InfoTitle>{selected.eventName}</InfoTitle>
             <EventLocationInfo>{selected.locationName}</EventLocationInfo>
             <EventGroup>

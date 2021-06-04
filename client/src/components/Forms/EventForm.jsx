@@ -32,6 +32,7 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         location.location.lat,
         location.location.lng,
         date,
+        activity,
         description,
         isPublic,
       );
@@ -68,18 +69,18 @@ const EventForm = ({ location, addEvent, closeModal }) => {
             id="activity"
             name="activity"
             defaultValue=""
-            onChange={(e) => setActivity(e.target.value)}
+            onChange={(e) => setActivity(e.target.value) && console.log(activity)}
             required
           >
             <EventFormOption disabled value="">
               -- select an activity --
             </EventFormOption>
-            <EventFormOption value="true">Hiking</EventFormOption>
-            <EventFormOption value="false">Biking</EventFormOption>
-            <EventFormOption value="false">Fishing</EventFormOption>
-            <EventFormOption value="false">Camping</EventFormOption>
-            <EventFormOption value="false">Running</EventFormOption>
-            <EventFormOption value="false">Other</EventFormOption>
+            <EventFormOption value="Hiking">Hiking</EventFormOption>
+            <EventFormOption value="Biking">Biking</EventFormOption>
+            <EventFormOption value="Fishing">Fishing</EventFormOption>
+            <EventFormOption value="Camping">Camping</EventFormOption>
+            <EventFormOption value="Running">Running</EventFormOption>
+            <EventFormOption value="Other">Other</EventFormOption>
           </EventFormSelect>
         </EventFormGroup>
 
