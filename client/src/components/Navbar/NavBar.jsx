@@ -28,6 +28,7 @@ const Navbar = ({
   removeEvent,
   showAlert,
   setShowAlert,
+  updateEvents,
 }) => (
   <div>
     <div>
@@ -51,13 +52,13 @@ const Navbar = ({
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <Menu className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <Item className="nav-item">
-                <LinkCss as={Link} to="/" className="nav-link">
-                  Home
-                </LinkCss>
-              </Item>
               {user && (
                 <>
+                  <Item className="nav-item">
+                    <LinkCss as={Link} to="/" className="nav-link">
+                      Home
+                    </LinkCss>
+                  </Item>
                   <Item className="nav-item">
                     <LinkCss as={Link} to="/search" className="nav-link">
                       Search
@@ -143,6 +144,7 @@ const Navbar = ({
               removeEvent={removeEvent}
               events={events}
               user={user}
+              updateEvents={updateEvents}
             />
           </>
         </Route>

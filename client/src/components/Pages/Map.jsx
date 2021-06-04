@@ -28,7 +28,9 @@ const Map = ({
   removeEvent,
   events,
   user,
+  updateEvents,
 }) => {
+  const [shouldUpdate, setShouldUpdate] = useState(true);
   const [center, setCenter] = useState({
     lat: position.lat,
     lng: position.lng,
@@ -37,7 +39,7 @@ const Map = ({
   // Selected marker
   const [selected, setSelected] = useState({});
   const onSelect = (item, selectedLat, selectedLng) => {
-    // setCenter({ lat: selectedLat, lng: selectedLng });
+    setShouldUpdate(!shouldUpdate);
     setSelected(item);
   };
   // Custom pins
@@ -83,6 +85,17 @@ const Map = ({
     setSelected({});
     setBounds();
   }, [results]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (shouldUpdate) {
+        updateEvents();
+      }
+    }, 3000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
   // Render the map
   return isLoaded ? (
     <div>
