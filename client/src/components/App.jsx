@@ -67,8 +67,9 @@ const App = () => {
     lat,
     lng,
     time,
+    activity,
     description,
-    isPublic
+    isPublic,
   ) => {
     if (!user) return;
     const { data: event } = await axios.post(`/events/${user._id}`, {
@@ -77,6 +78,7 @@ const App = () => {
       lat,
       lng,
       time,
+      activity,
       description,
       isPublic,
     });
