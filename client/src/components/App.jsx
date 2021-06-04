@@ -159,8 +159,8 @@ const App = () => {
 
   const updateEvents = () => {
     fetchEvents()
-      .then((events) => {
-        setEvents(events);
+      .then((updatedEvents) => {
+        setEvents(updatedEvents);
       })
       .catch((err) => console.log(err));
   };
