@@ -129,7 +129,7 @@ const Map = ({
                 url: './icons/park.svg',
                 scaledSize: new window.google.maps.Size(30, 30),
                 origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(15, 15),
+                anchor: new window.google.maps.Point(15, 35),
               }}
               onClick={() => {
                 const {
@@ -148,7 +148,7 @@ const Map = ({
                 url: './icons/park.svg',
                 scaledSize: new window.google.maps.Size(30, 30),
                 origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(15, 15),
+                anchor: new window.google.maps.Point(15, 35),
               }}
               onClick={() => {
                 onSelect(pin, pin.location.lat, pin.location.lng);

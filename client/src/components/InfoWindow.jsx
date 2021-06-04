@@ -37,7 +37,7 @@ const CustomInfoWindow = ({
     onCloseClick={() => setSelected({})}
     options={{
       pane: 'overlayLayer',
-      pixelOffset: new google.maps.Size(0, -45),
+      pixelOffset: new google.maps.Size(0, -37),
       alignBottom: true,
     }}
   >
