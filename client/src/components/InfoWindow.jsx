@@ -45,6 +45,7 @@ const CustomInfoWindow = ({
       {selected.eventName
         ? (
           <div>
+            <title>Hello World!!</title>
             <InfoTitle>{selected.eventName}</InfoTitle>
             <EventLocationInfo>{selected.locationName}</EventLocationInfo>
             <EventGroup>
