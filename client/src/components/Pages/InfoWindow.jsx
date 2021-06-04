@@ -112,6 +112,7 @@ const CustomInfoWindow = ({
             location={selected}
             addFav={addFavorite}
             toggleSearch={toggleSearch}
+            addEvent={addEvent}
           />
         )
         : null}

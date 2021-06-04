@@ -23,6 +23,10 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  activity: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,

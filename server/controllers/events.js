@@ -40,7 +40,7 @@ const getUserEvents = wrapAsync(async (req, res) => {
 
 const addNewEvent = wrapAsync(async (req, res) => {
   const { userId } = req.params;
-  const { eventName, locationName, lat, lng, time, description, isPublic } =
+  const { eventName, locationName, lat, lng, time, activity, description, isPublic } =
     req.body;
   const user = await User.findById(userId);
   const event = await new Event({
@@ -49,6 +49,7 @@ const addNewEvent = wrapAsync(async (req, res) => {
     location: { lat, lng },
     time,
     description,
+    activity,
     isPublic,
     attendees: [user._id],
     owner: user._id,
