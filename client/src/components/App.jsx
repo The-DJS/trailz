@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
-import NavBar from './NavBar.jsx';
+import NavBar from './Navbar/NavBar.jsx';
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -15,6 +15,12 @@ const App = () => {
 
   const unregister = async (eventId) => {
     if (!user) return;
+    const { data: eventExists } = await axios.get(`events/validate/${eventId}`);
+    if (!eventExists) {
+      setEvents(events.filter((currentEvent) => currentEvent._id !== eventId));
+      setShowAlert(true);
+      return;
+    }
     await axios.delete(`/events/${user._id}/${eventId}`);
     const foundEvent = events.find((event) => event._id === eventId);
     foundEvent.attendees = foundEvent.attendees.filter(
@@ -29,7 +35,6 @@ const App = () => {
       })
     );
   };
-
   const register = async (eventId) => {
     if (!user) return;
     const { data: eventExists } = await axios.get(`events/validate/${eventId}`);

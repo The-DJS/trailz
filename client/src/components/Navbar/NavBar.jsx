@@ -1,14 +1,14 @@
 /* eslint-disable import/extensions */
 import React from 'react';
-import styled from 'styled-components';
+import { Nav, LinkCss, Logo, Menu, Item } from '../../styles/navBarStyles';
 import { Route, Switch, Link } from 'react-router-dom';
-import { Nav, LinkCss, Logo, Menu, Item } from '../styles/navBarStyles';
+// import { Nav, LinkCss, Logo, Menu, Item } from '../styles/navBarStyles';
 // import GoogleButton from 'react-google-button';
-import Search from './Search.jsx';
+import Search from '../Pages/Search.jsx';
 // import FavoriteTrails from './FavoriteTrails.jsx';
-import Home from './HomeScreen.jsx';
-import Map from './Map.jsx';
-import Login from './Login.jsx';
+import Home from '../Pages/HomeScreen.jsx';
+import Map from '../Pages/Map.jsx';
+import Login from '../Pages/Login.jsx';
 
 const Navbar = ({
   searchResults,

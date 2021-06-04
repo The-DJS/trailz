@@ -3,8 +3,8 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { v4 as getKey } from 'uuid';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import mapStyles from '../styles/mapStyles';
-import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
+import mapStyles from '../../styles/mapStyles.js';
+import GOOGLE_MAPS_API_KEY from '../../../../server/google-maps/API.js';
 import CustomInfoWindow from './InfoWindow.jsx';
 // The size of the map on the page
 const containerStyle = {

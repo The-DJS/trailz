@@ -6,7 +6,7 @@ import {
   FavFormInput,
   FavFormRequiredMessage,
   FavFormButton,
-} from '../styles/favFormStyles';
+} from '../../styles/favFormStyles';
 
 const FavForm = ({ location, addFav, closeModal }) => {
   // Input fields

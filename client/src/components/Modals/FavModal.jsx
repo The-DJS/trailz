@@ -5,8 +5,8 @@ import {
   FavCustomModal,
   FavModalExitButton,
   FavInfoButton,
-} from '../styles/favModalStyles';
-import FavForm from './FavForm.jsx';
+} from '../../styles/favModalStyles';
+import FavForm from '../Forms/FavForm.jsx';
 
 const FavModal = ({ location, addFav }) => {
   let subtitle;

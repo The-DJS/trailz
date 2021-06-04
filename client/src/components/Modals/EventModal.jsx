@@ -5,8 +5,8 @@ import {
   EventCustomModal,
   EventModalExitButton,
   EventInfoButton,
-} from '../styles/eventModalStyles';
-import EventForm from './EventForm.jsx';
+} from '../../styles/eventModalStyles';
+import EventForm from '../Forms/EventForm.jsx';
 
 const EventModal = ({ location, addEvent }) => {
   let subtitle;
