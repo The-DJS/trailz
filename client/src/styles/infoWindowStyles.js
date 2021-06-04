@@ -34,7 +34,7 @@ const EventGroup = styled.div`
 const EventLocationInfo = styled.h3`
   color: ForestGreen;
   font-size: 1rem;
-  margin-bottom: 1vh;
+  margin-bottom: 0.75vh;
 `;
 
 const EventOwnerInfo = styled.h4`
@@ -42,7 +42,15 @@ const EventOwnerInfo = styled.h4`
   font-size: 0.75rem;
   margin: auto;
   display: inline;
-  padding-left: 2vw;
+  padding-left: 0.75vw;
+`;
+
+const EventActivityInfo = styled.h5`
+  color: ForestGreen;
+  font-size: 0.75rem;
+  margin: auto;
+  display: inline;
+  padding-left: 1vw;
 `;
 
 const EventDateInfo = styled.p`
@@ -59,7 +67,7 @@ const EventDescInfo = styled.p`
   margin-bottom: 0.75vh;
 `;
 
-const EventPubInfo = styled.h5`
+const EventPubInfo = styled.h6`
   font-size: 0.7rem;
   font-weight: bold;
   color: green;
@@ -67,7 +75,7 @@ const EventPubInfo = styled.h5`
   margin-bottom: 0.5vh;
 `;
 
-const EventPrivInfo = styled.h5`
+const EventPrivInfo = styled.h6`
   font-size: 0.7rem;
   font-weight: bold;
   font-weight: normal;
@@ -80,7 +88,7 @@ const EventAttendeesInfo = styled.p`
   font-size: 0.75rem;
   font-style: italic;
   background: AliceBlue;
-  padding-left: 1vw;
+  padding-left: 0.75vw;
   display: inline;
 `;
 
@@ -92,6 +100,7 @@ export {
   // Events
   EventLocationInfo,
   EventOwnerInfo,
+  EventActivityInfo,
   EventDateInfo,
   EventDescInfo,
   EventPubInfo,
