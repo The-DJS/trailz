@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import {
   FavCustomModal,
@@ -30,6 +30,10 @@ const FavModal = ({ location, addFav }) => {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    Modal.setAppElement('body');
+  }, []);
+
   return (
     <div>
       <FavInfoButton type="button" onClick={openModal}>
@@ -46,7 +50,9 @@ const FavModal = ({ location, addFav }) => {
             <FavModalExitButton type="button" onClick={closeModal}>
               X
             </FavModalExitButton>
-            <h1 ref={(_subtitle) => (subtitle = _subtitle)}>Add custom location to your favs</h1>
+            <h1 ref={(_subtitle) => (subtitle = _subtitle)}>
+              Add custom location to your favs
+            </h1>
           </div>
           <FavForm
             location={location}

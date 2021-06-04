@@ -1,9 +1,9 @@
 /* eslint-disable import/extensions */
 import React from 'react';
+import { InfoButton } from '../styles/infoWindowStyles.js';
 import { InfoWindow } from '@react-google-maps/api';
-import { InfoButton } from '../../styles/infoWindowStyles.js';
-import EventModal from '../Modals/EventModal.jsx';
-import FavModal from '../Modals/FavModal.jsx';
+import EventModal from './EventModal.jsx';
+import FavModal from './FavModal.jsx';
 
 const CustomInfoWindow = ({
   selected,
@@ -16,7 +16,6 @@ const CustomInfoWindow = ({
   removeEvent,
   addEvent,
 }) => {
-  console.log(user);
   return (
     <InfoWindow
       position={selected.location}
@@ -85,7 +84,6 @@ const CustomInfoWindow = ({
         ) : null}
       </div>
     </InfoWindow>
-
   );
 };
 

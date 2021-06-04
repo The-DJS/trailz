@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import {
   EventCustomModal,
@@ -25,6 +25,10 @@ const EventModal = ({ location, addEvent }) => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    Modal.setAppElement('body');
+  }, []);
 
   return (
     <div>

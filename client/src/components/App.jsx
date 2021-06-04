@@ -11,8 +11,16 @@ const App = () => {
   const [favorites, setFavorites] = useState([]);
   const [position, setPosition] = useState({});
   const [events, setEvents] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   const unregister = async (eventId) => {
+    if (!user) return;
+    const { data: eventExists } = await axios.get(`events/validate/${eventId}`);
+    if (!eventExists) {
+      setEvents(events.filter((currentEvent) => currentEvent._id !== eventId));
+      setShowAlert(true);
+      return;
+    }
     await axios.delete(`/events/${user._id}/${eventId}`);
     const foundEvent = events.find((event) => event._id === eventId);
     foundEvent.attendees = foundEvent.attendees.filter(
@@ -27,10 +35,18 @@ const App = () => {
       })
     );
   };
-
   const register = async (eventId) => {
+    if (!user) return;
+    const { data: eventExists } = await axios.get(`events/validate/${eventId}`);
+    if (!eventExists) {
+      setEvents(events.filter((currentEvent) => currentEvent._id !== eventId));
+      setShowAlert(true);
+      return;
+    }
     await axios.post(`/events/${user._id}/${eventId}`);
-    const foundEvent = events.find((event) => event._id === eventId);
+    const foundEvent = events.find(
+      (currentEvent) => currentEvent._id === eventId
+    );
     foundEvent.attendees = [
       ...foundEvent.attendees,
       `${user.firstName} ${user.lastName}`,
@@ -54,6 +70,7 @@ const App = () => {
     description,
     isPublic
   ) => {
+    if (!user) return;
     const { data: event } = await axios.post(`/events/${user._id}`, {
       eventName,
       locationName,
@@ -68,6 +85,7 @@ const App = () => {
   };
 
   const removeEvent = async (eventId) => {
+    if (!user) return;
     await axios.delete(`/events/removeEvent/${eventId}`);
     setEvents(events.filter((event) => event._id !== eventId));
   };
@@ -77,6 +95,7 @@ const App = () => {
   const updateSearchResults = (results) => setSearchResults(results);
 
   const removeFavorite = (park) => {
+    if (!user) return;
     axios
       .delete(`/parks/favorites/${user._id}/${park._id}`)
       .then(() => {
@@ -90,6 +109,7 @@ const App = () => {
   };
 
   const addFavorite = (park) => {
+    if (!user) return;
     const {
       parkId,
       name,
@@ -123,6 +143,7 @@ const App = () => {
   };
 
   const logoutUser = () => {
+    if (!user) return;
     setUser(null);
   };
 
@@ -185,6 +206,8 @@ const App = () => {
           addEvent={addEvent}
           removeEvent={removeEvent}
           // created={created}
+          showAlert={showAlert}
+          setShowAlert={setShowAlert}
         />
       </div>
     </BrowserRouter>

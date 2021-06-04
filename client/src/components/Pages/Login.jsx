@@ -65,12 +65,14 @@ const Login = ({ loginUser, logoutUser, user }) => {
           onSuccess={login}
           onFailure={login}
           cookiePolicy="single_host_origin"
+          className="btn"
         />
       ) : (
         <GoogleLogout
           clientId="266879339390-9ia1hkk7q7u6oh2puf1jjbep2bpgi305.apps.googleusercontent.com"
           buttonText="Sign out"
           onLogoutSuccess={logout}
+          className="btn"
         />
       )}
     </div>
