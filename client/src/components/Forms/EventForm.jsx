@@ -84,7 +84,7 @@ const EventForm = ({ location, addEvent, closeModal }) => {
         </EventFormGroup>
 
         <EventFormGroup>
-          {location.name === 'Custom User Pin'
+          {location.name === 'Dropped Pin'
             ? (
               <>
                 <EventFormLabel htmlFor="locationName">Location *</EventFormLabel>

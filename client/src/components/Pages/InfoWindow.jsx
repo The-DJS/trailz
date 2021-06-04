@@ -15,6 +15,7 @@ const CustomInfoWindow = ({
   unregister,
   removeEvent,
   addEvent,
+  toggleSearch,
 }) => {
   console.log(user);
   return (
@@ -43,7 +44,7 @@ const CustomInfoWindow = ({
           <h5>{selected.name}</h5>
         )}
         {addFavorite ? (
-          <FavModal location={selected} addFav={addFavorite} />
+          <FavModal location={selected} addFav={addFavorite} toggleSearch={toggleSearch} />
         ) : null}
         {removeFavorite && (
           <InfoButton type="button" onClick={() => removeFavorite(selected)}>
@@ -81,7 +82,7 @@ const CustomInfoWindow = ({
           </InfoButton>
         ) : null}
         {addFavorite || removeFavorite ? (
-          <EventModal location={selected} addEvent={addEvent} />
+          <EventModal location={selected} addEvent={addEvent} toggleSearch={toggleSearch} />
         ) : null}
       </div>
     </InfoWindow>
