@@ -6,7 +6,7 @@ const SearchBar = styled.input`
   -ms-transition: all 0.30s ease-in-out;
   -o-transition: all 0.30s ease-in-out;
   top: 10vh;
-  width: 60vw;
+  width: 50vw;
   z-index: 10;
   position: absolute;
   color: Black;

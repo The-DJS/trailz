@@ -11,12 +11,14 @@ const containerStyle = {
   height: '91vh',
   width: '100vw',
 };
+
 // Options of the render (disable default UI and custom styles)
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
 };
+
 const Map = ({
   results,
   addFavorite,
@@ -52,34 +54,42 @@ const Map = ({
       }
     }
   };
+
   const { lat, lng } = position;
   const [center, setCenter] = useState({ lat, lng });
   const [zoom, setZoom] = useState(12);
+
   // Selected marker
   const [selected, setSelected] = useState({});
   const onSelect = (item, selectedLat, selectedLng) => {
     setCenter({ selectedLat, selectedLng });
     setSelected(item);
   };
-  // Custom pins
+
+  // Custom pin
   const [userPins, setUserPins] = useState([]);
+
   // Location references to keep the center when the map re-renders.
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
     setBounds();
   }, []);
+
   // Load script
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
   });
+
   // Show error if there was an error loading the script.
   if (loadError) return 'Error loading maps';
+
   useEffect(() => {
     setSelected({});
     setBounds();
   }, [results]);
+
   // Render the map
   return isLoaded
     ? (
@@ -105,9 +115,12 @@ const Map = ({
             <Marker
               key={getKey()}
               position={item.location}
-              // icon={{
-              //   url: './camping.svg',
-              // }}
+              icon={{
+                url: './icons/park.svg',
+                scaledSize: new window.google.maps.Size(30, 30),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15),
+              }}
               onClick={() => {
                 const {
                   location: { lat, lng },
@@ -121,9 +134,12 @@ const Map = ({
             <Marker
               key={getKey()}
               position={pin.location}
-              // icon={{
-              //   url: '/camping.svg',
-              // }}
+              icon={{
+                url: './icons/park.svg',
+                scaledSize: new window.google.maps.Size(30, 30),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15),
+              }}
               onClick={() => {
                 const {
                   location: { lat, lng },
