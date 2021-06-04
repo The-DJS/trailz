@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SearchBar from '../styles/search';
 import axios from 'axios';
 
 const Search = ({ updateSearchResults, position, updatePosition }) => {
@@ -24,7 +25,7 @@ const Search = ({ updateSearchResults, position, updatePosition }) => {
         }}
       >
         {/* <h3 className="title">Search</h3> */}
-        <input
+        <SearchBar
           type="text"
           placeholder="Search Trails"
           value={search}
@@ -32,9 +33,9 @@ const Search = ({ updateSearchResults, position, updatePosition }) => {
         />
         <br />
         <br />
-        <button type="button" onClick={handleClick}>
+        {/* <button type="button" onClick={handleClick}>
           Search Parks
-        </button>
+        </button> */}
       </div>
     </div>
   );
