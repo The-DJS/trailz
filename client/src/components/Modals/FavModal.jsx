@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import {
   FavCustomModal,

@@ -29,6 +29,7 @@ const Navbar = ({
   showAlert,
   setShowAlert,
   toggleSearch,
+  isSearchVisible,
 }) => (
   <div>
     <div>
