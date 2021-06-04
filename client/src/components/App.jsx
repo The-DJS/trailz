@@ -157,6 +157,15 @@ const App = () => {
     return data;
   };
 
+  const updateEvents = () => {
+    const currentEvents = events;
+    fetchEvents()
+      .then((events) => {
+        setEvents(events);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     let currPosition;
     window.navigator.geolocation.getCurrentPosition(
@@ -194,18 +203,17 @@ const App = () => {
     <BrowserRouter>
       <div>
         <NavBar
-          searchResults={searchResults}
+          user={user}
           loginUser={loginUser}
           logoutUser={logoutUser}
+          searchResults={searchResults}
+          updateSearchResults={updateSearchResults}
           favorites={favorites}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
-          updateSearchResults={updateSearchResults}
           position={position}
           updatePosition={updatePosition}
           events={events}
-          // attending={attending}
-          user={user}
           register={register}
           unregister={unregister}
           addEvent={addEvent}
@@ -213,6 +221,7 @@ const App = () => {
           // created={created}
           toggleSearch={toggleSearch}
           isSearchVisible={isSearchVisible}
+          updateEvents={updateEvents}
           showAlert={showAlert}
           setShowAlert={setShowAlert}
         />
