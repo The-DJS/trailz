@@ -13,7 +13,7 @@ const SearchBar = styled.input`
   font-weight: bolder;
   background: rgba(122, 139, 148, 0.75);
   padding: 0.5rem;
-  border: 1px solid ForestGreen;
+  border: 2px solid ForestGreen;
   border-radius: 1rem;
   &:focus {
     color: Snow;

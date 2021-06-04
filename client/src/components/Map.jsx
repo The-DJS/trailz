@@ -8,7 +8,7 @@ import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import CustomInfoWindow from './InfoWindow.jsx';
 // The size of the map on the page
 const containerStyle = {
-  height: '91.1vh',
+  height: '91vh',
   width: '100vw',
 };
 // Options of the render (disable default UI and custom styles)
