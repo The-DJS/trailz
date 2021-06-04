@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import {
   EventCustomModal,
@@ -8,12 +8,13 @@ import {
 } from '../styles/eventModalStyles';
 import EventForm from './EventForm.jsx';
 
-const EventModal = ({ location, addEvent }) => {
+const EventModal = ({ location, addEvent, toggleSearch }) => {
   let subtitle;
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
+    toggleSearch();
   };
 
   const afterOpenModal = () => {
@@ -24,6 +25,7 @@ const EventModal = ({ location, addEvent }) => {
 
   const closeModal = () => {
     setIsOpen(false);
+    toggleSearch();
   };
 
   return (

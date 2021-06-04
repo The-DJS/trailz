@@ -164,6 +164,11 @@ const App = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const [isSearchVisible, setSearchVisible] = useState(true);
+  const toggleSearch = () => {
+    setSearchVisible(!isSearchVisible);
+  };
+
   return (
     <BrowserRouter>
       <div>
@@ -185,6 +190,8 @@ const App = () => {
           addEvent={addEvent}
           removeEvent={removeEvent}
           // created={created}
+          toggleSearch={toggleSearch}
+          isSearchVisible={isSearchVisible}
         />
       </div>
     </BrowserRouter>

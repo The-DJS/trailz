@@ -6,6 +6,7 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import mapStyles from '../styles/mapStyles';
 import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
 import CustomInfoWindow from './InfoWindow.jsx';
+
 // The size of the map on the page
 const containerStyle = {
   height: '91vh',
@@ -30,6 +31,7 @@ const Map = ({
   removeEvent,
   events,
   user,
+  toggleSearch,
 }) => {
   const setBounds = () => {
     if (window.google && mapRef.current) {
@@ -159,6 +161,7 @@ const Map = ({
               unregister={unregister}
               removeEvent={removeEvent}
               addEvent={addEvent}
+              toggleSearch={toggleSearch}
             />
           )}
           <></>

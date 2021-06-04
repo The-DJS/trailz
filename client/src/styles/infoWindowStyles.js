@@ -16,6 +16,7 @@ const InfoTitle = styled.h2`
   color: ForestGreen;
   margin-bottom: 1vh;
   font-size: 1rem;
+  text-align: center;
 `;
 
 const LabelInfo = styled.p`

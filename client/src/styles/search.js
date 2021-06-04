@@ -5,11 +5,12 @@ const SearchBar = styled.input`
   -moz-transition: all 0.30s ease-in-out;
   -ms-transition: all 0.30s ease-in-out;
   -o-transition: all 0.30s ease-in-out;
-  top: 10vh;
-  width: 50vw;
-  z-index: 10;
-  position: absolute;
   color: Black;
+  position: absolute;
+  margin-top: 2rem;
+  z-index: 10;
+  width: 50vw;
+  left: 25vw;
   font-weight: bolder;
   background: rgba(122, 139, 148, 0.75);
   padding: 0.5rem;

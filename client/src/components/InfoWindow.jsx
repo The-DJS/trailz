@@ -29,6 +29,7 @@ const CustomInfoWindow = ({
   unregister,
   removeEvent,
   addEvent,
+  toggleSearch,
 }) => {
   console.log(user);
   return (
@@ -66,15 +67,21 @@ const CustomInfoWindow = ({
           : (
             <InfoTitle>{selected.name}</InfoTitle>
           )}
-        {addFavorite && <FavModal location={selected} addFav={addFavorite} />}
+        {addFavorite && (
+          <FavModal
+            location={selected}
+            addFav={addFavorite}
+            toggleSearch={toggleSearch}
+          />
+        )}
         {removeFavorite && (
           <InfoButton type="button" onClick={() => removeFavorite(selected)}>
             Remove from favs
           </InfoButton>
         )}
         {!addFavorite
-        && !removeFavorite
-        && !selected.attendees.includes(`${user.firstName} ${user.lastName}`)
+          && !removeFavorite
+          && !selected.attendees.includes(`${user.firstName} ${user.lastName}`)
           ? (
             <>
               <InfoButton type="button" onClick={() => register(selected._id)}>
@@ -84,8 +91,8 @@ const CustomInfoWindow = ({
           )
           : null}
         {!addFavorite
-        && !removeFavorite
-        && selected.attendees.includes(`${user.firstName} ${user.lastName}`)
+          && !removeFavorite
+          && selected.attendees.includes(`${user.firstName} ${user.lastName}`)
           ? (
             <InfoButton type="button" onClick={() => unregister(selected._id)}>
               Unregister
@@ -93,8 +100,8 @@ const CustomInfoWindow = ({
           )
           : null}
         {!addFavorite
-        && !removeFavorite
-        && selected.owner.includes(`${user.firstName} ${user.lastName}`)
+          && !removeFavorite
+          && selected.owner.includes(`${user.firstName} ${user.lastName}`)
           ? (
             <InfoButton type="button" onClick={() => removeEvent(selected._id)}>
               Delete
@@ -103,7 +110,11 @@ const CustomInfoWindow = ({
           : null}
         {addFavorite || removeFavorite
           ? (
-            <EventModal location={selected} addEvent={addEvent} />
+            <EventModal
+              location={selected}
+              addFav={addFavorite}
+              toggleSearch={toggleSearch}
+            />
           )
           : null}
       </div>

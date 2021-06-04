@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import {
   FavCustomModal,
@@ -8,13 +8,14 @@ import {
 } from '../styles/favModalStyles';
 import FavForm from './FavForm.jsx';
 
-const FavModal = ({ location, addFav }) => {
+const FavModal = ({ location, addFav, toggleSearch }) => {
   let subtitle;
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => {
     if (location.name === 'Dropped Pin') {
       setIsOpen(true);
+      toggleSearch();
     } else {
       addFav(location);
     }
@@ -28,6 +29,7 @@ const FavModal = ({ location, addFav }) => {
 
   const closeModal = () => {
     setIsOpen(false);
+    toggleSearch();
   };
 
   return (
