@@ -26,6 +26,7 @@ const eventSchema = new mongoose.Schema({
   activity: {
     type: String,
     required: true,
+    enum: ['Hiking', 'Fishing', 'Biking', 'Camping', 'Running', 'Other'],
   },
   description: {
     type: String,
