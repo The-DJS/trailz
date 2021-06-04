@@ -1,12 +1,12 @@
 /* eslint-disable import/extensions */
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import {
   EventCustomModal,
   EventModalExitButton,
   EventInfoButton,
-} from '../styles/eventModalStyles';
-import EventForm from './EventForm.jsx';
+} from '../../styles/eventModalStyles';
+import EventForm from '../Forms/EventForm.jsx';
 
 const EventModal = ({ location, addEvent, toggleSearch }) => {
   let subtitle;
@@ -27,6 +27,10 @@ const EventModal = ({ location, addEvent, toggleSearch }) => {
     setIsOpen(false);
     toggleSearch();
   };
+
+  useEffect(() => {
+    Modal.setAppElement('body');
+  }, []);
 
   return (
     <div>

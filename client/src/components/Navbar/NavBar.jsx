@@ -1,13 +1,14 @@
 /* eslint-disable import/extensions */
 import React from 'react';
-import { Nav, LinkCss, Logo, Menu, Item } from '../styles/navBarStyles';
+import { Nav, LinkCss, Logo, Menu, Item } from '../../styles/navBarStyles';
 import { Route, Switch, Link } from 'react-router-dom';
+// import { Nav, LinkCss, Logo, Menu, Item } from '../styles/navBarStyles';
 // import GoogleButton from 'react-google-button';
-import Search from './Search.jsx';
+import Search from '../Pages/Search.jsx';
 // import FavoriteTrails from './FavoriteTrails.jsx';
-import Home from './HomeScreen.jsx';
-import Map from './Map.jsx';
-import Login from './Login.jsx';
+import Home from '../Pages/HomeScreen.jsx';
+import Map from '../Pages/Map.jsx';
+import Login from '../Pages/Login.jsx';
 
 const Navbar = ({
   searchResults,
@@ -21,14 +22,13 @@ const Navbar = ({
   logoutUser,
   user,
   events,
-  // attending,
   register,
   unregister,
   addEvent,
   removeEvent,
-  // created,
+  showAlert,
+  setShowAlert,
   toggleSearch,
-  isSearchVisible,
 }) => (
   <div>
     <div>
@@ -54,33 +54,35 @@ const Navbar = ({
             <Menu className="navbar-nav ms-auto mb-2 mb-lg-0">
               <Item className="nav-item">
                 <LinkCss as={Link} to="/" className="nav-link">
+                  Home
+                </LinkCss>
+              </Item>
+              {user && (
+                <>
+                  <Item className="nav-item">
+                    <LinkCss as={Link} to="/search" className="nav-link">
+                      Search
+                    </LinkCss>
+                  </Item>
+                  <Item className="nav-item">
+                    <LinkCss as={Link} to="/favorite" className="nav-link">
+                      Favorite Trails
+                    </LinkCss>
+                  </Item>
+                  <Item className="nav-item">
+                    <LinkCss as={Link} to="/events" className="nav-link">
+                      Events
+                    </LinkCss>
+                  </Item>
+                </>
+              )}
+              <Item className="nav-item">
+                <LinkCss as={Link} to="/" className="nav-link">
                   <Login
                     loginUser={loginUser}
                     logoutUser={logoutUser}
                     user={user}
                   />
-                </LinkCss>
-              </Item>
-              <Item className="nav-item">
-                <LinkCss as={Link} to="/" className="nav-link">
-                  Home
-                </LinkCss>
-              </Item>
-              <Item className="nav-item">
-                <LinkCss as={Link} to="/search" className="nav-link">
-                  Search
-                </LinkCss>
-              </Item>
-              <Item className="nav-item">
-                {user && (
-                  <LinkCss as={Link} to="/favorite" className="nav-link">
-                    Favorite Trails
-                  </LinkCss>
-                )}
-              </Item>
-              <Item className="nav-item">
-                <LinkCss as={Link} to="/events" className="nav-link">
-                  Events
                 </LinkCss>
               </Item>
             </Menu>
@@ -125,6 +127,16 @@ const Navbar = ({
         </Route>
         <Route exact path="/events">
           <>
+            {showAlert && (
+              <div
+                class="alert alert-danger"
+                role="alert"
+                onClick={() => setShowAlert(false)}
+                style={{ margin: 0 }}
+              >
+                This event no longer exists.
+              </div>
+            )}
             <Map
               results={events}
               position={position}
@@ -134,8 +146,6 @@ const Navbar = ({
               removeEvent={removeEvent}
               events={events}
               user={user}
-            // attending={attending}
-            // created={created}
             />
           </>
         </Route>

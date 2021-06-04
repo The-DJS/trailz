@@ -3,8 +3,8 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { v4 as getKey } from 'uuid';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import mapStyles from '../styles/mapStyles';
-import GOOGLE_MAPS_API_KEY from '../../../server/google-maps/API';
+import mapStyles from '../../styles/mapStyles.js';
+import GOOGLE_MAPS_API_KEY from '../../../../server/google-maps/API.js';
 import CustomInfoWindow from './InfoWindow.jsx';
 
 // The size of the map on the page
@@ -33,6 +33,32 @@ const Map = ({
   user,
   toggleSearch,
 }) => {
+  const [center, setCenter] = useState({
+    lat: position.lat,
+    lng: position.lng,
+  });
+  const [zoom, setZoom] = useState(12);
+  // Selected marker
+  const [selected, setSelected] = useState({});
+  const onSelect = (item, selectedLat, selectedLng) => {
+    // setCenter({ lat: selectedLat, lng: selectedLng });
+    setSelected(item);
+  };
+  // Custom pins
+  const [userPins, setUserPins] = useState([]);
+  // Location references to keep the center when the map re-renders.
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map;
+    setBounds();
+  }, []);
+  // Load script
+  const { isLoaded, loadError } = useLoadScript({
+    id: 'google-map-script',
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+  });
+  // Show error if there was an error loading the script.
+  if (loadError) return 'Error loading maps';
   const setBounds = () => {
     if (window.google && mapRef.current) {
       if (results.length > 1) {
@@ -56,37 +82,6 @@ const Map = ({
       }
     }
   };
-
-  const { lat, lng } = position;
-  const [center, setCenter] = useState({ lat, lng });
-  const [zoom, setZoom] = useState(12);
-
-  // Selected marker
-  const [selected, setSelected] = useState({});
-  const onSelect = (item, selectedLat, selectedLng) => {
-    setCenter({ selectedLat, selectedLng });
-    setSelected(item);
-  };
-
-  // Custom pin
-  const [userPins, setUserPins] = useState([]);
-
-  // Location references to keep the center when the map re-renders.
-  const mapRef = useRef();
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-    setBounds();
-  }, []);
-
-  // Load script
-  const { isLoaded, loadError } = useLoadScript({
-    id: 'google-map-script',
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-  });
-
-  // Show error if there was an error loading the script.
-  if (loadError) return 'Error loading maps';
-
   useEffect(() => {
     setSelected({});
     setBounds();
@@ -143,10 +138,7 @@ const Map = ({
                 anchor: new window.google.maps.Point(15, 15),
               }}
               onClick={() => {
-                const {
-                  location: { lat, lng },
-                } = pin;
-                onSelect(pin, lat, lng);
+                onSelect(pin, pin.location.lat, pin.location.lng);
               }}
             />
           ))}

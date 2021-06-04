@@ -10,7 +10,7 @@ import {
   EventFormMessage,
   EventFormRequiredMessage,
   EventFormButton,
-} from '../styles/eventFormStyles';
+} from '../../styles/eventFormStyles';
 
 const EventForm = ({ location, addEvent, closeModal }) => {
   // Input fields

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SearchBar from '../styles/search';
 import axios from 'axios';
+import SearchBar from '../../styles/search';
 
 const Search = ({ updateSearchResults, position, updatePosition, isSearchVisible }) => {
   const [search, setSearch] = useState('');
