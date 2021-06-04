@@ -34,39 +34,43 @@ const Map = ({
   toggleSearch,
   updateEvents,
 }) => {
-  console.log('rerender');
   const [center, setCenter] = useState({
     lat: position.lat,
     lng: position.lng,
   });
   const [zoom, setZoom] = useState(12);
+
   // Selected marker
   const [selected, setSelected] = useState({});
   const onSelect = (item, selectedLat, selectedLng) => {
     setSelected(item);
   };
+
   // Custom pins
   const [userPins, setUserPins] = useState([]);
+
   // Location references to keep the center when the map re-renders.
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
     setBounds();
   }, []);
+
   // Load script
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
   });
+
   // Show error if there was an error loading the script.
   if (loadError) return 'Error loading maps';
+
   const setBounds = () => {
     if (window.google && mapRef.current) {
       if (results.length > 1) {
         const bounds = results.reduce(
-          (boundsObj, { location: { lat, lng } }) =>
-            boundsObj.extend({ lat, lng }),
-          new window.google.maps.LatLngBounds()
+          (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
+          new window.google.maps.LatLngBounds(),
         );
         mapRef.current.fitBounds(bounds);
       } else if (results.length === 1) {
@@ -84,6 +88,26 @@ const Map = ({
       }
     }
   };
+
+  const getIcon = (activity) => {
+    switch (activity) {
+    case 'Hiking':
+      return './icons/hiking.svg';
+    case 'Fishing':
+      return './icons/fishing.svg';
+    case 'Biking':
+      return './icons/biking.svg';
+    case 'Camping':
+      return './icons/camping.svg';
+    case 'Running':
+      return './icons/running.svg';
+    case 'Other':
+      return './icons/compass.svg';
+    default:
+      return './icons/park.svg';
+    }
+  };
+
   useEffect(() => {
     setSelected({});
     setBounds();
@@ -104,18 +128,16 @@ const Map = ({
         center={center}
         zoom={zoom}
         options={options}
-        onClick={(event) =>
-          setUserPins(() => [
-            {
-              name: 'Dropped Pin',
-              location: {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
-              },
-              parkId: getKey(),
+        onClick={(event) => setUserPins(() => [
+          {
+            name: 'Dropped Pin',
+            location: {
+              lat: event.latLng.lat(),
+              lng: event.latLng.lng(),
             },
-          ])
-        }
+            parkId: getKey(),
+          },
+        ])}
         onLoad={onMapLoad}
       >
         {results.map((item) => (
@@ -123,7 +145,7 @@ const Map = ({
             key={getKey()}
             position={item.location}
             icon={{
-              url: './icons/park.svg',
+              url: getIcon(item.activity),
               scaledSize: new window.google.maps.Size(30, 30),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 35),
@@ -136,13 +158,13 @@ const Map = ({
             }}
           />
         ))}
-        {addFavorite &&
-          userPins.map((pin) => (
+        {addFavorite
+          && userPins.map((pin) => (
             <Marker
               key={getKey()}
               position={pin.location}
               icon={{
-                url: './icons/park.svg',
+                url: getIcon(pin.activity),
                 scaledSize: new window.google.maps.Size(30, 30),
                 origin: new window.google.maps.Point(0, 0),
                 anchor: new window.google.maps.Point(15, 35),
@@ -169,9 +191,10 @@ const Map = ({
         <></>
       </GoogleMap>
     </div>
-  ) : (
+  )
+    : (
     // Display loading message while the script loads the map.
-    <h1>Loading Maps!</h1>
-  );
+      <h1>Loading Maps!</h1>
+    );
 };
 export default Map;
