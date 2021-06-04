@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
-import NavBar from './NavBar.jsx';
+import NavBar from './Navbar/NavBar.jsx';
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);
