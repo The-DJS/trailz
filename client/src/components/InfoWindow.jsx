@@ -16,7 +16,6 @@ const CustomInfoWindow = ({
   removeEvent,
   addEvent,
 }) => {
-  console.log(user);
   return (
     <InfoWindow
       position={selected.location}
@@ -42,7 +41,9 @@ const CustomInfoWindow = ({
         ) : (
           <h5>{selected.name}</h5>
         )}
-        {addFavorite && <FavModal location={selected} addFav={addFavorite} />}
+        {addFavorite ? (
+          <FavModal location={selected} addFav={addFavorite} />
+        ) : null}
         {removeFavorite && (
           <InfoButton type="button" onClick={() => removeFavorite(selected)}>
             Remove from favs
@@ -50,6 +51,8 @@ const CustomInfoWindow = ({
         )}
         {!addFavorite &&
         !removeFavorite &&
+        user &&
+        selected.attendees &&
         !selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
           <>
             <InfoButton type="button" onClick={() => register(selected._id)}>
@@ -59,13 +62,18 @@ const CustomInfoWindow = ({
         ) : null}
         {!addFavorite &&
         !removeFavorite &&
-        selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
+        user &&
+        selected.attendees &&
+        selected.attendees.includes(`${user.firstName} ${user.lastName}`) &&
+        selected.owner !== `${user.firstName} ${user.lastName}` ? (
           <InfoButton type="button" onClick={() => unregister(selected._id)}>
             Unregister
           </InfoButton>
         ) : null}
         {!addFavorite &&
         !removeFavorite &&
+        user &&
+        selected.owner &&
         selected.owner.includes(`${user.firstName} ${user.lastName}`) ? (
           <InfoButton type="button" onClick={() => removeEvent(selected._id)}>
             Delete
