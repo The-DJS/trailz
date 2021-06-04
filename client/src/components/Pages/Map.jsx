@@ -89,16 +89,16 @@ const Map = ({
     setBounds();
   }, [results]);
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (shouldUpdate) {
-        updateEvents();
-      }
-    }, 3000);
-    return () => {
-      clearInterval(id);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const id = setInterval(() => {
+  //     if (shouldUpdate) {
+  //       updateEvents();
+  //     }
+  //   }, 3000);
+  //   return () => {
+  //     clearInterval(id);
+  //   };
+  // }, []);
 
   // Render the map
   return isLoaded
