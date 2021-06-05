@@ -10,6 +10,7 @@ import {
   // Events
   EventLocationInfo,
   EventOwnerInfo,
+  EventActivityInfo,
   EventDateInfo,
   EventDescInfo,
   EventPubInfo,
@@ -42,32 +43,39 @@ const CustomInfoWindow = ({
     }}
   >
     <div className="map-info-window">
-      {selected.eventName ? (
-        <div>
-          <InfoTitle>{selected.eventName}</InfoTitle>
-          <EventLocationInfo>{selected.locationName}</EventLocationInfo>
-          <EventGroup>
-            <LabelInfo>Owner:</LabelInfo>
-            <EventOwnerInfo>{selected.owner}</EventOwnerInfo>
-          </EventGroup>
-          <EventDescInfo>{selected.activity}</EventDescInfo>
-          <EventDateInfo>{moment(selected.time).format('ll')}</EventDateInfo>
-          <EventDescInfo>{selected.description}</EventDescInfo>
-          {selected.isPublic ? (
-            <EventPubInfo>Public Event</EventPubInfo>
-          ) : (
-            <EventPrivInfo>Private Event</EventPrivInfo>
-          )}
-          <EventGroup>
-            <LabelInfo>Attendees:</LabelInfo>
-            <EventAttendeesInfo>
-              {selected.attendees.join(', ')}
-            </EventAttendeesInfo>
-          </EventGroup>
-        </div>
-      ) : (
-        <InfoTitle>{selected.name}</InfoTitle>
-      )}
+      {selected.eventName
+        ? (
+          <div>
+            <InfoTitle>{selected.eventName}</InfoTitle>
+            <EventLocationInfo>{selected.locationName}</EventLocationInfo>
+            <EventGroup>
+              <LabelInfo>Owner:</LabelInfo>
+              <EventOwnerInfo>{selected.owner}</EventOwnerInfo>
+            </EventGroup>
+            <EventGroup>
+              <LabelInfo>Activity:</LabelInfo>
+              <EventActivityInfo>{selected.activity}</EventActivityInfo>
+            </EventGroup>
+            <EventDateInfo>{moment(selected.time).format('ll')}</EventDateInfo>
+            <EventDescInfo>{selected.description}</EventDescInfo>
+            {selected.isPublic
+              ? (
+                <EventPubInfo>Public Event</EventPubInfo>
+              )
+              : (
+                <EventPrivInfo>Private Event</EventPrivInfo>
+              )}
+            <EventGroup>
+              <LabelInfo>Attendees:</LabelInfo>
+              <EventAttendeesInfo>
+                {selected.attendees.join(', ')}
+              </EventAttendeesInfo>
+            </EventGroup>
+          </div>
+        )
+        : (
+          <InfoTitle>{selected.name}</InfoTitle>
+        )}
       {addFavorite && (
         <FavModal
           location={selected}
@@ -80,37 +88,45 @@ const CustomInfoWindow = ({
           Remove from favs
         </InfoButton>
       )}
-      {!addFavorite &&
-      !removeFavorite &&
-      !selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
-        <>
-          <InfoButton type="button" onClick={() => register(selected._id)}>
-            Register
+      {!addFavorite
+      && !removeFavorite
+      && !selected.attendees.includes(`${user.firstName} ${user.lastName}`)
+        ? (
+          <>
+            <InfoButton type="button" onClick={() => register(selected._id)}>
+              Register
+            </InfoButton>
+          </>
+        )
+        : null}
+      {!addFavorite
+      && !removeFavorite
+      && selected.attendees.includes(`${user.firstName} ${user.lastName}`)
+        ? (
+          <InfoButton type="button" onClick={() => unregister(selected._id)}>
+            Unregister
           </InfoButton>
-        </>
-      ) : null}
-      {!addFavorite &&
-      !removeFavorite &&
-      selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
-        <InfoButton type="button" onClick={() => unregister(selected._id)}>
-          Unregister
-        </InfoButton>
-      ) : null}
-      {!addFavorite &&
-      !removeFavorite &&
-      selected.owner.includes(`${user.firstName} ${user.lastName}`) ? (
-        <InfoButton type="button" onClick={() => removeEvent(selected._id)}>
-          Delete
-        </InfoButton>
-      ) : null}
-      {addFavorite || removeFavorite ? (
-        <EventModal
-          location={selected}
-          addFav={addFavorite}
-          toggleSearch={toggleSearch}
-          addEvent={addEvent}
-        />
-      ) : null}
+        )
+        : null}
+      {!addFavorite
+      && !removeFavorite
+      && selected.owner.includes(`${user.firstName} ${user.lastName}`)
+        ? (
+          <InfoButton type="button" onClick={() => removeEvent(selected._id)}>
+            Delete
+          </InfoButton>
+        )
+        : null}
+      {addFavorite || removeFavorite
+        ? (
+          <EventModal
+            location={selected}
+            addFav={addFavorite}
+            toggleSearch={toggleSearch}
+            addEvent={addEvent}
+          />
+        )
+        : null}
     </div>
   </InfoWindow>
 );
