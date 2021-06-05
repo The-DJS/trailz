@@ -3,6 +3,12 @@ const { Park, User } = require('../database');
 const { wrapAsync } = require('../helpers');
 const GOOGLE_MAPS_API_KEY = require('../google-maps/API');
 
+/**
+ * returns an array of favorite parks based on a user id. maps
+ * over favorite parks so return array includes park objects
+ * instead of object ids. promise all is used because the callback
+ * function passed into map requires a subsequent database query.
+ */
 const getFavoriteParks = wrapAsync(async (req, res) => {
   const { userId } = req.params;
   const { favoriteParks } = await User.findOne({ _id: userId });
@@ -15,6 +21,12 @@ const getFavoriteParks = wrapAsync(async (req, res) => {
   res.send(mappedParks);
 });
 
+/**
+ * is invoked when user clicks add to favorite buttons. takes
+ * data from google server regarding park, saves park to database,
+ * adds park to favorite park array of user mapped to user id, and
+ * saves updated user.
+ */
 const addFavoritePark = wrapAsync(async (req, res) => {
   const { userId } = req.params;
   const { parkId, name, address, lat, lng } = req.body;
@@ -30,6 +42,13 @@ const addFavoritePark = wrapAsync(async (req, res) => {
   res.send(newPark);
 });
 
+/**
+ * finds user associated with user id. filters favorite parks
+ * array and removes park associated with park id is of type
+ * object id and parkId is of type string. convert object id
+ * to a string else the strict comparison won't work. this took
+ * like an hour to figure out, learn from my mistake.
+ */
 const removeFavoritePark = wrapAsync(async (req, res) => {
   const { userId, parkId } = req.params;
   const user = await User.findById(userId);
@@ -40,6 +59,16 @@ const removeFavoritePark = wrapAsync(async (req, res) => {
   res.send();
 });
 
+/**
+ * queries google server for nearby parks. maps over the query results
+ * and creates object client is able to iterate over. google query requires
+ * key which comes from .env folder, location which has a default location
+ * of mid city, new orleans. i recommend making this dynamic. check out
+ * the use effect in app.jsx to see how to extract browser location. radius is
+ * in meters, equals 100 miles. type is park so it will only return locations
+ * of type park and keyword is trails so it will specifically look for
+ * trails.
+ */
 const defaultSearch = wrapAsync(async (req, res) => {
   const { data: results } = await axios.get(
     `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${GOOGLE_MAPS_API_KEY}&location=29.977000,-90.101570&radius=160934&keyword=trails&type=park`
@@ -60,6 +89,16 @@ const defaultSearch = wrapAsync(async (req, res) => {
   );
 });
 
+/**
+ * this callback accepts a latitude, longitude, and keyword from the params.
+ * it queries the google server for parks within 100 miles (160934 meters =
+ * 100 miles) including the supplied keyword (this comes from a form). the
+ * results are mapped so the client can iterate over them. a reduce method
+ * is used to find the minimum and maximum latitude and longitudes. using these
+ * values, the center of the queried data is calculated. an object is returned
+ * that contains both the mapped results and an object that contains the center
+ * of the search results.
+ */
 const searchParks = wrapAsync(async (req, res) => {
   const { lat, lng, keyword } = req.params;
   const { data: results } = await axios.get(

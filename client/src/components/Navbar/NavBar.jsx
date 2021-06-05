@@ -31,9 +31,16 @@ const Navbar = ({
   toggleSearch,
   isSearchVisible,
   updateEvents,
+  showSRAlert,
+  setShowSRAlert,
+  showEventAlert,
+  setShowEventAlert,
 }) => (
   <div>
     <div>
+      {/* used bootstrap to create responsive navbar, the styled
+      components worked perfectly with the structure bootstrap requires
+      hover over the component to see what the actual html element is */}
       <Nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <a href="#" className="navbar-brand">
@@ -96,18 +103,42 @@ const Navbar = ({
       <Switch>
         <Route exact path="/search">
           <>
+            {showSRAlert && (
+              <div
+                className="alert alert-danger"
+                role="alert"
+                onClick={() => setShowSRAlert(false)}
+                style={{ margin: 0 }}
+              >
+                No search results.
+              </div>
+            )}
+            {showEventAlert && (
+              <div
+                className="alert alert-danger"
+                role="alert"
+                onClick={() => setShowEventAlert(false)}
+                style={{ margin: 0 }}
+              >
+                Event time must be in the future.
+              </div>
+            )}
             <Search
               updateSearchResults={updateSearchResults}
               position={position}
               updatePosition={updatePosition}
               isSearchVisible={isSearchVisible}
+              setShowSRAlert={setShowSRAlert}
             />
+            {/* different props are passed into each map component
+            conditional rendering in the map component is based
+            on if that instance of map contains a particular prop 
+            for example, only the search map contains add favorite 
+            so only the search map will display an add favorite button */}
             <Map
               results={searchResults}
               addFavorite={addFavorite}
               position={position}
-              register={register}
-              unregister={unregister}
               addEvent={addEvent}
               removeEvent={removeEvent}
               toggleSearch={toggleSearch}
@@ -116,6 +147,16 @@ const Navbar = ({
         </Route>
         <Route exact path="/favorite">
           <>
+            {showEventAlert && (
+              <div
+                class="alert alert-danger"
+                role="alert"
+                onClick={() => setShowEventAlert(false)}
+                style={{ margin: 0 }}
+              >
+                Event time must be in the future.
+              </div>
+            )}
             <Map
               results={favorites}
               removeFavorite={removeFavorite}
@@ -129,6 +170,8 @@ const Navbar = ({
         </Route>
         <Route exact path="/events">
           <>
+            {/* bootstrap alter that shows when user tries to register or unregister
+          to an event that another user has deleted */}
             {showAlert && (
               <div
                 class="alert alert-danger"
@@ -160,5 +203,4 @@ const Navbar = ({
   </div>
 );
 
-/// logout button is funcitonal now
 export default Navbar;

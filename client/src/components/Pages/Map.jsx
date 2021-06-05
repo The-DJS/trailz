@@ -4,6 +4,14 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { v4 as getKey } from 'uuid';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import mapStyles from '../../styles/mapStyles.js';
+/**
+ * if this project is chosen for legacy, need to find better way to get
+ * google map api, shouldn't reference back end from front end, could make
+ * .env folder on client side using webpack.config.js however this could
+ * be risky as everything served up can be accessed by user, could make
+ * route that sends key from server to client and is called when component
+ * renders?
+ */
 import GOOGLE_MAPS_API_KEY from '../../../../server/google-maps/API.js';
 import CustomInfoWindow from './InfoWindow.jsx';
 
@@ -34,7 +42,41 @@ const Map = ({
   toggleSearch,
   updateEvents,
 }) => {
-  console.log('rerender');
+  /**
+   * this function dynamically sets the bounds of the map
+   * so all points can be viewed at once. if the number of
+   * results is greater than one, every point is visible
+   * and the zoom is set based on the bounds. if the number
+   * of results is equal to one, the map is centered on that
+   * point and the zoom is set to the default of 12 so its
+   * not too zoomed in. if no points are in results, the
+   * location of the user is set to center with a default of 12.
+   */
+  const setBounds = () => {
+    if (window.google && mapRef.current) {
+      if (results.length > 1) {
+        const bounds = results.reduce(
+          (boundsObj, { location: { lat, lng } }) =>
+            boundsObj.extend({ lat, lng }),
+          new window.google.maps.LatLngBounds()
+        );
+        mapRef.current.fitBounds(bounds);
+      } else if (results.length === 1) {
+        const [
+          {
+            location: { lat, lng },
+          },
+        ] = results;
+        setZoom(14);
+        setCenter({ lat, lng });
+      } else {
+        const { lat, lng } = position;
+        setZoom(12);
+        setCenter({ lat, lng });
+      }
+    }
+  };
+  // initial center set based on users location
   const [center, setCenter] = useState({
     lat: position.lat,
     lng: position.lng,
@@ -43,6 +85,10 @@ const Map = ({
   // Selected marker
   const [selected, setSelected] = useState({});
   const onSelect = (item, selectedLat, selectedLng) => {
+    // could invoke set center and pass in selected lat
+    // and selected lng if you want to center map whenever
+    // you click a marker, i removed this functionality
+    // cause i though it made the map jump around too much
     setSelected(item);
   };
   // Custom pins
@@ -60,35 +106,24 @@ const Map = ({
   });
   // Show error if there was an error loading the script.
   if (loadError) return 'Error loading maps';
-  const setBounds = () => {
-    if (window.google && mapRef.current) {
-      if (results.length > 1) {
-        const bounds = results.reduce(
-          (boundsObj, { location: { lat, lng } }) =>
-            boundsObj.extend({ lat, lng }),
-          new window.google.maps.LatLngBounds()
-        );
-        mapRef.current.fitBounds(bounds);
-      } else if (results.length === 1) {
-        const [
-          {
-            location: { lat, lng },
-          },
-        ] = results;
-        setZoom(12);
-        setCenter({ lat, lng });
-      } else {
-        const { lat, lng } = position;
-        setZoom(12);
-        setCenter({ lat, lng });
-      }
-    }
-  };
+
+  /**
+   * every time the results state value changes, selected will
+   * be set to an empty object. when selected equals an empty object
+   * the info window disappears and the map bounds are redrawn.
+   * this triggers when searches are made, things are removed from
+   * favorites, events are deleted
+   */
   useEffect(() => {
     setSelected({});
     setBounds();
   }, [results]);
 
+  /**
+   * the following use effect was supposed to query the server for events
+   * every minutes and refresh the page, however, i couldn't figure out
+   * how to make so the info window would no disappear
+   */
   // useEffect(() => {
   //   const id = setInterval(() => {
   //     updateEvents();
@@ -99,6 +134,8 @@ const Map = ({
   // Render the map
   return isLoaded ? (
     <div>
+      {/* when the map is clicked, add a pin to the 
+      user pins state value */}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -118,6 +155,9 @@ const Map = ({
         }
         onLoad={onMapLoad}
       >
+        {/* map over results (array of parks or events) and
+        add markers to map, when the marker is clicked, set selected
+        state value to the clicked marker */}
         {results.map((item) => (
           <Marker
             key={getKey()}
@@ -136,6 +176,9 @@ const Map = ({
             }}
           />
         ))}
+        {/* if add favorite exists, you are on the search map,
+        only add user pins to the search map, on click set selected
+        state value to user pin */}
         {addFavorite &&
           userPins.map((pin) => (
             <Marker
@@ -152,6 +195,7 @@ const Map = ({
               }}
             />
           ))}
+        {/*  if a location is selected, render a info window */}
         {selected.location && (
           <CustomInfoWindow
             selected={selected}

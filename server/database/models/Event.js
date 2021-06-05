@@ -26,6 +26,10 @@ const eventSchema = new mongoose.Schema({
   activity: {
     type: String,
     required: true,
+    /**
+     * enumerations are used with the possibilities is discrete
+     * any potential values must be included in array
+     */
     enum: ['Hiking', 'Fishing', 'Biking', 'Camping', 'Running', 'Other'],
   },
   description: {
@@ -36,6 +40,9 @@ const eventSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  /**
+   * array of object ids
+   */
   attendees: [
     { type: mongoose.Schema.Types.ObjectId, required: true, default: [] },
   ],

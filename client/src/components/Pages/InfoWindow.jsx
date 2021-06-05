@@ -68,6 +68,7 @@ const CustomInfoWindow = ({
       ) : (
         <InfoTitle>{selected.name}</InfoTitle>
       )}
+      {/* show add favorite button in search map only */}
       {addFavorite && (
         <FavModal
           location={selected}
@@ -75,13 +76,17 @@ const CustomInfoWindow = ({
           toggleSearch={toggleSearch}
         />
       )}
+      {/* show remove favorite button in favorites map only */}
       {removeFavorite && (
         <InfoButton type="button" onClick={() => removeFavorite(selected)}>
           Remove from favs
         </InfoButton>
       )}
+      {/* show register in events map only and only if the event attendees
+      array does not include the name of the user */}
       {!addFavorite &&
       !removeFavorite &&
+      selected.attendees &&
       !selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
         <>
           <InfoButton type="button" onClick={() => register(selected._id)}>
@@ -89,20 +94,27 @@ const CustomInfoWindow = ({
           </InfoButton>
         </>
       ) : null}
+      {/* show unregister in events map only and only if the event attendees
+      array does include the name of the user */}
       {!addFavorite &&
       !removeFavorite &&
-      selected.attendees.includes(`${user.firstName} ${user.lastName}`) ? (
+      selected.attendees &&
+      selected.attendees.includes(`${user.firstName} ${user.lastName}`) &&
+      selected.owner !== `${user.firstName} ${user.lastName}` ? (
         <InfoButton type="button" onClick={() => unregister(selected._id)}>
           Unregister
         </InfoButton>
       ) : null}
+      {/* only show delete if  the current user is the user who creatd the event */}
       {!addFavorite &&
       !removeFavorite &&
+      selected.owner &&
       selected.owner.includes(`${user.firstName} ${user.lastName}`) ? (
         <InfoButton type="button" onClick={() => removeEvent(selected._id)}>
           Delete
         </InfoButton>
       ) : null}
+      {/* only allow user to create event in search and favorites maps */}
       {addFavorite || removeFavorite ? (
         <EventModal
           location={selected}
