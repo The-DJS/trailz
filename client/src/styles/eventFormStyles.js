@@ -35,6 +35,8 @@ const EventFormTextarea = styled.textarea`
   border-radius: 3px;
   width: 100%;
   margin-bottom: 0.5em;
+  white-space: pre-wrap;
+  resize: vertical;
   &:invalid {
     border: 2px solid red;
   }

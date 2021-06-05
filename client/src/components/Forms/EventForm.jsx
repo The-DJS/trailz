@@ -130,7 +130,7 @@ const EventForm = ({ location, addEvent, closeModal }) => {
             name="description"
             rows="4"
             cols="50"
-            placeholder="Starts at noon near the gazebo./n Bring drinks!"
+            placeholder="Starts at noon near the gazebo.&#13;&#10;Bring drinks!"
             onChange={(e) => setDescription(e.target.value)}
             required
           />
