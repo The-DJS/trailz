@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const InfoButton = styled.button`
   margin: 0.5rem 0%;
   background-color: ForestGreen;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 1rem;
   width: 100%;
   height: 1.25rem;
@@ -14,6 +14,7 @@ const InfoButton = styled.button`
 
 const InfoTitle = styled.h2`
   color: ForestGreen;
+  font-weight: 900;
   margin-bottom: 1vh;
   font-size: 1rem;
   text-align: center;
@@ -22,6 +23,7 @@ const InfoTitle = styled.h2`
 const LabelInfo = styled.p`
   font-size: 0.8rem;
   padding-bottom: 0.5rem;
+  font-weight: bold;
   display: inline;
 `;
 
@@ -33,6 +35,7 @@ const EventGroup = styled.div`
 // Events
 const EventLocationInfo = styled.h3`
   color: ForestGreen;
+  font-weight: bold;
   font-size: 1rem;
   margin-bottom: 0.75vh;
 `;
@@ -59,12 +62,16 @@ const EventDateInfo = styled.p`
   margin-bottom: 0.75vh;
 `;
 
-const EventDescInfo = styled.p`
+const EventDescInfo = styled.div`
   font-size: 1rem;
   font-weight: normal;
   background: AliceBlue;
   margin-top: auto;
   margin-bottom: 0.75vh;
+`;
+
+const EventDescLineInfo = styled.p`
+  margin: auto;
 `;
 
 const EventPubInfo = styled.h6`
@@ -103,6 +110,7 @@ export {
   EventActivityInfo,
   EventDateInfo,
   EventDescInfo,
+  EventDescLineInfo,
   EventPubInfo,
   EventPrivInfo,
   EventAttendeesInfo,

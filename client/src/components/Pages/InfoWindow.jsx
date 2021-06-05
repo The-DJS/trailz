@@ -13,6 +13,7 @@ import {
   EventActivityInfo,
   EventDateInfo,
   EventDescInfo,
+  EventDescLineInfo,
   EventPubInfo,
   EventPrivInfo,
   EventAttendeesInfo,
@@ -61,7 +62,13 @@ const CustomInfoWindow = ({
               <EventActivityInfo>{selected.activity}</EventActivityInfo>
             </EventGroup>
             <EventDateInfo>{moment(selected.time).format('ll')}</EventDateInfo>
-            <EventDescInfo>{selected.description}</EventDescInfo>
+            <EventDescInfo>
+              {
+                selected.description
+                  .split('\n')
+                  .map((line) => <EventDescLineInfo>{line}</EventDescLineInfo>)
+              }
+            </EventDescInfo>
             {selected.isPublic
               ? (
                 <EventPubInfo>Public Event</EventPubInfo>

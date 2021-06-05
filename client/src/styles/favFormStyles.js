@@ -9,6 +9,7 @@ const FavFormGroup = styled.div`
 
 const FavFormLabel = styled.label`
   margin-bottom: 0.5rem;
+  font-weight: bold;
   color: ForestGreen;
   display: block;
 `;
@@ -47,7 +48,7 @@ const FavFormButton = styled.button`
   margin-bottom: 0.5rem;
   margin-top:0.5rem;
   background-color: ForestGreen;
-  font-weight: bolder;
+  font-weight: 900;
   width: 10vw;
   height: 5vh;
   border: 0px;

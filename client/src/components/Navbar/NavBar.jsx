@@ -38,7 +38,7 @@ const Navbar = ({
         <div className="container-fluid">
           <a href="#" className="navbar-brand">
             <Logo as={Link} to="/" style={{ fontsize: '40px' }}>
-              TRAILZ
+              Trails
             </Logo>
           </a>
           <button
