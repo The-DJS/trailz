@@ -1,7 +1,7 @@
 # Trailz
 
 # DESCRIPTION
-Are you looking for parks nearby, places to hike, and what events are happening near you. This is the app for you! Our app allows users to search for local parks in our search tab which has features that will allow users to save their favorite parks and create events. You can also drop custom pins to create events there.
+Are you looking for parks nearby, places to hike, and what events are happening near you. This is the app for you! Our app allows users to search for local parks in our search tab which has features that will allow users to save their favorite parks and create events. Users can also drop custom pins to add to their favorites or use for events.
 
 # Interaction
 1. First sign in, which creates the user account for you using google oauth.
