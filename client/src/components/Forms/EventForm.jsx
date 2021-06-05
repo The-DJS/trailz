@@ -87,6 +87,10 @@ const EventForm = ({ location, addEvent, closeModal }) => {
 
         <EventFormGroup>
           {location.name === 'Dropped Pin'
+          /**
+           * Check if the name of the location is "Dropped Pin"
+           * to allow a user to name their custom location for events.
+           */
             ? (
               <>
                 <EventFormLabel htmlFor="locationName">Location *</EventFormLabel>
