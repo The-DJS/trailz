@@ -48,7 +48,7 @@ Are you looking for parks nearby, places to hike, and what events are happening 
 2. npm run build -- to run the webpack
 3. npm run start -- to start up the server
 
-# What are in the folder
+# What are in the folders
 1. Server -- in the server folder you will have the controllers, database, helper functions, middleware and routers
 2. Client -- in the scr folder you will have a folder for Forms, Modals, Navbar, Pages, and Styles
 
