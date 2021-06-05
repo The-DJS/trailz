@@ -17,7 +17,7 @@ const Search = ({ updateSearchResults, position, updatePosition, isSearchVisible
   };
   return (
     <div>
-      {isSearchVisible
+      {isSearchVisible // Check if the search bar should be visible.
         ? (
           <SearchBar
             className="form-control"

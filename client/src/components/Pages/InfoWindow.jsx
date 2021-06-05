@@ -44,6 +44,10 @@ const CustomInfoWindow = ({
   >
     <div className="map-info-window">
       {selected.eventName
+      /**
+       * Render event info or the name of the location.
+       * Normal locations don't have an "event name" key.
+       */
         ? (
           <div>
             <InfoTitle>{selected.eventName}</InfoTitle>

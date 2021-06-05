@@ -46,7 +46,7 @@ const Map = ({
     setSelected(item);
   };
 
-  // Custom pins
+  // Custom pin
   const [userPins, setUserPins] = useState([]);
 
   // Location references to keep the center when the map re-renders.
@@ -89,6 +89,7 @@ const Map = ({
     }
   };
 
+  // Get the appropriate icon based on the type of the activity.
   const getIcon = (activity) => {
     switch (activity) {
     case 'Hiking':

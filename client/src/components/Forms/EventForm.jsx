@@ -23,6 +23,7 @@ const EventForm = ({ location, addEvent, closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Double check the fields are filled in before attempting to add the event to the db.
     if (title && date && description && isPublic && activity) {
       addEvent(
         title,

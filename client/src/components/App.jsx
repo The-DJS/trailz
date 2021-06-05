@@ -195,6 +195,10 @@ const App = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  /**
+   * Adds the ability to hide and show then search bar.
+   * The search bar checks this state before it attempts to render on the page.
+   */
   const [isSearchVisible, setSearchVisible] = useState(true);
   const toggleSearch = () => {
     setSearchVisible(!isSearchVisible);
