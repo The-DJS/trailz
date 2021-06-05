@@ -18,9 +18,9 @@ Are you looking for parks nearby, places to hike, and what events are happening 
 12. When creating an event or adding this custom pin to your favorites you will be asked to name this location in the event creation modal or an add to favs modal that will ask you to name the location before you can save it to the database.
 
 # Requirements
-1. Git
-2. npm
-3. Mongo
+1. git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+2. npm https://www.npmjs.com/get-npm
+3. Mongo https://www.mongodb.com/try/download/community or https://www.mongodb.com/cloud/atlas
 
 # Tech Stack
 1. MongoDB/Mongoose (5.10.15)
