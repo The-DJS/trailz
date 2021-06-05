@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
+import moment from 'moment';
 import {
   EventFormGroup,
   EventFormLabel,
@@ -15,7 +16,7 @@ import {
 const EventForm = ({ location, addEvent, closeModal }) => {
   // Input fields
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'));
   const [description, setDescription] = useState('');
   const [isPublic, setIsPublic] = useState('');
   const [activity, setActivity] = useState('');
@@ -118,6 +119,9 @@ const EventForm = ({ location, addEvent, closeModal }) => {
             type="date"
             id="date"
             name="date"
+            value={date}
+            min={moment(new Date()).format('YYYY-MM-DD')}
+            max={moment(new Date()).add(456, 'd').format('YYYY-MM-DD')}
             onChange={(e) => setDate(e.target.value)}
             required
           />
