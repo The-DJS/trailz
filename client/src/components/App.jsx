@@ -9,7 +9,7 @@ const App = () => {
   const [searchResults, setSearchResults] = useState([]); // array of parks
   const [user, setUser] = useState(null); // user object
   const [favorites, setFavorites] = useState([]); // array of parks
-  const [position, setPosition] = useState({}); // geographic coordinates => {lat: number, lng: number}
+  const [position, setPosition] = useState({}); // geographic coordinates  {lat: number, lng: number}
   const [events, setEvents] = useState([]); // array of events
   const [showAlert, setShowAlert] = useState(false); // boolean
   const [showSRAlert, setShowSRAlert] = useState(false);
@@ -190,7 +190,11 @@ const App = () => {
   // queries our server for all events, returns array of event objects
   const fetchEvents = async () => {
     const { data } = await axios.get('/events');
-    return data.filter((event) => new Date(event.time) > new Date());
+    console.log(data);
+    const now = new Date();
+    return data.filter(
+      (event) => new Date(event.time) >= now.setTime(now.getDate() - 1)
+    );
   };
 
   // tried to implement auto refresh on events, however, component
@@ -239,6 +243,10 @@ const App = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  /**
+   * Adds the ability to hide and show then search bar.
+   * The search bar checks this state before it attempts to render on the page.
+   */
   const [isSearchVisible, setSearchVisible] = useState(true);
   const toggleSearch = () => {
     setSearchVisible(!isSearchVisible);

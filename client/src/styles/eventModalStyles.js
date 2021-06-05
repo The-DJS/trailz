@@ -26,7 +26,7 @@ const EventModalExitButton = styled.button`
 const EventInfoButton = styled.button`
   margin: 0.5rem 0%;
   background-color: ForestGreen;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 1rem;
   width: 100%;
   height: 1.25rem;

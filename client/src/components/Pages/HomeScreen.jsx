@@ -36,6 +36,7 @@ const HomeScreen = ({ loginUser, logoutUser, user }) => {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'scroll',
+        backgroundPosition: '80% center',
       }}
     >
       {/* <GoogleButton

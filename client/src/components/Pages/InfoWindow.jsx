@@ -10,8 +10,10 @@ import {
   // Events
   EventLocationInfo,
   EventOwnerInfo,
+  EventActivityInfo,
   EventDateInfo,
   EventDescInfo,
+  EventDescLineInfo,
   EventPubInfo,
   EventPrivInfo,
   EventAttendeesInfo,
@@ -30,6 +32,7 @@ const CustomInfoWindow = ({
   removeEvent,
   addEvent,
   toggleSearch,
+  updateEvents,
 }) => (
   <InfoWindow
     position={selected.location}
@@ -43,6 +46,10 @@ const CustomInfoWindow = ({
   >
     <div className="map-info-window">
       {selected.eventName ? (
+        /**
+         * Render event info or the name of the location.
+         * Normal locations don't have an "event name" key.
+         */
         <div>
           <InfoTitle>{selected.eventName}</InfoTitle>
           <EventLocationInfo>{selected.locationName}</EventLocationInfo>
@@ -50,25 +57,51 @@ const CustomInfoWindow = ({
             <LabelInfo>Owner:</LabelInfo>
             <EventOwnerInfo>{selected.owner}</EventOwnerInfo>
           </EventGroup>
-          <EventDescInfo>{selected.activity}</EventDescInfo>
+          <EventGroup>
+            <LabelInfo>Activity:</LabelInfo>
+            <EventActivityInfo>{selected.activity}</EventActivityInfo>
+          </EventGroup>
           <EventDateInfo>{moment(selected.time).format('ll')}</EventDateInfo>
-          <EventDescInfo>{selected.description}</EventDescInfo>
+          <EventDescInfo>
+            {selected.description.split('\n').map((line) => (
+              <EventDescLineInfo>{line}</EventDescLineInfo>
+            ))}
+          </EventDescInfo>
           {selected.isPublic ? (
             <EventPubInfo>Public Event</EventPubInfo>
           ) : (
             <EventPrivInfo>Private Event</EventPrivInfo>
           )}
           <EventGroup>
-            <LabelInfo>Attendees:</LabelInfo>
-            <EventAttendeesInfo>
-              {selected.attendees.join(', ')}
-            </EventAttendeesInfo>
+            <div className="row">
+              <div className="col-5">
+                <LabelInfo>Attendees:</LabelInfo>
+              </div>
+              <div className="col-7" style={{ background: 'AliceBlue' }}>
+                <div>
+                  {selected.attendees.map((attendee) => (
+                    <p
+                      className="me-auto"
+                      style={{ marginBottom: 0, paddingTop: 0 }}
+                    >
+                      {attendee.split(' ').reduce((str, name, index) => {
+                        if (index !== 0) {
+                          str = str + ' ' + name.slice(0, 1);
+                        } else {
+                          str = name;
+                        }
+                        return str;
+                      }, '')}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
           </EventGroup>
         </div>
       ) : (
         <InfoTitle>{selected.name}</InfoTitle>
       )}
-      {/* show add favorite button in search map only */}
       {addFavorite && (
         <FavModal
           location={selected}
@@ -92,6 +125,9 @@ const CustomInfoWindow = ({
           <InfoButton type="button" onClick={() => register(selected._id)}>
             Register
           </InfoButton>
+          {/* <InfoButton type="button" onClick={updateEvents}>
+            Refresh Events
+          </InfoButton> */}
         </>
       ) : null}
       {/* show unregister in events map only and only if the event attendees
@@ -101,9 +137,14 @@ const CustomInfoWindow = ({
       selected.attendees &&
       selected.attendees.includes(`${user.firstName} ${user.lastName}`) &&
       selected.owner !== `${user.firstName} ${user.lastName}` ? (
-        <InfoButton type="button" onClick={() => unregister(selected._id)}>
-          Unregister
-        </InfoButton>
+        <>
+          <InfoButton type="button" onClick={() => unregister(selected._id)}>
+            Unregister
+          </InfoButton>
+          {/* <InfoButton type="button" onClick={updateEvents}>
+            Refresh Events
+          </InfoButton> */}
+        </>
       ) : null}
       {/* only show delete if  the current user is the user who creatd the event */}
       {!addFavorite &&

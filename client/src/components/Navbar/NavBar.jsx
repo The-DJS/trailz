@@ -45,7 +45,7 @@ const Navbar = ({
         <div className="container-fluid">
           <a href="#" className="navbar-brand">
             <Logo as={Link} to="/" style={{ fontsize: '40px' }}>
-              TRAILZ
+              Trails
             </Logo>
           </a>
           <button
@@ -79,7 +79,12 @@ const Navbar = ({
                     </LinkCss>
                   </Item>
                   <Item className="nav-item">
-                    <LinkCss as={Link} to="/events" className="nav-link">
+                    <LinkCss
+                      as={Link}
+                      to="/events"
+                      className="nav-link"
+                      onClick={updateEvents}
+                    >
                       Events
                     </LinkCss>
                   </Item>

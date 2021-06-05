@@ -9,26 +9,35 @@ import {
 import FavForm from '../Forms/FavForm.jsx';
 
 const FavModal = ({ location, addFav, toggleSearch }) => {
+  // Title that appears for the modal
   let subtitle;
 
+  // Track when the modal is open.
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => {
+    /**
+     * Only open the modal if the name of the location is "Dropped Pin" so user
+     * can name their custom location.
+     */
     if (location.name === 'Dropped Pin') {
       setIsOpen(true);
+      // Toggle search so it disappears when the modal opens.
       toggleSearch();
     } else {
+      // Add location as is.
       addFav(location);
     }
   };
 
+  // Styling of the title.
   const afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
     subtitle.style.color = 'ForestGreen';
     subtitle.style.marginLeft = '12%';
   };
 
   const closeModal = () => {
     setIsOpen(false);
+    // Toggle search so it reappears when the modal closes.
     toggleSearch();
   };
 

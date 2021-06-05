@@ -9,6 +9,7 @@ const EventFormGroup = styled.div`
 
 const EventFormLabel = styled.label`
   margin-bottom: 0.5em;
+  font-weight: bold;
   color: ForestGreen;
   display: block;
 `;
@@ -34,6 +35,8 @@ const EventFormTextarea = styled.textarea`
   border-radius: 3px;
   width: 100%;
   margin-bottom: 0.5em;
+  white-space: pre-wrap;
+  resize: vertical;
   &:invalid {
     border: 2px solid red;
   }
@@ -83,7 +86,7 @@ const EventFormButton = styled.button`
   margin-bottom: 0.5em;
   margin-top:0.5rem;
   background-color: ForestGreen;
-  font-weight: bolder;
+  font-weight: 900;
   width: 10vw;
   height: 5vh;
   border: 0px;

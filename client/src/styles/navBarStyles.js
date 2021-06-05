@@ -14,14 +14,20 @@ const Nav = styled.nav`
 const LinkCss = styled.a`
   font-size: 25px;
   color: white;
+  font-weight: bold;
   text-decoration: none;
   :hover {
     text-decoration: underline;
   }
 `;
 const Logo = styled.h1`
-  font-size: 30px;
-  color: white;
+  font-size: 2.5rem;
+  color: ForestGreen;
+  font-family: 'Lobster', cursive;
+  text-decoration: none;
+  :hover {
+    color: DarkGreen;
+  }
 `;
 
 const Menu = styled.ul`

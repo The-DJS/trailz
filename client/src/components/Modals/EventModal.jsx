@@ -9,22 +9,26 @@ import {
 import EventForm from '../Forms/EventForm.jsx';
 
 const EventModal = ({ location, addEvent, toggleSearch }) => {
+  // Title that appears for the modal.
   let subtitle;
 
+  // Track when the modal is open.
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
+    // Toggle search so it disappears when the modal opens.
     toggleSearch();
   };
 
+  // Styling of the title.
   const afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
     subtitle.style.color = 'ForestGreen';
     subtitle.style.marginLeft = '32%';
   };
 
   const closeModal = () => {
     setIsOpen(false);
+    // Toggle search so it reappears when the modal closes.
     toggleSearch();
   };
 

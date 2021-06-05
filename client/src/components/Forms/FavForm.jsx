@@ -14,6 +14,7 @@ const FavForm = ({ location, addFav, closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Double check the field is filled in before attempting to add the event to the db.
     if (name) {
       // Update the name of the location
       console.info(location);

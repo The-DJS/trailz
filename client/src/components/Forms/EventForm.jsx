@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
+import moment from 'moment';
 import {
   EventFormGroup,
   EventFormLabel,
@@ -15,7 +16,7 @@ import {
 const EventForm = ({ location, addEvent, closeModal }) => {
   // Input fields
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'));
   const [description, setDescription] = useState('');
   const [isPublic, setIsPublic] = useState('');
   const [activity, setActivity] = useState('');
@@ -23,6 +24,7 @@ const EventForm = ({ location, addEvent, closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Double check the fields are filled in before attempting to add the event to the db.
     if (title && date && description && isPublic && activity) {
       addEvent(
         title,
@@ -86,6 +88,10 @@ const EventForm = ({ location, addEvent, closeModal }) => {
 
         <EventFormGroup>
           {location.name === 'Dropped Pin'
+          /**
+           * Check if the name of the location is "Dropped Pin"
+           * to allow a user to name their custom location for events.
+           */
             ? (
               <>
                 <EventFormLabel htmlFor="locationName">Location *</EventFormLabel>
@@ -113,6 +119,9 @@ const EventForm = ({ location, addEvent, closeModal }) => {
             type="date"
             id="date"
             name="date"
+            value={date}
+            min={moment(new Date()).format('YYYY-MM-DD')}
+            max={moment(new Date()).add(15, 'M').format('YYYY-MM-DD')}
             onChange={(e) => setDate(e.target.value)}
             required
           />
@@ -125,7 +134,7 @@ const EventForm = ({ location, addEvent, closeModal }) => {
             name="description"
             rows="4"
             cols="50"
-            placeholder="Starts at noon near the gazebo./n Bring drinks!"
+            placeholder="Starts at noon near the gazebo.&#13;&#10;Bring drinks!"
             onChange={(e) => setDescription(e.target.value)}
             required
           />
