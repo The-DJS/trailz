@@ -38,7 +38,7 @@ Are you looking for parks nearby, places to hike, and what events are happening 
 2. Create an account at (https://www.mongodb.com/cloud/atlas) to access a secure passowrd for your cluster.
 
 # Google Maps API
-1. Make a directory a in the server folder and name it "google-maps"
+1. Make a directory in the server folder and name it "google-maps"
 2. Then create a file and name it "API.js"
 3. Create a variable and name it "GOOGLE_MAPS_API_KEY" with your Google Maps API key.
 4. Export it the variable from that file.
