@@ -4,7 +4,9 @@ const FavFormGroup = styled.div`
   color: SlateGray;
   display: block;
   width: 80vw;
-  margin-top: 32vh;
+  margin-top: 30vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
 `;
 
 const FavFormLabel = styled.label`

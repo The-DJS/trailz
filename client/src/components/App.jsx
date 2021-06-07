@@ -83,10 +83,11 @@ const App = () => {
     time,
     activity,
     description,
-    isPublic
+    isPublic,
   ) => {
     if (!user) return;
-    if (new Date(time) < new Date()) {
+    const now = new Date();
+    if (new Date(time) < now.setTime(now.getDate() - 1)) {
       setShowEventAlert(true);
       return;
     }

@@ -23,7 +23,7 @@ const EventModal = ({ location, addEvent, toggleSearch }) => {
   // Styling of the title.
   const afterOpenModal = () => {
     subtitle.style.color = 'ForestGreen';
-    subtitle.style.marginLeft = '32%';
+    subtitle.style.marginLeft = '31%';
   };
 
   const closeModal = () => {

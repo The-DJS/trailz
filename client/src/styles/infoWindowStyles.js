@@ -91,14 +91,6 @@ const EventPrivInfo = styled.h6`
   margin-bottom: 0.5vh;
 `;
 
-const EventAttendeesInfo = styled.p`
-  font-size: 0.75rem;
-  font-style: italic;
-  background: AliceBlue;
-  padding-left: 0.75vw;
-  display: inline;
-`;
-
 export {
   InfoButton,
   InfoTitle,
@@ -113,5 +105,4 @@ export {
   EventDescLineInfo,
   EventPubInfo,
   EventPrivInfo,
-  EventAttendeesInfo,
 };

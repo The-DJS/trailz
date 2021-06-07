@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
 const FavCustomModal = styled.div`
-    top: 46vh;
-    left: 44vw;
-    margin: auto;
-    bottom: auto;
-    position: absolute;
-    display: block;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    overflow-y: auto;
+  top: 50vh;
+  left: 42vw;
+  margin: auto;
+  bottom: auto;
+  position: absolute;
+  display: block;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  overflow-y: auto;
+  margin-left: 2vw;
+  margin-right: 2vw;
 `;
 
 const FavModalExitButton = styled.button`

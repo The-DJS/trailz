@@ -5,6 +5,8 @@ const EventFormGroup = styled.div`
   display: block;
   width: 80vw;
   margin-bottom: 2.5vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
 `;
 
 const EventFormLabel = styled.label`

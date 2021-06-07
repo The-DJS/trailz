@@ -71,7 +71,7 @@ const EventForm = ({ location, addEvent, closeModal }) => {
             id="activity"
             name="activity"
             defaultValue=""
-            onChange={(e) => setActivity(e.target.value) && console.log(activity)}
+            onChange={(e) => setActivity(e.target.value)}
             required
           >
             <EventFormOption disabled value="">
