@@ -35,6 +35,6 @@ app.use('/auth', authRouter);
 app.use('/parks', parksRouter);
 app.use('/events', eventsRouter);
 
-app.use(handleError);
+// app.use(handleError);
 
 module.exports = app;
