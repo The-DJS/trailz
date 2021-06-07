@@ -5,5 +5,5 @@
  * in this project could definitely be handled more gracefully.
  */
 module.exports = (err, req, res, next) => {
-  res.statusCode(500);
+  res.sendStatus(500);
 };

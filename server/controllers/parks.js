@@ -31,6 +31,8 @@ const addFavoritePark = wrapAsync(async (req, res) => {
   const { userId } = req.params;
   const { parkId, name, address, lat, lng } = req.body;
   const user = await User.findOne({ _id: userId });
+  // const park = await Park.findById(parkId);
+  // console.log(park);
   const newPark = await new Park({
     parkId,
     name,
