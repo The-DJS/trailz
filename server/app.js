@@ -22,7 +22,7 @@ app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: process.env.CLIENT_SECRET,
     resave: false,
     saveUninitialized: false,
   })
