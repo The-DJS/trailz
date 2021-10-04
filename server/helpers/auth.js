@@ -47,8 +47,8 @@ passport.use(
           firstName: profile.name.givenName || 'no first name ',
           lastName: profile.name.familyName || 'no last name',
         },
-        (err, user) => cb(err, user)
+        (err, user) => cb(err, user),
       );
-    }
-  )
+    },
+  ),
 );
