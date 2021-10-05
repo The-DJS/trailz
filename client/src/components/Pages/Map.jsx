@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
 /* eslint-disable react/jsx-boolean-value */
 import React, { useState, useRef, useCallback, useEffect } from 'react';
@@ -12,7 +13,7 @@ import mapStyles from '../../styles/mapStyles.js';
  * route that sends key from server to client and is called when component
  * renders?
  */
-import GOOGLE_MAPS_API_KEY from '../../../../server/google-maps/API.js';
+import { GOOGLE_MAPS_API_KEY } from '../../../../server/google-maps/API.js';
 import CustomInfoWindow from './InfoWindow.jsx';
 
 // The size of the map on the page

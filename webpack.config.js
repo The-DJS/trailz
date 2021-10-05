@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: path.resolve(__dirname, './client/src/index.jsx'),
+  devtool: 'eval-cheap-source-map',
   module: {
     rules: [
       {
