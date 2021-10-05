@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  devtool: 'eval-cheap-source-map',
   entry: path.resolve(__dirname, './client/src/index.jsx'),
   devtool: 'eval-cheap-source-map',
   module: {
@@ -14,6 +15,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './client/dist'),
+    publicPath: '/',
     filename: 'bundle.js',
+  },
+  devServer: {
+    historyApiFallback: true,
   },
 };

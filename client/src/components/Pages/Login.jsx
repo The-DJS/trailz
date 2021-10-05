@@ -37,7 +37,7 @@ const Login = ({ loginUser, logoutUser, user }) => {
         logoutUser();
       })
       .catch((err) => console.warn(err));
-    console.info('response!!!!!', response);
+    //console.info('response!!!!!', response);
     // console.log('logout');
   };
 
@@ -61,17 +61,18 @@ const Login = ({ loginUser, logoutUser, user }) => {
       {!user
         ? (
           <GoogleLogin
-            clientId="266879339390-9ia1hkk7q7u6oh2puf1jjbep2bpgi305.apps.googleusercontent.com"
+            clientId="101946136166-d43g259nd32qau97t43vjq9onbqqpifd.apps.googleusercontent.com"
             buttonText="Login"
             onSuccess={login}
             onFailure={login}
-            cookiePolicy="single_host_origin"
+            // cookiePolicy="single_host_origin"
+            // cookiePolicy="none"
             className="btn"
           />
         )
         : (
           <GoogleLogout
-            clientId="266879339390-9ia1hkk7q7u6oh2puf1jjbep2bpgi305.apps.googleusercontent.com"
+            clientId="101946136166-d43g259nd32qau97t43vjq9onbqqpifd.apps.googleusercontent.com"
             buttonText="Sign out"
             onLogoutSuccess={logout}
             className="btn"

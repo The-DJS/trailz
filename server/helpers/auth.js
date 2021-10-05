@@ -38,7 +38,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/google/callback',
+      callbackURL: '/auth/google/callback',
     },
     (accessToken, refreshToken, profile, cb) => {
       User.findOrCreate(
@@ -46,9 +46,9 @@ passport.use(
           googleId: profile.id,
           firstName: profile.name.givenName || 'no first name ',
           lastName: profile.name.familyName || 'no last name',
-        },
-        (err, user) => cb(err, user)
-      );
+        }
+      )
+        .then((err, user) => cb(err, user));
     }
   )
 );
