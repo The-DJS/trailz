@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable multiline-ternary */
+/* eslint-disable */
 import React, { useState } from 'react';
 import axios from 'axios';
 import SearchBar from '../../styles/search';
@@ -15,7 +18,7 @@ const Search = ({
     axios
       .get(`/parks/searchResults/${lat}/${lng}/${search}`)
       .then(({ data: results }) => {
-        console.log(results);
+        // console.log(results);
         if (results.mappedResults.length) {
           updateSearchResults(results.mappedResults);
         } else {

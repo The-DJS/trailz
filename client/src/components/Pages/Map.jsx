@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
 /* eslint-disable react/jsx-boolean-value */
+/* eslint-disable */
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { v4 as getKey } from 'uuid';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
@@ -117,9 +118,8 @@ const Map = ({
     if (window.google && mapRef.current) {
       if (results.length > 1) {
         const bounds = results.reduce(
-          (boundsObj, { location: { lat, lng } }) =>
-            boundsObj.extend({ lat, lng }),
-          new window.google.maps.LatLngBounds()
+          (boundsObj, { location: { lat, lng } }) => boundsObj.extend({ lat, lng }),
+          new window.google.maps.LatLngBounds(),
         );
         mapRef.current.fitBounds(bounds);
       } else if (results.length === 1) {
@@ -141,20 +141,20 @@ const Map = ({
   // Get the appropriate icon based on the type of the activity.
   const getIcon = (activity) => {
     switch (activity) {
-      case 'Hiking':
-        return './icons/hiking.svg';
-      case 'Fishing':
-        return './icons/fishing.svg';
-      case 'Biking':
-        return './icons/biking.svg';
-      case 'Camping':
-        return './icons/camping.svg';
-      case 'Running':
-        return './icons/running.svg';
-      case 'Other':
-        return './icons/compass.svg';
-      default:
-        return './icons/park.svg';
+    case 'Hiking':
+      return './icons/hiking.svg';
+    case 'Fishing':
+      return './icons/fishing.svg';
+    case 'Biking':
+      return './icons/biking.svg';
+    case 'Camping':
+      return './icons/camping.svg';
+    case 'Running':
+      return './icons/running.svg';
+    case 'Other':
+      return './icons/compass.svg';
+    default:
+      return './icons/park.svg';
     }
   };
 
@@ -178,15 +178,14 @@ const Map = ({
   // Render the map
   return isLoaded ? (
     <div>
-      {/* when the map is clicked, add a pin to the 
+      {/* when the map is clicked, add a pin to the
       user pins state value */}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
         zoom={zoom}
         options={options}
-        onClick={(event) =>
-          setUserPins(() => [
+        onClick={(event) => setUserPins(() => [
             {
               name: 'Dropped Pin',
               location: {
@@ -195,8 +194,7 @@ const Map = ({
               },
               parkId: getKey(),
             },
-          ])
-        }
+          ])}
         onLoad={onMapLoad}
       >
         {/* map over results (array of parks or events) and
@@ -223,8 +221,8 @@ const Map = ({
         {/* if add favorite exists, you are on the search map,
         only add user pins to the search map, on click set selected
         state value to user pin */}
-        {addFavorite &&
-          userPins.map((pin) => (
+        {addFavorite
+          && userPins.map((pin) => (
             <Marker
               key={getKey()}
               position={pin.location}

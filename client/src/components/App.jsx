@@ -5,6 +5,8 @@ import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
 import NavBar from './Navbar/NavBar.jsx';
 
+
+
 const App = () => {
   const [searchResults, setSearchResults] = useState([]); // array of parks
   const [user, setUser] = useState(null); // user object

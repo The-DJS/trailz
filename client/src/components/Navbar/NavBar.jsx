@@ -1,4 +1,5 @@
 /* eslint-disable import/extensions */
+/* eslint-disable */
 import React from 'react';
 import { Nav, LinkCss, Logo, Menu, Item } from '../../styles/navBarStyles';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -9,6 +10,7 @@ import Search from '../Pages/Search.jsx';
 import Home from '../Pages/HomeScreen.jsx';
 import Map from '../Pages/Map.jsx';
 import Login from '../Pages/Login.jsx';
+import Weather from '../Pages/Weather.jsx';
 import ActivityLog from '../Pages/ActivityLog.jsx';
 
 const Navbar = ({
@@ -73,6 +75,11 @@ const Navbar = ({
                     <LinkCss as={Link} to="/search" className="nav-link">
                       Search
                     </LinkCss>
+                  </Item>
+                  <Item className="nav-item">
+                  <LinkCss as={Link} to="/weather" className="nav-link">
+                    Weather Forecast
+                  </LinkCss>
                   </Item>
                   <Item className="nav-item">
                     <LinkCss as={Link} to="/favorite" className="nav-link">
@@ -198,6 +205,21 @@ const Navbar = ({
               </div>
             )}
             <Map
+              results={events}
+              position={position}
+              register={register}
+              unregister={unregister}
+              addEvent={addEvent}
+              removeEvent={removeEvent}
+              events={events}
+              user={user}
+              updateEvents={updateEvents}
+            />
+          </>
+        </Route>
+        <Route path="/weather">
+          <>
+            <Weather
               results={events}
               position={position}
               register={register}

@@ -1,8 +1,12 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 /* eslint-disable import/extensions */
+/* eslint-disable */
 import React from 'react';
 import moment from 'moment';
 import { InfoWindow } from '@react-google-maps/api';
+import Weather from './Weather.jsx';
 import {
   InfoButton,
   InfoTitle,
@@ -67,6 +71,9 @@ const CustomInfoWindow = ({
               {selected.description.split('\n').map((line) => (
                 <EventDescLineInfo>{line}</EventDescLineInfo>
               ))}
+              <Weather
+              
+              />
             </EventDescInfo>
             {selected.isPublic
               ? (
@@ -76,7 +83,7 @@ const CustomInfoWindow = ({
                 <EventPrivInfo>Private Event</EventPrivInfo>
               )}
             <EventGroup>
-              <div className="row" style={{margin: 'auto'}}>
+              <div className="row" style={{ margin: 'auto' }}>
                 <div className="col-6">
                   <LabelInfo>Attendees:</LabelInfo>
                 </div>
@@ -175,6 +182,7 @@ const CustomInfoWindow = ({
         : null}
     </div>
   </InfoWindow>
+  
 );
 
 export default CustomInfoWindow;
