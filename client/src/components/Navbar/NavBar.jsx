@@ -9,6 +9,7 @@ import Search from '../Pages/Search.jsx';
 import Home from '../Pages/HomeScreen.jsx';
 import Map from '../Pages/Map.jsx';
 import Login from '../Pages/Login.jsx';
+import ActivityLog from '../Pages/ActivityLog.jsx';
 
 const Navbar = ({
   searchResults,
@@ -88,6 +89,15 @@ const Navbar = ({
                       Events
                     </LinkCss>
                   </Item>
+                  <Item className="nav-item">
+                    <LinkCss
+                      as={Link}
+                      to="/activity"
+                      className="nav-link"
+                    >
+                      Activity Log
+                    </LinkCss>
+                  </Item>
                 </>
               )}
               <Item className="nav-item">
@@ -106,7 +116,7 @@ const Navbar = ({
     </div>
     <div>
       <Switch>
-        <Route exact path="/search">
+        <Route path="/search">
           <>
             {showSRAlert && (
               <div
@@ -150,7 +160,7 @@ const Navbar = ({
             />
           </>
         </Route>
-        <Route exact path="/favorite">
+        <Route path="/favorite">
           <>
             {showEventAlert && (
               <div
@@ -173,7 +183,7 @@ const Navbar = ({
             />
           </>
         </Route>
-        <Route exact path="/events">
+        <Route path="/events">
           <>
             {/* bootstrap alter that shows when user tries to register or unregister
           to an event that another user has deleted */}
@@ -188,6 +198,21 @@ const Navbar = ({
               </div>
             )}
             <Map
+              results={events}
+              position={position}
+              register={register}
+              unregister={unregister}
+              addEvent={addEvent}
+              removeEvent={removeEvent}
+              events={events}
+              user={user}
+              updateEvents={updateEvents}
+            />
+          </>
+        </Route>
+        <Route path="/activity">
+          <>
+            <ActivityLog
               results={events}
               position={position}
               register={register}
